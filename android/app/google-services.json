@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "57854838415",
+    "project_id": "agnomy-001",
+    "storage_bucket": "agnomy-001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57854838415:android:13dc6eec1fc8d1afd192fa",
+        "android_client_info": {
+          "package_name": "com.agnomy.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57854838415-fedeg0jshs2btmmie1gciq0s7aq26b9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3HL7QR_1_KVsLHO0oc3pY4IOfMFwdhyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57854838415-fedeg0jshs2btmmie1gciq0s7aq26b9a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
