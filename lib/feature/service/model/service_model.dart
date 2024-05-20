@@ -130,6 +130,7 @@ class Service {
   double? avgRating;
   String? createdAt;
   int? providerCount;
+  List<Providers>? providers;
   String? updatedAt;
   ServiceCategory? category;
   VariationsAppFormat? variationsAppFormat;
@@ -154,6 +155,7 @@ class Service {
         this.avgRating,
         this.createdAt,
         this.updatedAt,
+        this.providers,
         this.category,
         this.variationsAppFormat,
         this.variations,
@@ -180,6 +182,12 @@ class Service {
     createdAt = json['created_at'];
     providerCount = json['provider_count'];
     updatedAt = json['updated_at'];
+    if (json['providers'] != null) {
+      providers = <Providers>[];
+      json['providers'].forEach((v) {
+        providers!.add(new Providers.fromJson(v));
+      });
+    }
     variationsAppFormat = json['variations_app_format'] != null
         ? VariationsAppFormat.fromJson(json['variations_app_format'])
         : null;
@@ -238,6 +246,9 @@ class Service {
     if (variations != null) {
       data['variations'] = variations!.map((v) => v.toJson()).toList();
     }
+    if (this.providers != null) {
+      data['providers'] = this.providers!.map((v) => v.toJson()).toList();
+    }
 
     if (category != null) {
       data['category'] = category!.toJson();
@@ -289,6 +300,66 @@ class VariationsAppFormat {
     return data;
   }
 }
+class Providers {
+  String? id;
+  String? categoryId;
+  String? subCategoryId;
+  int? providerCount;
+  String? providerLatitude;
+  String? providerLongitude;
+  String? companyName;
+  double? distance;
+  List<Null>? serviceDiscount;
+  List<Null>? campaignDiscount;
+
+  Providers(
+      {this.id,
+        this.categoryId,
+        this.subCategoryId,
+        this.providerCount,
+        this.providerLatitude,
+        this.providerLongitude,
+        this.companyName,
+        this.distance,
+        this.serviceDiscount,
+        this.campaignDiscount,
+        });
+
+  Providers.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    categoryId = json['category_id'];
+    subCategoryId = json['sub_category_id'];
+    providerCount = json['provider_count'];
+    providerLatitude = json['provider_latitude'];
+    providerLongitude = json['provider_longitude'];
+    companyName = json['company_name'];
+    distance = json['distance'];
+    if (json['service_discount'] != null) {
+      serviceDiscount = <Null>[];
+
+    }
+    if (json['campaign_discount'] != null) {
+      campaignDiscount = <Null>[];
+
+    }
+
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['category_id'] = this.categoryId;
+    data['sub_category_id'] = this.subCategoryId;
+    data['provider_count'] = this.providerCount;
+    data['provider_latitude'] = this.providerLatitude;
+    data['provider_longitude'] = this.providerLongitude;
+    data['company_name'] = this.companyName;
+    data['distance'] = this.distance;
+
+    return data;
+  }
+}
+
 
 class Variations {
   int? id;

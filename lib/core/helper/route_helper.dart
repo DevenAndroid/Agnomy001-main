@@ -28,6 +28,7 @@ import 'package:demandium/feature/suggest_new_service/view/suggest_service_scree
 import 'package:demandium/feature/suggest_new_service/view/suggested_service_list_screen.dart';
 import 'package:demandium/feature/wallet/binding/wallet_binding.dart';
 import 'package:demandium/feature/wallet/wallet_screen.dart';
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/initial_binding/initial_binding.dart';
 import 'package:demandium/feature/category/bindings/category_bindings.dart';
@@ -246,7 +247,7 @@ class RouteHelper {
     return '$rateReviewScreen?id=$id';
   }
 
-  static String allServiceScreenRoute(String fromPage, {String campaignID = ''}) => '$allServiceScreen?fromPage=$fromPage&campaignID=$campaignID';
+  static String allServiceScreenRoute(String fromPage, {String campaignID = ''}) => '$allServiceScreen?fromPage=$fromPage&campaignID=$campaignID&placeid=$placedIdGloabal';
   static String getFeatheredCategoryService(String fromPage, CategoryData categoryData) {
     String data = base64Url.encode(utf8.encode(jsonEncode(categoryData.toJson())));
     return '$featheredServiceScreen?fromPage=$fromPage&categoryData=$data';

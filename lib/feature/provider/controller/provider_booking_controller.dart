@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/provider/model/category_model_item.dart';
 import 'package:demandium/feature/provider/model/provider_details_model.dart';
@@ -67,6 +69,8 @@ class ProviderBookingController extends GetxController implements GetxService {
     return daysOfWeek[(index + 1) % daysOfWeek.length];
   }
 
+  RxInt refreshInt = 0.obs;
+
 
   Future<void> getProviderList({required int offset, required bool reload, String? placeId, int? distance }) async {
 
@@ -78,17 +82,23 @@ class ProviderBookingController extends GetxController implements GetxService {
       Map<String,dynamic> body={
         'sort_by': sortBy[selectedSortByIndex],
         'rating': selectedRatingIndex,
+          'limit': '10',
+          'offset': offset,
+          'placeid': placeId,
+          'distance': distance
       }; 
       
       if(selectedCategoryId.isNotEmpty){
         body.addAll({'category_ids': selectedCategoryId});
       }
 
-      Response response = await providerBookingRepo.getProviderList(offset: offset,body: body,distance:distance ,placeID:placeId );
+      Response response = await providerBookingRepo.getProviderList(offset: offset,body: body,distance:distance, placeID:placeId );
+      refreshInt.value = DateTime.now().millisecondsSinceEpoch;
       if (response.statusCode == 200) {
         if(reload){
           _providerList = [];
         }
+
         _providerModel = ProviderModel.fromJson(response.body);
         if(_providerModel != null && offset != 1){
           _providerList!.addAll(ProviderModel.fromJson(response.body).content?.data??[]);
@@ -96,6 +106,7 @@ class ProviderBookingController extends GetxController implements GetxService {
           _providerList = [];
           _providerList!.addAll(ProviderModel.fromJson(response.body).content?.data??[]);
         }
+        log("Got info....    _providerList     ${_providerList}");
         update();
       } else {
        // ApiChecker.checkApi(response);

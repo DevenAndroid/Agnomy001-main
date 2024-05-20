@@ -93,12 +93,12 @@ class ServiceController extends GetxController implements GetxService {
 
 
 
-  Future<void> getAllServiceList(int offset, bool reload) async {
+  Future<void> getAllServiceList({required int offset, required bool reload, String? placeId, int? distance }) async {
     if(offset != 1 || _allService == null || reload){
       if(reload){
         _allService = null;
       }
-      Response response = await serviceRepo.getAllServiceList(offset);
+      Response response = await serviceRepo.getAllServiceList(offset: offset,placeID: placeId,distance: distance);
       if (response.statusCode == 200) {
         if(reload){
           _allService = [];
@@ -118,9 +118,9 @@ class ServiceController extends GetxController implements GetxService {
   }
 
 
-  Future<void> getPopularServiceList(int offset, bool reload) async {
+  Future<void> getPopularServiceList({required int offset, required bool reload, int? distance, String? placeId }) async {
     if(offset != 1 || _popularServiceList == null || reload ){
-      Response response = await serviceRepo.getPopularServiceList(offset: offset);
+      Response response = await serviceRepo.getPopularServiceList(offset: offset,placeID: placeId,distance: distance);
       if (response.statusCode == 200) {
         if(reload){
           _popularServiceList = [];

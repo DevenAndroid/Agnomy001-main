@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/provider/widgets/provider_filter_view.dart';
 import 'package:demandium/feature/provider/widgets/provider_item_view.dart';
@@ -31,7 +33,11 @@ class _AllProviderViewState extends State<AllProviderView> {
             useRootNavigator: true,
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
-            context: context, builder: (context) => const ProviderFilterView());
+            context: context, builder: (context) => ProviderFilterView(
+            onUpdate: (){
+              setState(() {});
+            },
+          ));
           },
 
           child: Padding(padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
@@ -41,6 +47,7 @@ class _AllProviderViewState extends State<AllProviderView> {
       ),
 
       body: GetBuilder<ProviderBookingController>(builder: (providerBookingController){
+        log("Got info....   ${providerBookingController.providerList}");
         return FooterBaseView(
           isScrollView:true,
           scrollController: scrollController,
@@ -57,7 +64,11 @@ class _AllProviderViewState extends State<AllProviderView> {
                         useRootNavigator: true,
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,
-                        context: context, builder: (context) => const ProviderFilterView(),
+                        context: context, builder: (context) => ProviderFilterView(
+                        onUpdate: (){
+                          setState(() {});
+                        },
+                      ),
                       );
                     },
                     child: Container(

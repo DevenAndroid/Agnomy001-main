@@ -54,7 +54,10 @@ class WebMenuBar extends StatelessWidget implements PreferredSizeWidget {
         ))),
         const SizedBox(width: Dimensions.paddingSizeSmall),
 
-        MenuButtonWeb( title: 'services'.tr, onTap: () => Get.toNamed(RouteHelper.allServiceScreenRoute('all_service'))),
+        MenuButtonWeb( title: 'services'.tr, onTap: () => Get.toNamed(RouteHelper.allServiceScreenRoute('all_service')
+
+
+        )),
 
         const SizedBox(width: Dimensions.paddingSizeSmall),
 

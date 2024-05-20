@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
-
+RxString dropValue = "".obs;
 class CategoryView extends StatefulWidget {
   const CategoryView({super.key});
 
@@ -11,6 +11,7 @@ class CategoryView extends StatefulWidget {
 class _CategoryViewState extends State<CategoryView> {
   String dropdownvalue = '0-5';
 
+
 // List of items in our dropdown menu
 
   var items = [
@@ -20,6 +21,10 @@ class _CategoryViewState extends State<CategoryView> {
     '15-20',
     '20-25',
   ];
+  int getLargestValue(String range) {
+    List<String> parts = range.split('-');
+    return int.parse(parts[1]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +48,7 @@ class _CategoryViewState extends State<CategoryView> {
                           Text('all_categories'.tr,
                               style: ubuntuMedium.copyWith(
                                   fontSize: Dimensions.fontSizeExtraLarge)),
-                          SizedBox(
+                          const SizedBox(
                             width: Dimensions.paddingSizeDefault,
                           ),
                           DropdownButton(
@@ -65,6 +70,9 @@ class _CategoryViewState extends State<CategoryView> {
                             onChanged: (String? newValue) {
                               setState(() {
                                 dropdownvalue = newValue!;
+                                // String largestValue = getLargestValue(dropdownvalue).toString();
+                                // print('Largest value: $largestValue');
+                                dropValue.value = dropdownvalue;
                               });
                             },
                           ),
@@ -187,7 +195,7 @@ class _CategoryViewState extends State<CategoryView> {
             ),
           );
         } else {
-          return WebCategoryShimmer(categoryController: categoryController);
+          return WebCategoryShimmer(categoryController: categoryController,);
         }
       }
     });

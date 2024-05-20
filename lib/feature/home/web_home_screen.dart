@@ -154,7 +154,7 @@ class WebHomeScreen extends StatelessWidget {
                       scrollController: scrollController!,
                       totalSize: serviceController.serviceContent?.total,
                       offset: serviceController.serviceContent?.currentPage,
-                      onPaginate: (int offset) async => await serviceController.getAllServiceList(offset,false),
+                      onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload: false),
                       itemView: ServiceViewVertical(
                         service: serviceController.serviceContent != null ? serviceController.allService : null,
                         padding: EdgeInsets.symmetric(

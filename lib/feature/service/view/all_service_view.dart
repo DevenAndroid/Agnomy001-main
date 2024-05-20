@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:demandium/components/service_widget_vertical.dart';
 import 'package:demandium/components/core_export.dart';
 
+import '../../web_landing/widget/web_landing_search_box.dart';
+
 class AllServiceView extends StatefulWidget {
   final String fromPage;
   final String campaignID;
@@ -15,6 +17,18 @@ class AllServiceView extends StatefulWidget {
 class _AllServiceViewState extends State<AllServiceView> {
 
   int availableServiceCount = 0;
+  String dropdownvalue = '10';
+
+
+// List of items in our dropdown menu
+
+  var items = [
+    '10',
+    '20',
+    '30',
+    '40',
+    '50',
+  ];
 
   @override
   void initState() {
@@ -53,7 +67,8 @@ class _AllServiceViewState extends State<AllServiceView> {
     if(fromPage == 'popular_services') {
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getPopularServiceList(1,true);
+          Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId:placedIdGloabal.value,distance: int.parse(dropValue.toString()));
+          Get.find<ServiceController>().getPopularServiceList;
         },
         builder: (serviceController){
           return FooterBaseView(
@@ -79,7 +94,10 @@ class _AllServiceViewState extends State<AllServiceView> {
                     totalSize: serviceController.popularBasedServiceContent?.total,
                     offset: serviceController.popularBasedServiceContent?.currentPage ,
                     onPaginate: (int offset) async {
-                      return await serviceController.getPopularServiceList(offset, false);
+
+                      return await serviceController.getPopularServiceList(offset: offset, reload: false,placeId:placedIdGloabal.value,distance: int.parse(dropValue.toString()) );
+
+
                     },
                     itemView: ServiceViewVertical(
                       service: serviceController.popularBasedServiceContent != null ? serviceController.popularServiceList : null,
@@ -257,7 +275,7 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'all_service'){
       return GetBuilder<ServiceController>(
           initState: (state){
-            Get.find<ServiceController>().getAllServiceList(1,true);
+            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true);
           },
           builder: (serviceController) {
         return FooterBaseView(
@@ -274,8 +292,37 @@ class _AllServiceViewState extends State<AllServiceView> {
                     Dimensions.paddingSizeDefault,
                     Dimensions.paddingSizeSmall,
                   ),
-                  child: TitleWidget(
-                    title: 'all_service'.tr,
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TitleWidget(
+                        title: 'all_service'.tr,
+                      ),
+                      DropdownButton(
+                        // Initial Value
+                        value: dropdownvalue,
+
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+
+                        // Array list of items
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                            // String largestValue = getLargestValue(dropdownvalue).toString();
+                            // print('Largest value: $largestValue');
+                            dropValue.value = dropdownvalue;
+                          });
+                        },
+                      ),
+                    ],
                   ),
 
                 ),
@@ -284,7 +331,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                   scrollController: scrollController,
                   totalSize: serviceController.serviceContent?.total,
                   offset:  serviceController.serviceContent?.currentPage,
-                  onPaginate: (int offset) async => await serviceController.getAllServiceList(offset, false),
+                  onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload:  false),
                   itemView: ServiceViewVertical(
                     service: serviceController.serviceContent != null ? serviceController.allService : null,
                     padding: EdgeInsets.symmetric(

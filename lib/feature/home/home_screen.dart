@@ -11,10 +11,10 @@ class HomeScreen extends StatefulWidget {
     if(availableServiceCount==0){
       Get.find<BannerController>().getBannerList(reload);
     }else{
-      Get.find<ServiceController>().getAllServiceList(1,reload);
+      Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload);
       Get.find<BannerController>().getBannerList(reload);
       Get.find<CategoryController>().getCategoryList(1,reload);
-      Get.find<ServiceController>().getPopularServiceList(1,reload);
+      Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: reload);
       Get.find<ServiceController>().getTrendingServiceList(1,reload);
       Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: reload);
       Get.find<CampaignController>().getCampaignList(reload);
@@ -92,12 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
           onRefresh: () async {
 
             if(availableServiceCount > 0){
-              await Get.find<ServiceController>().getAllServiceList(1,true);
+              await Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true);
               await Get.find<BannerController>().getBannerList(true);
               await Get.find<CategoryController>().getCategoryList(1,true);
               await Get.find<ServiceController>().getRecommendedServiceList(1,true);
               await Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: true );
-              await Get.find<ServiceController>().getPopularServiceList(1,true,);
+              await Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true);
               await Get.find<ServiceController>().getRecentlyViewedServiceList(1,true,);
               await Get.find<ServiceController>().getTrendingServiceList(1,true,);
               await Get.find<CampaignController>().getCampaignList(true);
@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollController: scrollController,
                           totalSize: serviceController.serviceContent?.total ,
                           offset:  serviceController.serviceContent?.currentPage ,
-                          onPaginate: (int offset) async => await serviceController.getAllServiceList(offset, false),
+                          onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset, reload: false),
                           showBottomSheet: true,
                           itemView: ServiceViewVertical(
                             service: serviceController.serviceContent != null ? serviceController.allService : null,
