@@ -7,7 +7,18 @@ import 'package:demandium/feature/campaign/model/service_types.dart';
 class ServiceController extends GetxController implements GetxService {
   final ServiceRepo serviceRepo;
   ServiceController({required this.serviceRepo});
+  String dropdownvalue = '0-5';
 
+
+// List of items in our dropdown menu
+
+  var items = [
+    '0-5',
+    '5-10',
+    '10-15',
+    '15-20',
+    '20-25',
+  ];
 
   bool _isLoading = false;
   List<int>? _variationIndex;
@@ -141,9 +152,9 @@ class ServiceController extends GetxController implements GetxService {
   }
 
 
-  Future<void> getTrendingServiceList(int offset, bool reload) async {
+  Future<void> getTrendingServiceList({required int offset, required bool reload, int? distance, String? placeId }) async {
     if(offset != 1 || _trendingServiceList == null || reload ){
-      Response response = await serviceRepo.getTrendingServiceList(offset);
+      Response response = await serviceRepo.getTrendingServiceList(offset: offset,placeID: placeId,distance: distance);
       if (response.statusCode == 200) {
         if(reload){
           _trendingServiceList = [];
@@ -214,9 +225,9 @@ class ServiceController extends GetxController implements GetxService {
     }
   }
 
-  Future<void> getRecommendedServiceList(int offset, bool reload ) async {
+  Future<void> getRecommendedServiceList({required int offset, required bool reload, String? placeId, int? distance } ) async {
    if(offset != 1 || _recommendedServiceList == null || reload){
-     Response response = await serviceRepo.getRecommendedServiceList(offset);
+     Response response = await serviceRepo.getRecommendedServiceList(offset: offset,placeID: placeId,distance: distance);
      if (response.statusCode == 200) {
        if(reload){
          _recommendedServiceList = [];

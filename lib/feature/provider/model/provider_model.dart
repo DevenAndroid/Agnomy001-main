@@ -103,6 +103,7 @@ class ProviderData {
   String? updatedAt;
   int? isApproved;
   String? zoneId;
+  double? distance;
   Owner? owner;
   int? serviceAvailability;
   List<String>? weekends;
@@ -134,6 +135,7 @@ class ProviderData {
         this.isApproved,
         this.zoneId,
         this.owner,
+        this.distance,
         this.subscribedServices,
         this.cashLimitStatus,
         this.serviceAvailability,
@@ -164,6 +166,7 @@ class ProviderData {
     updatedAt = json['updated_at'];
     isApproved = json['is_approved'];
     zoneId = json['zone_id'];
+    distance = json['distance'];
     owner = json['owner'] != null ? Owner.fromJson(json['owner']) : null;
     serviceAvailability = int.tryParse(json['service_availability'].toString());
     timeSchedule = json['time_schedule'] != null
@@ -203,6 +206,7 @@ class ProviderData {
     data['updated_at'] = updatedAt;
     data['is_approved'] = isApproved;
     data['zone_id'] = zoneId;
+    data['distance'] =distance;
     data['service_availability'] = serviceAvailability;
     if (timeSchedule != null) {
       data['time_schedule'] = timeSchedule!.toJson();

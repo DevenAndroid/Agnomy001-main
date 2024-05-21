@@ -17,7 +17,8 @@ class AllServiceView extends StatefulWidget {
 class _AllServiceViewState extends State<AllServiceView> {
 
   int availableServiceCount = 0;
-  String dropdownvalue = '10';
+  var servicevalue = '10';
+
 
 
 // List of items in our dropdown menu
@@ -67,7 +68,7 @@ class _AllServiceViewState extends State<AllServiceView> {
     if(fromPage == 'popular_services') {
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId:placedIdGloabal.value,distance: int.parse(dropValue.toString()));
+          Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true);
           Get.find<ServiceController>().getPopularServiceList;
         },
         builder: (serviceController){
@@ -95,7 +96,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                     offset: serviceController.popularBasedServiceContent?.currentPage ,
                     onPaginate: (int offset) async {
 
-                      return await serviceController.getPopularServiceList(offset: offset, reload: false,placeId:placedIdGloabal.value,distance: int.parse(dropValue.toString()) );
+                      return await serviceController.getPopularServiceList(offset: offset, reload: false );
 
 
                     },
@@ -119,7 +120,7 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'trending_services') {
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getTrendingServiceList(1,true);
+          Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true);
         },
         builder: (serviceController){
           return FooterBaseView(
@@ -145,7 +146,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                     totalSize: serviceController.trendingServiceContent?.total,
                     offset: serviceController.trendingServiceContent?.currentPage ,
                     onPaginate: (int offset) async {
-                      return await serviceController.getTrendingServiceList(offset, false);
+                      return await serviceController.getTrendingServiceList(offset: offset, reload: false);
                     },
                     itemView: ServiceViewVertical(
                       service: serviceController.trendingServiceContent != null ? serviceController.trendingServiceList : null,
@@ -227,7 +228,7 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'fromRecommendedScreen'){
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getRecommendedServiceList(1,true);
+          Get.find<ServiceController>().getRecommendedServiceList(offset: 1,reload: true);
         },
         builder: (serviceController){
           return FooterBaseView(
@@ -253,7 +254,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                     totalSize: serviceController.recommendedBasedServiceContent?.total,
                     offset:  serviceController.recommendedBasedServiceContent?.currentPage,
                     onPaginate: (int offset) async {
-                      return await serviceController.getRecommendedServiceList(offset, false);
+                      return await serviceController.getRecommendedServiceList(offset: offset, reload: false,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
                     },
                     itemView: ServiceViewVertical(
                       service: serviceController.recommendedBasedServiceContent != null ? serviceController.recommendedServiceList : null,
@@ -275,7 +276,7 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'all_service'){
       return GetBuilder<ServiceController>(
           initState: (state){
-            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true);
+            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(servicevalue));
           },
           builder: (serviceController) {
         return FooterBaseView(
@@ -299,7 +300,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                       ),
                       DropdownButton(
                         // Initial Value
-                        value: dropdownvalue,
+                        value: servicevalue,
 
                         // Down Arrow Icon
                         icon: const Icon(Icons.keyboard_arrow_down),
@@ -315,11 +316,13 @@ class _AllServiceViewState extends State<AllServiceView> {
                         // change button value to selected value
                         onChanged: (String? newValue) {
                           setState(() {
-                            dropdownvalue = newValue!;
+                            servicevalue = newValue!;
+                            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(servicevalue));
+
                             // String largestValue = getLargestValue(dropdownvalue).toString();
                             // print('Largest value: $largestValue');
-                            dropValue.value = dropdownvalue;
-                          });
+                            // dropValue.value = servicevalue;
+                           });
                         },
                       ),
                     ],
@@ -331,7 +334,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                   scrollController: scrollController,
                   totalSize: serviceController.serviceContent?.total,
                   offset:  serviceController.serviceContent?.currentPage,
-                  onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload:  false),
+                  onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload:  false,placeId: placedIdGloabal.value,distance: int.parse(servicevalue)),
                   itemView: ServiceViewVertical(
                     service: serviceController.serviceContent != null ? serviceController.allService : null,
                     padding: EdgeInsets.symmetric(
@@ -342,6 +345,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                     noDataType: NoDataType.home,
                   ),
                 ),
+
               ],
             ),
           ),

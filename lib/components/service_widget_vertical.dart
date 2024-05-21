@@ -9,6 +9,7 @@ class ServiceWidgetVertical extends StatelessWidget {
   final String fromType;
   final String fromPage;
 
+
   const ServiceWidgetVertical(
       {Key? key,
       required this.service,
@@ -136,7 +137,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'starts_from'.tr,
+                                  '${service.providerCount.toString()}starts_from'.tr,
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context)
@@ -146,7 +147,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                                           .withOpacity(.6)),
                                 ),
                                 Text(
-                                  "Within 25 Miles",
+                                  "Within ${service.providers!.first.providerCount.toString()} Miles",
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context).colorScheme.primary),

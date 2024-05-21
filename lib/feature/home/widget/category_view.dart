@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 RxString dropValue = "".obs;
@@ -45,9 +48,15 @@ class _CategoryViewState extends State<CategoryView> {
                     children: [
                       Row(
                         children: [
-                          Text('all_categories'.tr,
-                              style: ubuntuMedium.copyWith(
-                                  fontSize: Dimensions.fontSizeExtraLarge)),
+                          InkWell(
+                            onTap: ()  {
+
+
+                            },
+                            child: Text('all_categories'.tr,
+                                style: ubuntuMedium.copyWith(
+                                    fontSize: Dimensions.fontSizeExtraLarge)),
+                          ),
                           const SizedBox(
                             width: Dimensions.paddingSizeDefault,
                           ),
@@ -69,10 +78,16 @@ class _CategoryViewState extends State<CategoryView> {
                             // change button value to selected value
                             onChanged: (String? newValue) {
                               setState(() {
+                                log("placeid:::${placedIdGloabal.value}");
+                                log("dropvalue${dropdownvalue}");
                                 dropdownvalue = newValue!;
-                                // String largestValue = getLargestValue(dropdownvalue).toString();
-                                // print('Largest value: $largestValue');
-                                dropValue.value = dropdownvalue;
+                                 String largestValue = getLargestValue(dropdownvalue).toString();
+                                 print('Largest value: $largestValue');
+                                Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: true, placeId: placedIdGloabal.value,distance:20);
+                                Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: 20);
+                                Get.find<ServiceController>().getTrendingServiceList(reload: true, offset: 1,placeId: placedIdGloabal.value,distance: 20);
+                                // dropValue.value = dropdownvalue;
+
                               });
                             },
                           ),
@@ -185,6 +200,7 @@ class _CategoryViewState extends State<CategoryView> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
+
                                   ]),
                             ),
                           );

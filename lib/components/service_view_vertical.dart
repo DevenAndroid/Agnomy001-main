@@ -14,7 +14,7 @@ class ServiceViewVertical extends GetView<ServiceController> {
   final String? fromPage;
 
   final Function(String type)? onVegFilterTap;
-  const ServiceViewVertical({super.key, this.fromPage="", required this.service, this.isScrollable = false, this.shimmerLength = 20,
+  const ServiceViewVertical({super.key, this.fromPage="",required this.service, this.isScrollable = false, this.shimmerLength = 20,
     this.padding = const EdgeInsets.all(Dimensions.paddingSizeSmall), this.noDataText, this.type, this.onVegFilterTap, this.noDataType});
 
   @override

@@ -211,7 +211,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog> {
                           children: [
 
                             Row(children: [
-                              if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
+                              if(Get.find<SplashController>().configModel.content?. directProviderBooking==1)
                               cartControllerInit.preSelectedProvider?
                               GestureDetector(
                                 onTap: (){

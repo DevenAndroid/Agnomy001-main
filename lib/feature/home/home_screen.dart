@@ -15,10 +15,10 @@ class HomeScreen extends StatefulWidget {
       Get.find<BannerController>().getBannerList(reload);
       Get.find<CategoryController>().getCategoryList(1,reload);
       Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: reload);
-      Get.find<ServiceController>().getTrendingServiceList(1,reload);
+      Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: reload);
       Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: reload);
       Get.find<CampaignController>().getCampaignList(reload);
-      Get.find<ServiceController>().getRecommendedServiceList(1, reload);
+      Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: reload);
       Get.find<SplashController>().getOfflinePaymentMethod(false);
       if(Get.find<AuthController>().isLoggedIn()){
         Get.find<ServiceController>().getRecentlyViewedServiceList(1,reload);
@@ -95,11 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
               await Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true);
               await Get.find<BannerController>().getBannerList(true);
               await Get.find<CategoryController>().getCategoryList(1,true);
-              await Get.find<ServiceController>().getRecommendedServiceList(1,true);
+              await Get.find<ServiceController>().getRecommendedServiceList(offset: 1,reload: true);
               await Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: true );
               await Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true);
               await Get.find<ServiceController>().getRecentlyViewedServiceList(1,true,);
-              await Get.find<ServiceController>().getTrendingServiceList(1,true,);
+              await Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true,);
               await Get.find<CampaignController>().getCampaignList(true);
               await Get.find<ServiceController>().getFeatherCategoryList(true);
               await Get.find<CartController>().getCartListFromServer();
