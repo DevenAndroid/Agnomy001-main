@@ -74,9 +74,9 @@ class _CategoryViewState extends State<CategoryView> {
                                 serviceController.dropdownvalue = newValue!;
                                  String largestValue = getLargestValue(serviceController.dropdownvalue).toString();
                                  print('Largest value: $largestValue');
-                                Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: true, placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
-                                Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,);
-                                Get.find<ServiceController>().getTrendingServiceList(reload: true, offset: 1,placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
+                                // Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: true, placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
+                                //  Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(largestValue));
+                                // Get.find<ServiceController>().getTrendingServiceList(reload: true, offset: 1,placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
                                 // dropValue.value = dropdownvalue;
 
                               });

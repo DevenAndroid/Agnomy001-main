@@ -130,6 +130,7 @@ class Service {
   double? avgRating;
   String? createdAt;
   int? providerCount;
+  double? maxDistanceProvider;
   List<Providers>? providers;
   String? updatedAt;
   ServiceCategory? category;
@@ -156,6 +157,7 @@ class Service {
         this.createdAt,
         this.updatedAt,
         this.providers,
+        this.maxDistanceProvider,
         this.category,
         this.variationsAppFormat,
         this.variations,
@@ -182,6 +184,8 @@ class Service {
     createdAt = json['created_at'];
     providerCount = json['provider_count'];
     updatedAt = json['updated_at'];
+    maxDistanceProvider = json['max_distance_provider'];
+
     if (json['providers'] != null) {
       providers = <Providers>[];
       json['providers'].forEach((v) {
@@ -237,6 +241,7 @@ class Service {
     data['is_active'] = isActive;
     data['rating_count'] = ratingCount;
     data['avg_rating'] = avgRating;
+    data['max_distance_provider'] = maxDistanceProvider;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     if (variationsAppFormat != null) {

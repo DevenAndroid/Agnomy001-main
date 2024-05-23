@@ -71,7 +71,7 @@ class _AllServiceViewState extends State<AllServiceView> {
     if(fromPage == 'popular_services') {
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true);
+          Get.find<ServiceController>().getPopularServiceList( 1, true,);
           Get.find<ServiceController>().getPopularServiceList;
         },
         builder: (serviceController){
@@ -99,7 +99,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                     offset: serviceController.popularBasedServiceContent?.currentPage ,
                     onPaginate: (int offset) async {
 
-                      return await serviceController.getPopularServiceList(offset: offset, reload: false );
+                      return await serviceController.getPopularServiceList(  offset,  false ,);
 
 
                     },
@@ -391,7 +391,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                 delegate: SliverChildBuilderDelegate(
                       (context, index) {
                     Get.find<ServiceController>().getServiceDiscount(serviceList[index]);
-                    return ServiceWidgetVertical(service: serviceList[index],  isAvailable: true,fromType: widget.fromPage,);
+                    return ServiceWidgetVertical(service: serviceList[index],  isAvailable: true,fromType: widget.fromPage ,);
                   },
                   childCount: serviceList.length,
                 ),

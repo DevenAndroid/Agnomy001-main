@@ -14,10 +14,10 @@ class HomeScreen extends StatefulWidget {
       Get.find<BannerController>().getBannerList(reload);
     }else{
       final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
-      Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value,distance: int.parse(serviceController.milesdropdownvalue));
+      Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
       Get.find<BannerController>().getBannerList(reload);
       Get.find<CategoryController>().getCategoryList(1,reload);
-      Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
+      Get.find<ServiceController>().getPopularServiceList( 1,reload);
       Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: reload);
       Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: reload);
       Get.find<CampaignController>().getCampaignList(reload);
@@ -100,12 +100,12 @@ class _HomeScreenState extends State<HomeScreen> {
             if(availableServiceCount > 0){
 
               final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
-              await Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.milesdropdownvalue));
+              await Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
               await Get.find<BannerController>().getBannerList(true);
               await Get.find<CategoryController>().getCategoryList(1,true);
               await Get.find<ServiceController>().getRecommendedServiceList(offset: 1,reload: true);
               await Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: true );
-              await Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
+              await Get.find<ServiceController>().getPopularServiceList(  1,  true, );
               await Get.find<ServiceController>().getRecentlyViewedServiceList(1,true,);
               await Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true,);
               await Get.find<CampaignController>().getCampaignList(true);
@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollController: scrollController,
                           totalSize: serviceController.serviceContent?.total ,
                           offset:  serviceController.serviceContent?.currentPage ,
-                          onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset, reload: false,placeId: placedIdGloabal.value,distance:int.parse(serviceController.milesdropdownvalue)),
+                          onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset, reload: false,placeId: placedIdGloabal.value,distance:int.parse(serviceController.servicevalue)),
                           showBottomSheet: true,
                           itemView: ServiceViewVertical(
                             service: serviceController.serviceContent != null ? serviceController.allService : null,

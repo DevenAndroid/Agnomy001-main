@@ -1,9 +1,14 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/ripple_button.dart';
 import 'package:demandium/components/service_center_dialog.dart';
 import 'package:demandium/components/core_export.dart';
 
 class ServiceWidgetVertical extends StatelessWidget {
+
+
   final Service service;
   final bool isAvailable;
   final String fromType;
@@ -14,12 +19,31 @@ class ServiceWidgetVertical extends StatelessWidget {
       {Key? key,
       required this.service,
       required this.isAvailable,
+
       required this.fromType,
       this.fromPage = ""})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String distancesToShow = '';
+
+    if (service.providers != null) {
+      service.providers!.forEach((element) {
+        if (element.distance! > (service.providers!.map((e) => e.distance!).reduce((value, element) => value > element! ? value : element))) {
+          distancesToShow += '${element.distance.toString()}, ';
+        }
+      });
+    }
+
+
+
+
+    //log("provider:::::::"+service.providers![0].distance.toString());
+    //
+    // Rx<ServiceModel> model = ServiceModel().obs;
+    //
+    // var largestGeekValue = model.value.content!.serviceList[].providers[].distance;
     num lowestPrice = 0.0;
 
     if (fromType == 'fromCampaign') {
@@ -50,7 +74,10 @@ class ServiceWidgetVertical extends StatelessWidget {
     }
 
     Discount discountModel = PriceConverter.discountCalculation(service);
-    return Stack(
+
+    return
+
+      Stack(
       alignment: Alignment.bottomRight,
       children: [
         Stack(
@@ -137,7 +164,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'starts_from'.tr,
+                                  'Service ${service.providerCount.toString()} Provider'.tr,
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context)
@@ -146,8 +173,19 @@ class ServiceWidgetVertical extends StatelessWidget {
                                           .color!
                                           .withOpacity(.6)),
                                 ),
+
+
+                                service.maxDistanceProvider!=null&&service.maxDistanceProvider!=""?
+
                                 Text(
-                                  "Within Miles",
+                                  
+                                  "Within ${service.maxDistanceProvider!.ceil().toString()} Miles",
+                                  style: ubuntuRegular.copyWith(
+                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                      color: Theme.of(context).colorScheme.primary),
+                                ):   Text(
+
+                                  "Within 0 Miles",
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context).colorScheme.primary),

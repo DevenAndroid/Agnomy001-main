@@ -88,7 +88,7 @@ SizedBox(height: 10,),
                 child: Image.asset(Images.iconLocation, height:12)),
 
               Flexible(
-                child: Text("${providerData.distance!.toStringAsFixed(2)} miles away",
+                child: Text("${providerData.distance!.ceil()} miles away",
                   style: ubuntuLight.copyWith(color:Get.isDarkMode? Theme.of(context).secondaryHeaderColor:Theme.of(context).primaryColorDark,fontSize: 12),
                   overflow: TextOverflow.ellipsis),
               ),

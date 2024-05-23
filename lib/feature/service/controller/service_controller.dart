@@ -39,6 +39,10 @@ class ServiceController extends GetxController implements GetxService {
     '30',
     '40',
     '50',
+    '75',
+    '100',
+    '150',
+    '151'
   ];
 
   bool _isLoading = false;
@@ -150,9 +154,9 @@ class ServiceController extends GetxController implements GetxService {
   }
 
 
-  Future<void> getPopularServiceList({required int offset, required bool reload, int? distance, String? placeId }) async {
+  Future<void> getPopularServiceList(int offset, bool reload) async {
     if(offset != 1 || _popularServiceList == null || reload ){
-      Response response = await serviceRepo.getPopularServiceList(offset: offset,placeID: placeId,distance: distance);
+      Response response = await serviceRepo.getPopularServiceList(offset, );
       if (response.statusCode == 200) {
         if(reload){
           _popularServiceList = [];
