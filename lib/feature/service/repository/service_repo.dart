@@ -8,14 +8,14 @@ class ServiceRepo extends GetxService {
   ServiceRepo({required this.apiClient});
 
   Future<Response> getAllServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants.allServiceUri}?offset=$offset&limit=10&placeid$placeID&distance$distance');
+    return await apiClient.getData('${AppConstants.allServiceUri}?offset=$offset&limit=10&placeid=$placeID&distance=$distance');
   }
   Future<Response> getPopularServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants. popularServiceUri}?offset=$offset&limit=10&placeid$placeID&distance$distance');
+    return await apiClient.getData('${AppConstants. popularServiceUri}?offset=$offset&limit=10&placeid=$placeID&distance=$distance');
   }
 
   Future<Response> getTrendingServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants.trendingServiceUri}?offset=$offset&limit=10&placid$placeID&distance$distance');
+    return await apiClient.getData('${AppConstants.trendingServiceUri}?offset=$offset&limit=10&placid=$placeID&distance=$distance');
   }
 
   Future<Response> getRecentlyViewedServiceList(int offset) async {

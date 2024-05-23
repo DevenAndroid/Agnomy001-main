@@ -1,4 +1,5 @@
 import 'package:demandium/feature/home/widget/service_not_availavle.dart';
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 
@@ -154,7 +155,7 @@ class WebHomeScreen extends StatelessWidget {
                       scrollController: scrollController!,
                       totalSize: serviceController.serviceContent?.total,
                       offset: serviceController.serviceContent?.currentPage,
-                      onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload: false),
+                      onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload: false,placeId: placedIdGloabal.value,distance:int.parse (serviceController.servicevalue)),
                       itemView: ServiceViewVertical(
                         service: serviceController.serviceContent != null ? serviceController.allService : null,
                         padding: EdgeInsets.symmetric(

@@ -137,7 +137,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  '${service.providerCount.toString()}starts_from'.tr,
+                                  'starts_from'.tr,
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context)
@@ -147,7 +147,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                                           .withOpacity(.6)),
                                 ),
                                 Text(
-                                  "Within ${service.providers!.first.providerCount.toString()} Miles",
+                                  "Within Miles",
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context).colorScheme.primary),

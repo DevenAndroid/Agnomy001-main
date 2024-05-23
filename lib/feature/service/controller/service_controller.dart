@@ -8,16 +8,37 @@ class ServiceController extends GetxController implements GetxService {
   final ServiceRepo serviceRepo;
   ServiceController({required this.serviceRepo});
   String dropdownvalue = '0-5';
-
-
-// List of items in our dropdown menu
-
   var items = [
     '0-5',
     '5-10',
     '10-15',
     '15-20',
     '20-25',
+  ];
+  String milesdropdownvalue = '100';
+  var miles = [
+    '100',
+    '125',
+    '150',
+    '175',
+    '200',
+  ];
+
+// List of items in our dropdown menu
+
+
+  var servicevalue = '10';
+
+
+
+// List of items in our dropdown menu
+
+  var serviceItem = [
+    '10',
+    '20',
+    '30',
+    '40',
+    '50',
   ];
 
   bool _isLoading = false;

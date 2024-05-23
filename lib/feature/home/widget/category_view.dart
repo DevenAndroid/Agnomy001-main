@@ -12,18 +12,9 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryViewState extends State<CategoryView> {
-  String dropdownvalue = '0-5';
 
+  final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
 
-// List of items in our dropdown menu
-
-  var items = [
-    '0-5',
-    '5-10',
-    '10-15',
-    '15-20',
-    '20-25',
-  ];
   int getLargestValue(String range) {
     List<String> parts = range.split('-');
     return int.parse(parts[1]);
@@ -62,13 +53,13 @@ class _CategoryViewState extends State<CategoryView> {
                           ),
                           DropdownButton(
                             // Initial Value
-                            value: dropdownvalue,
+                            value: serviceController.dropdownvalue,
 
                             // Down Arrow Icon
                             icon: const Icon(Icons.keyboard_arrow_down),
 
                             // Array list of items
-                            items: items.map((String items) {
+                            items: serviceController.items.map((String items) {
                               return DropdownMenuItem(
                                 value: items,
                                 child: Text(items),
@@ -79,13 +70,13 @@ class _CategoryViewState extends State<CategoryView> {
                             onChanged: (String? newValue) {
                               setState(() {
                                 log("placeid:::${placedIdGloabal.value}");
-                                log("dropvalue${dropdownvalue}");
-                                dropdownvalue = newValue!;
-                                 String largestValue = getLargestValue(dropdownvalue).toString();
+                                // log("dropvalue${dropdownvalue}");
+                                serviceController.dropdownvalue = newValue!;
+                                 String largestValue = getLargestValue(serviceController.dropdownvalue).toString();
                                  print('Largest value: $largestValue');
-                                Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: true, placeId: placedIdGloabal.value,distance:20);
-                                Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: 20);
-                                Get.find<ServiceController>().getTrendingServiceList(reload: true, offset: 1,placeId: placedIdGloabal.value,distance: 20);
+                                Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: true, placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
+                                Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,);
+                                Get.find<ServiceController>().getTrendingServiceList(reload: true, offset: 1,placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
                                 // dropValue.value = dropdownvalue;
 
                               });

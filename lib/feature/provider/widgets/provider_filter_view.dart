@@ -17,6 +17,8 @@ class ProviderFilterView extends StatefulWidget {
 }
 
 class _ProductBottomSheetState extends State<ProviderFilterView> {
+
+  final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
   String milesdropdownvalue = '100';
 
   // List of items in our dropdown menu
@@ -164,13 +166,13 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                           const SizedBox(width: Dimensions.paddingSizeDefault),
                           DropdownButton(
                             // Initial Value
-                            value: milesdropdownvalue,
+                            value: serviceController.milesdropdownvalue,
 
                             // Down Arrow Icon
                             icon: const Icon(Icons.keyboard_arrow_down),
 
                             // Array list of items
-                            items: miles.map((String items) {
+                            items: serviceController.miles.map((String items) {
                               return DropdownMenuItem(
                                 value: items,
                                 child: Text(items),
@@ -180,7 +182,7 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                             // change button value to selected value
                             onChanged: (String? newValue) {
                               setState(() {
-                                milesdropdownvalue = newValue!;
+                                serviceController.milesdropdownvalue = newValue!;
                               });
                             },
                           ),

@@ -16,6 +16,8 @@ class AllServiceView extends StatefulWidget {
 
 class _AllServiceViewState extends State<AllServiceView> {
 
+  final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
+
   int availableServiceCount = 0;
   var servicevalue = '10';
 
@@ -41,6 +43,7 @@ class _AllServiceViewState extends State<AllServiceView> {
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
+
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -276,7 +279,7 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'all_service'){
       return GetBuilder<ServiceController>(
           initState: (state){
-            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(servicevalue));
+            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
           },
           builder: (serviceController) {
         return FooterBaseView(
@@ -300,13 +303,13 @@ class _AllServiceViewState extends State<AllServiceView> {
                       ),
                       DropdownButton(
                         // Initial Value
-                        value: servicevalue,
+                        value: serviceController.servicevalue,
 
                         // Down Arrow Icon
                         icon: const Icon(Icons.keyboard_arrow_down),
 
                         // Array list of items
-                        items: items.map((String items) {
+                        items: serviceController.serviceItem.map((String items) {
                           return DropdownMenuItem(
                             value: items,
                             child: Text(items),
@@ -316,8 +319,8 @@ class _AllServiceViewState extends State<AllServiceView> {
                         // change button value to selected value
                         onChanged: (String? newValue) {
                           setState(() {
-                            servicevalue = newValue!;
-                            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(servicevalue));
+                            serviceController.servicevalue = newValue!;
+                            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
 
                             // String largestValue = getLargestValue(dropdownvalue).toString();
                             // print('Largest value: $largestValue');
@@ -334,7 +337,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                   scrollController: scrollController,
                   totalSize: serviceController.serviceContent?.total,
                   offset:  serviceController.serviceContent?.currentPage,
-                  onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload:  false,placeId: placedIdGloabal.value,distance: int.parse(servicevalue)),
+                  onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset,reload:  false,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue)),
                   itemView: ServiceViewVertical(
                     service: serviceController.serviceContent != null ? serviceController.allService : null,
                     padding: EdgeInsets.symmetric(

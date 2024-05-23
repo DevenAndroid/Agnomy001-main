@@ -1,20 +1,23 @@
 import 'package:demandium/feature/area/controller/service_area_controller.dart';
 import 'package:demandium/feature/home/widget/not_availavle_dialog.dart';
 import 'package:demandium/feature/home/widget/service_not_availavle.dart';
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'web_home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+
   static Future<void> loadData(bool reload, {int availableServiceCount = 1}) async {
 
     if(availableServiceCount==0){
       Get.find<BannerController>().getBannerList(reload);
     }else{
-      Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload);
+      final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
+      Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value,distance: int.parse(serviceController.milesdropdownvalue));
       Get.find<BannerController>().getBannerList(reload);
       Get.find<CategoryController>().getCategoryList(1,reload);
-      Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: reload);
+      Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
       Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: reload);
       Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: reload);
       Get.find<CampaignController>().getCampaignList(reload);
@@ -28,6 +31,7 @@ class HomeScreen extends StatefulWidget {
       Get.find<WebLandingController>().getWebLandingContent();
     }
   }
+
   final AddressModel? addressModel;
   final bool showServiceNotAvailableDialog;
   const HomeScreen({Key? key, this.addressModel, required this.showServiceNotAvailableDialog}) : super(key: key);
@@ -36,6 +40,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
   AddressModel? _previousAddress;
   int availableServiceCount = 0;
 
@@ -92,12 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
           onRefresh: () async {
 
             if(availableServiceCount > 0){
-              await Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true);
+
+              final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
+              await Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.milesdropdownvalue));
               await Get.find<BannerController>().getBannerList(true);
               await Get.find<CategoryController>().getCategoryList(1,true);
               await Get.find<ServiceController>().getRecommendedServiceList(offset: 1,reload: true);
               await Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: true );
-              await Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true);
+              await Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
               await Get.find<ServiceController>().getRecentlyViewedServiceList(1,true,);
               await Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true,);
               await Get.find<CampaignController>().getCampaignList(true);
@@ -209,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollController: scrollController,
                           totalSize: serviceController.serviceContent?.total ,
                           offset:  serviceController.serviceContent?.currentPage ,
-                          onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset, reload: false),
+                          onPaginate: (int offset) async => await serviceController.getAllServiceList(offset: offset, reload: false,placeId: placedIdGloabal.value,distance:int.parse(serviceController.milesdropdownvalue)),
                           showBottomSheet: true,
                           itemView: ServiceViewVertical(
                             service: serviceController.serviceContent != null ? serviceController.allService : null,
