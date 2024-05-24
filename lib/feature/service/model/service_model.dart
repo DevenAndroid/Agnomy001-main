@@ -311,9 +311,13 @@ class Providers {
   String? subCategoryId;
   int? providerCount;
   String? providerLatitude;
+  String? logo;
   String? providerLongitude;
   String? companyName;
+  String? companyDescription;
   double? distance;
+  double? ratingCount;
+  double? avgRating;
   List<Null>? serviceDiscount;
   List<Null>? campaignDiscount;
 
@@ -323,9 +327,13 @@ class Providers {
         this.subCategoryId,
         this.providerCount,
         this.providerLatitude,
+        this.logo,
         this.providerLongitude,
         this.companyName,
+        this.companyDescription,
         this.distance,
+        this.ratingCount,
+        this.avgRating,
         this.serviceDiscount,
         this.campaignDiscount,
         });
@@ -336,9 +344,13 @@ class Providers {
     subCategoryId = json['sub_category_id'];
     providerCount = json['provider_count'];
     providerLatitude = json['provider_latitude'];
+    logo = json['logo'];
     providerLongitude = json['provider_longitude'];
     companyName = json['company_name'];
+    companyDescription = json['company_description'];
     distance = json['distance'];
+    ratingCount = json['rating_count'];
+    avgRating = json['avg_rating'];
     if (json['service_discount'] != null) {
       serviceDiscount = <Null>[];
 
@@ -357,9 +369,13 @@ class Providers {
     data['sub_category_id'] = this.subCategoryId;
     data['provider_count'] = this.providerCount;
     data['provider_latitude'] = this.providerLatitude;
+    data['logo'] = this.logo;
     data['provider_longitude'] = this.providerLongitude;
     data['company_name'] = this.companyName;
+    data['company_description'] = this.companyDescription;
     data['distance'] = this.distance;
+    data['rating_count'] = this.ratingCount;
+    data['avg_rating'] = this.avgRating;
 
     return data;
   }

@@ -27,7 +27,7 @@ dependencies:
   country_code_picker: ^3.0.0
   phone_number: ^1.0.0
   webview_flutter: ^4.0.7
-  pin_code_fields: ^7.4.0
+  pin_code_fields: ^8.0.1
   flutter_widget_from_html_core: ^0.8.5+3
   flutter_typeahead: ^4.3.7
   web: ^0.5.1
@@ -52,7 +52,7 @@ dependencies:
   flutter_downloader: ^1.10.2
   permission_handler: ^10.2.0
   fluttertoast: ^8.2.2
-  printing: ^5.11.0
+  printing: ^5.12.0
   audioplayers: ^3.0.1
   dotted_border: ^2.0.0+3
   expandable_bottom_sheet: ^1.1.1+1

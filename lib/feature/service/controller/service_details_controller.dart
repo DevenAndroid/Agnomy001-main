@@ -1,3 +1,4 @@
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/data/provider/checker_api.dart';
 import 'package:demandium/feature/service/model/service_model.dart';
@@ -21,9 +22,9 @@ class ServiceDetailsController extends GetxController{
   String get discountType => _discountType!;
 
   ///call service details data based on service id
-  Future<void> getServiceDetails(String serviceID,{String fromPage=""}) async {
+  Future<void> getServiceDetails(String serviceID,String placeID,{String fromPage=""}) async {
     _service = null;
-    Response response = await serviceDetailsRepo.getServiceDetails(serviceID,fromPage);
+    Response response = await serviceDetailsRepo.getServiceDetails(serviceID:serviceID,placeID:placeID, fromPage: fromPage);
     if (response.body['response_code'] == 'default_200' ) {
       _service = Service.fromJson(response.body['content']);
     } else {
