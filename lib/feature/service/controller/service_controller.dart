@@ -7,21 +7,29 @@ import 'package:demandium/feature/campaign/model/service_types.dart';
 class ServiceController extends GetxController implements GetxService {
   final ServiceRepo serviceRepo;
   ServiceController({required this.serviceRepo});
-  String dropdownvalue = '0-5';
+  String dropdownvalue = '10';
   var items = [
-    '0-5',
-    '5-10',
-    '10-15',
-    '15-20',
-    '20-25',
-  ];
-  String milesdropdownvalue = '100';
-  var miles = [
+    '10',
+    '20',
+    '30',
+    '40',
+    '50',
+    '75',
     '100',
-    '125',
     '150',
-    '175',
-    '200',
+    '150+'
+  ];
+  String milesdropdownvalue = '10';
+  var miles = [
+    '10',
+    '20',
+    '30',
+    '40',
+    '50',
+    '75',
+    '100',
+    '150',
+    '150+'
   ];
 
 // List of items in our dropdown menu
@@ -42,7 +50,7 @@ class ServiceController extends GetxController implements GetxService {
     '75',
     '100',
     '150',
-    '151'
+    '150+'
   ];
 
   bool _isLoading = false;
@@ -154,9 +162,9 @@ class ServiceController extends GetxController implements GetxService {
   }
 
 
-  Future<void> getPopularServiceList(int offset, bool reload) async {
+  Future<void> getPopularServiceList({required int offset, required bool reload, int? distance, String? placeId }) async {
     if(offset != 1 || _popularServiceList == null || reload ){
-      Response response = await serviceRepo.getPopularServiceList(offset, );
+      Response response = await serviceRepo.getPopularServiceList(offset: offset,placeID: placeId,distance: distance, );
       if (response.statusCode == 200) {
         if(reload){
           _popularServiceList = [];
@@ -224,14 +232,14 @@ class ServiceController extends GetxController implements GetxService {
 
 
 
-  Future<void> getFeatherCategoryList( bool reload) async {
+  Future<void> getFeatherCategoryList({required int offset, required bool reload, int? distance, String? placeId }) async {
 
     if(_featheredCategoryContent == null || reload){
       if(reload){
         _categoryList =[];
         _featheredCategoryContent = null;
       }
-      Response response = await serviceRepo.getFeatheredCategoryServiceList();
+      Response response = await serviceRepo.getFeatheredCategoryServiceList(offset: offset,placeID: placeId,distance: distance);
       if (response.statusCode == 200) {
         _featheredCategoryContent = FeatheredCategoryModel.fromJson(response.body).content;
 

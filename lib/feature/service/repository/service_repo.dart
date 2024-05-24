@@ -10,24 +10,24 @@ class ServiceRepo extends GetxService {
   Future<Response> getAllServiceList({required int offset, int? distance , String? placeID}) async {
     return await apiClient.getData('${AppConstants.allServiceUri}?offset=$offset&limit=10&placeid=$placeID&distance=$distance');
   }
-  Future<Response> getPopularServiceList(int offset) async {
-    return await apiClient.getData('${AppConstants. popularServiceUri}?offset=$offset&limit=10');
+  Future<Response> getPopularServiceList({required int offset, int? distance , String? placeID}) async {
+    return await apiClient.getData('${AppConstants. popularServiceUri}?offset=$offset&limit=10&placeid=$placeID&distance=$distance');
   }
 
   Future<Response> getTrendingServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants.trendingServiceUri}?offset=$offset&limit=10&placid=$placeID&distance=$distance');
+    return await apiClient.getData('${AppConstants.trendingServiceUri}?offset=$offset&limit=10&placeid=$placeID&distance=$distance');
   }
 
   Future<Response> getRecentlyViewedServiceList(int offset) async {
     return await apiClient.getData('${AppConstants.recentlyViewedServiceUri}?offset=$offset&limit=10');
   }
 
-  Future<Response> getFeatheredCategoryServiceList() async {
-    return await apiClient.getData(AppConstants.getFeaturedCategoryService);
+  Future<Response> getFeatheredCategoryServiceList({required int offset, int? distance , String? placeID}) async {
+    return await apiClient.getData('${AppConstants.getFeaturedCategoryService}?offset=$offset&limit=10&placeid=$placeID&distance=$distance');
   }
 
   Future<Response> getRecommendedServiceList({required int offset, int? distance, String? placeID}) async {
-    return await apiClient.getData('${AppConstants.recommendedServiceUri}?limit=10&offset=$offset&placeid$placeID&distance$distance');
+    return await apiClient.getData('${AppConstants.recommendedServiceUri}?limit=10&offset=$offset&placeid=$placeID&distance=$distance');
   }
 
   Future<Response> getRecommendedSearchList() async {

@@ -18,6 +18,7 @@ class _WebFeatheredCategoryViewState extends State<WebFeatheredCategoryView> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ServiceController>(builder: (serviceController){
+      // return SizedBox();
       return SizedBox(
         height:Get.find<LocalizationController>().isLtr? serviceController.categoryList.length*315 : serviceController.categoryList.length*325,
         child: ListView.builder(itemBuilder: (context,categoryIndex){
@@ -27,14 +28,14 @@ class _WebFeatheredCategoryViewState extends State<WebFeatheredCategoryView> {
                 : serviceController.categoryList[categoryIndex].servicesByCategory!.length;
 
           return Container(
-            height: Get.find<LocalizationController>().isLtr?305:315,
-            width: Get.width,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-            ),
-            margin: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-            padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall,horizontal: Dimensions.paddingSizeDefault),
+             height: Get.find<LocalizationController>().isLtr?305:315,
+             width: Get.width,
+             decoration: BoxDecoration(
+               color: Theme.of(context).primaryColor.withOpacity(0.05),
+               borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+             ),
+             margin: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+            // padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall,horizontal: Dimensions.paddingSizeDefault),
             child: Column(
               children: [
                 Row(

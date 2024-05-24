@@ -210,7 +210,7 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                             barrierDismissible: false,
                           );
                           await providerBookingController.getProviderList(
-                              offset: 1, reload: true, placeId: placedIdGloabal.value, distance: int.parse(milesdropdownvalue));
+                              offset: 1, reload: true, placeId: placedIdGloabal.value, distance: int.parse(milesdropdownvalue.replaceAll("150+", "151")));
                           widget.onUpdate();
                           Get.back();
                         },

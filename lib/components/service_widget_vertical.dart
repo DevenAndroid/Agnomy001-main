@@ -156,6 +156,86 @@ class ServiceWidgetVertical extends StatelessWidget {
                         ),
                       ],
                     ),
+                    // if( fromPage == 'fromRecommendedScreen')
+                    //   Expanded(
+                    //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         Column(
+                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             children: [
+                    //
+                    //
+                    //               Text(
+                    //                 'Service ${service.providerCount.toString()} Provider'.tr,
+                    //                 style: ubuntuRegular.copyWith(
+                    //                     fontSize: Dimensions.fontSizeExtraSmall,
+                    //                     color: Theme.of(context)
+                    //                         .textTheme
+                    //                         .bodyLarge!
+                    //                         .color!
+                    //                         .withOpacity(.6)),
+                    //               ),
+                    //
+                    //
+                    //               service.maxDistanceProvider!=null&&service.maxDistanceProvider!=""?
+                    //
+                    //               Text(
+                    //
+                    //                 "Within ${service.maxDistanceProvider!.ceil().toString()} Miles",
+                    //                 style: ubuntuRegular.copyWith(
+                    //                     fontSize: Dimensions.fontSizeExtraSmall,
+                    //                     color: Theme.of(context).colorScheme.primary),
+                    //               ):   Text(
+                    //
+                    //                 "Within 0 Miles",
+                    //                 style: ubuntuRegular.copyWith(
+                    //                     fontSize: Dimensions.fontSizeExtraSmall,
+                    //                     color: Theme.of(context).colorScheme.primary),
+                    //               ),
+                    //               // Column(
+                    //               //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //               //   children: [
+                    //               //     if(discountModel.discountAmount! > 0)
+                    //               //       Directionality(
+                    //               //         textDirection: TextDirection.ltr,
+                    //               //         child: Text(
+                    //               //           PriceConverter.convertPrice(lowestPrice.toDouble()),
+                    //               //           maxLines: 2,
+                    //               //           style: ubuntuRegular.copyWith(
+                    //               //               fontSize: Dimensions.fontSizeSmall,
+                    //               //               decoration: TextDecoration.lineThrough,
+                    //               //               color: Theme.of(context).colorScheme.error.withOpacity(.8)),),
+                    //               //       ),
+                    //               //     discountModel.discountAmount! > 0?
+                    //               //     Directionality(
+                    //               //       textDirection: TextDirection.ltr,
+                    //               //       child: Text(
+                    //               //         PriceConverter.convertPrice(
+                    //               //             lowestPrice.toDouble(),
+                    //               //             discount: discountModel.discountAmount!.toDouble(),
+                    //               //             discountType: discountModel.discountAmountType),
+                    //               //         style: ubuntuMedium.copyWith(
+                    //               //             fontSize: Dimensions.paddingSizeDefault,
+                    //               //             color:  Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                    //               //       ),
+                    //               //     ):
+                    //               //     Directionality(
+                    //               //       textDirection: TextDirection.ltr,
+                    //               //       child: Text(
+                    //               //         PriceConverter.convertPrice(lowestPrice.toDouble()),
+                    //               //         style: ubuntuMedium.copyWith(
+                    //               //             fontSize:Dimensions.fontSizeDefault,
+                    //               //             color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                    //               //       ),
+                    //               //     ),
+                    //               //   ],
+                    //               // ),
+                    //             ]),
+                    //       ],
+                    //     ),
+                    //   ),
+                   if( fromPage == 'popular_services')
                     Expanded(
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -163,6 +243,8 @@ class ServiceWidgetVertical extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+
+
                                 Text(
                                   'Service ${service.providerCount.toString()} Provider'.tr,
                                   style: ubuntuRegular.copyWith(
@@ -179,6 +261,164 @@ class ServiceWidgetVertical extends StatelessWidget {
 
                                 Text(
                                   
+                                  "Within ${service.maxDistanceProvider!.ceil().toString()} Miles",
+                                  style: ubuntuRegular.copyWith(
+                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                      color: Theme.of(context).colorScheme.primary),
+                                ):   Text(
+
+                                  "Within 0 Miles",
+                                  style: ubuntuRegular.copyWith(
+                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                      color: Theme.of(context).colorScheme.primary),
+                                ),
+                                // Column(
+                                //   crossAxisAlignment: CrossAxisAlignment.start,
+                                //   children: [
+                                //     if(discountModel.discountAmount! > 0)
+                                //       Directionality(
+                                //         textDirection: TextDirection.ltr,
+                                //         child: Text(
+                                //           PriceConverter.convertPrice(lowestPrice.toDouble()),
+                                //           maxLines: 2,
+                                //           style: ubuntuRegular.copyWith(
+                                //               fontSize: Dimensions.fontSizeSmall,
+                                //               decoration: TextDecoration.lineThrough,
+                                //               color: Theme.of(context).colorScheme.error.withOpacity(.8)),),
+                                //       ),
+                                //     discountModel.discountAmount! > 0?
+                                //     Directionality(
+                                //       textDirection: TextDirection.ltr,
+                                //       child: Text(
+                                //         PriceConverter.convertPrice(
+                                //             lowestPrice.toDouble(),
+                                //             discount: discountModel.discountAmount!.toDouble(),
+                                //             discountType: discountModel.discountAmountType),
+                                //         style: ubuntuMedium.copyWith(
+                                //             fontSize: Dimensions.paddingSizeDefault,
+                                //             color:  Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                                //       ),
+                                //     ):
+                                //     Directionality(
+                                //       textDirection: TextDirection.ltr,
+                                //       child: Text(
+                                //         PriceConverter.convertPrice(lowestPrice.toDouble()),
+                                //         style: ubuntuMedium.copyWith(
+                                //             fontSize:Dimensions.fontSizeDefault,
+                                //             color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                              ]),
+                        ],
+                      ),
+                    ),
+
+                    if( fromPage == 'trending_services')
+                      Expanded(
+                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+
+                                  Text(
+                                    'Service ${service.providerCount.toString()} Provider'.tr,
+                                    style: ubuntuRegular.copyWith(
+                                        fontSize: Dimensions.fontSizeExtraSmall,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .color!
+                                            .withOpacity(.6)),
+                                  ),
+
+
+                                  service.maxDistanceProvider!=null&&service.maxDistanceProvider!=""?
+
+                                  Text(
+
+                                    "Withins ${service.maxDistanceProvider!.ceil().toString()} Miles",
+                                    style: ubuntuRegular.copyWith(
+                                        fontSize: Dimensions.fontSizeExtraSmall,
+                                        color: Theme.of(context).colorScheme.primary),
+                                  ):   Text(
+
+                                    "Within 0 Miles",
+                                    style: ubuntuRegular.copyWith(
+                                        fontSize: Dimensions.fontSizeExtraSmall,
+                                        color: Theme.of(context).colorScheme.primary),
+                                  ),
+                                  // Column(
+                                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                                  //   children: [
+                                  //     if(discountModel.discountAmount! > 0)
+                                  //       Directionality(
+                                  //         textDirection: TextDirection.ltr,
+                                  //         child: Text(
+                                  //           PriceConverter.convertPrice(lowestPrice.toDouble()),
+                                  //           maxLines: 2,
+                                  //           style: ubuntuRegular.copyWith(
+                                  //               fontSize: Dimensions.fontSizeSmall,
+                                  //               decoration: TextDecoration.lineThrough,
+                                  //               color: Theme.of(context).colorScheme.error.withOpacity(.8)),),
+                                  //       ),
+                                  //     discountModel.discountAmount! > 0?
+                                  //     Directionality(
+                                  //       textDirection: TextDirection.ltr,
+                                  //       child: Text(
+                                  //         PriceConverter.convertPrice(
+                                  //             lowestPrice.toDouble(),
+                                  //             discount: discountModel.discountAmount!.toDouble(),
+                                  //             discountType: discountModel.discountAmountType),
+                                  //         style: ubuntuMedium.copyWith(
+                                  //             fontSize: Dimensions.paddingSizeDefault,
+                                  //             color:  Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                                  //       ),
+                                  //     ):
+                                  //     Directionality(
+                                  //       textDirection: TextDirection.ltr,
+                                  //       child: Text(
+                                  //         PriceConverter.convertPrice(lowestPrice.toDouble()),
+                                  //         style: ubuntuMedium.copyWith(
+                                  //             fontSize:Dimensions.fontSizeDefault,
+                                  //             color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                ]),
+                          ],
+                        ),
+                      ),
+                    Expanded(
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+
+                                Text(
+                                  'Service ${service.providerCount.toString()} Provider'.tr,
+                                  style: ubuntuRegular.copyWith(
+                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .color!
+                                          .withOpacity(.6)),
+                                ),
+
+
+                                service.maxDistanceProvider!=null&&service.maxDistanceProvider!=""?
+
+                                Text(
+
                                   "Within ${service.maxDistanceProvider!.ceil().toString()} Miles",
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,

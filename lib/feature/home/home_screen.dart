@@ -17,16 +17,16 @@ class HomeScreen extends StatefulWidget {
       Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
       Get.find<BannerController>().getBannerList(reload);
       Get.find<CategoryController>().getCategoryList(1,reload);
-      Get.find<ServiceController>().getPopularServiceList( 1,reload);
-      Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: reload);
+      Get.find<ServiceController>().getPopularServiceList( offset: 1,reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue) );
+      Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
       Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: reload);
       Get.find<CampaignController>().getCampaignList(reload);
-      Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: reload);
+      Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
       Get.find<SplashController>().getOfflinePaymentMethod(false);
       if(Get.find<AuthController>().isLoggedIn()){
         Get.find<ServiceController>().getRecentlyViewedServiceList(1,reload);
       }
-      Get.find<ServiceController>().getFeatherCategoryList(reload);
+      Get.find<ServiceController>().getFeatherCategoryList(reload: reload,offset: 1,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue) );
       Get.find<ServiceAreaController>().getZoneList(reload: reload);
       Get.find<WebLandingController>().getWebLandingContent();
     }
@@ -103,13 +103,13 @@ class _HomeScreenState extends State<HomeScreen> {
               await Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
               await Get.find<BannerController>().getBannerList(true);
               await Get.find<CategoryController>().getCategoryList(1,true);
-              await Get.find<ServiceController>().getRecommendedServiceList(offset: 1,reload: true);
+              await Get.find<ServiceController>().getRecommendedServiceList(offset: 1,reload: true,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
               await Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: true );
-              await Get.find<ServiceController>().getPopularServiceList(  1,  true, );
+              await Get.find<ServiceController>().getPopularServiceList( offset:  1, reload:  true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue) );
               await Get.find<ServiceController>().getRecentlyViewedServiceList(1,true,);
-              await Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true,);
+              await Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
               await Get.find<CampaignController>().getCampaignList(true);
-              await Get.find<ServiceController>().getFeatherCategoryList(true);
+              await Get.find<ServiceController>().getFeatherCategoryList(reload: true,offset: 1,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
               await Get.find<CartController>().getCartListFromServer();
             }else{
               await Get.find<BannerController>().getBannerList(true);

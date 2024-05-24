@@ -248,8 +248,7 @@ class RouteHelper {
   }
 
   static String allServiceScreenRoute(String fromPage, {String campaignID = ''}) => '$allServiceScreen?fromPage=$fromPage&campaignID=$campaignID&placeid=$placedIdGloabal';
-  static String getFeatheredCategoryService(String fromPage, CategoryData categoryData) {
-    String data = base64Url.encode(utf8.encode(jsonEncode(categoryData.toJson())));
+  static String getFeatheredCategoryService(String fromPage, CategoryData categoryData) {String data = base64Url.encode(utf8.encode(jsonEncode(categoryData.toJson())));
     return '$featheredServiceScreen?fromPage=$fromPage&categoryData=$data';
   }
   static String subCategoryScreenRoute(String categoryName,String categoryID,int subCategoryIndex) {

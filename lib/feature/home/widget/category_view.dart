@@ -68,15 +68,18 @@ class _CategoryViewState extends State<CategoryView> {
                             // After selecting the desired option,it will
                             // change button value to selected value
                             onChanged: (String? newValue) {
+
                               setState(() {
-                                log("placeid:::${placedIdGloabal.value}");
+                                // log("placeid:::${placedIdGloabal.value}");
                                 // log("dropvalue${dropdownvalue}");
                                 serviceController.dropdownvalue = newValue!;
-                                 String largestValue = getLargestValue(serviceController.dropdownvalue).toString();
-                                 print('Largest value: $largestValue');
-                                // Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: true, placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
-                                //  Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(largestValue));
-                                // Get.find<ServiceController>().getTrendingServiceList(reload: true, offset: 1,placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue));
+
+                                 // String largestValue = getLargestValue(serviceController.dropdownvalue).toString();
+                                 // print('Largest value: $largestValue');
+                                 Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: true, placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue.replaceAll("150+", "151")));
+                                 Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue.replaceAll("150+", "151")));
+                                 Get.find<ServiceController>().getTrendingServiceList( offset: 1,reload: true,placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue.replaceAll("150+", "151")));
+                                Get.find<ServiceController>().getFeatherCategoryList(reload: true,offset: 1,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue.replaceAll("150+", "151")) );
                                 // dropValue.value = dropdownvalue;
 
                               });

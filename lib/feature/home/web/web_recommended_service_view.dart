@@ -197,15 +197,15 @@ class ServiceModelView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("starts_from".tr,style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall,
+                  Text( 'Service ${serviceList[index].providerCount.toString()} Provider'.tr,style: ubuntuRegular.copyWith(fontSize: 11,
                       color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.5)),),
-
+                  serviceList[index].maxDistanceProvider!=null&&serviceList[index].maxDistanceProvider!=""?
                   Column(
                     children: [
                       Text(
-                        "Within 25 Miles",
+                        "Within ${serviceList[index].maxDistanceProvider!.ceil().toString()} Miles",
                         style: ubuntuRegular.copyWith(
-                            fontSize: Dimensions.fontSizeExtraSmall,
+                            fontSize: 12,
                             color: Theme.of(context).colorScheme.primary),
                       ),
                       // if(discountAmount! > 0)
@@ -237,6 +237,12 @@ class ServiceModelView extends StatelessWidget {
                       //   ),
                       // ),
                     ]
+                  ):Text(
+
+                    "Within 0 Miles",
+                    style: ubuntuRegular.copyWith(
+                        fontSize: Dimensions.fontSizeExtraSmall,
+                        color: Theme.of(context).colorScheme.primary),
                   ),
 
 
