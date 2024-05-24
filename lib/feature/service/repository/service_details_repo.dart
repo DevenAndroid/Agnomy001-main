@@ -6,13 +6,14 @@ class ServiceDetailsRepo {
   final ApiClient apiClient;
   ServiceDetailsRepo({required this.apiClient});
 
-  Future<Response> getServiceDetails(String serviceID,String fromPage) async {
+  Future<Response> getServiceDetails(
+      {required String serviceID, String? fromPage, String? placeID}) async {
 
 
     if(fromPage=="search_page"){
-      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID?attribute=service');
+      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID?placeid=$placeID');
     }else{
-      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID');
+      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID?placeid=$placeID');
     }
 
   }

@@ -2,6 +2,7 @@ import 'package:demandium/feature/service/widget/service_details_faq_section.dar
 import 'package:demandium/feature/service/widget/service_details_shimmer_widget.dart';
 import 'package:demandium/feature/service/widget/service_info_card.dart';
 import 'package:demandium/feature/service/widget/service_overview.dart';
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/core/helper/decorated_tab_bar.dart';
@@ -42,10 +43,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
         initState: (state) {
           if (widget.fromPage == "search_page") {
             Get.find<ServiceDetailsController>().getServiceDetails(
-                widget.serviceID,fromPage: "search_page");
+                widget.serviceID,placedIdGloabal.value,fromPage: "search_page");
           } else {
             Get.find<ServiceDetailsController>().getServiceDetails(
-                widget.serviceID);
+                widget.serviceID,placedIdGloabal.value);
           }
         },
 
@@ -185,7 +186,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                             Widget tabBarView = TabBarView(
                               controller: controller.controller,
                               children: [
-                                SingleChildScrollView(child: ServiceOverview(description:service.description!)),
+                                SingleChildScrollView(child: ServiceOverview(description:service.description!,
+                                    providers:service.providers!)),
                                 if(Get.find<ServiceDetailsController>().service!.faqs!.isNotEmpty)
                                   const SingleChildScrollView(child: ServiceDetailsFaqSection()),
                                 if(controller.reviewList != null)

@@ -6,6 +6,8 @@ import 'package:demandium/components/ripple_button.dart';
 import 'package:demandium/components/service_center_dialog.dart';
 import 'package:demandium/components/core_export.dart';
 
+import '../feature/web_landing/widget/web_landing_search_box.dart';
+
 class ServiceWidgetVertical extends StatelessWidget {
 
 
@@ -477,12 +479,16 @@ class ServiceWidgetVertical extends StatelessWidget {
               ),
             ),
             Positioned.fill(child: RippleButton(onTap: () {
+              print("ANKURRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+              print("placeid:::${placedIdGloabal.value}");
               if (fromPage == "search_page") {
+                print("search page");
                 Get.toNamed(
                   RouteHelper.getServiceRoute(service.id!,
                       fromPage: "search_page"),
                 );
               } else {
+                print("RouteHelper.getServiceRoute(service.id!)");
                 Get.toNamed(
                   RouteHelper.getServiceRoute(service.id!),
                 );

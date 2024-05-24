@@ -83,7 +83,7 @@ class _WebFeatheredCategoryViewState extends State<WebFeatheredCategoryView> {
                       shrinkWrap: true,
                       itemCount: serviceItemCount,
                       itemBuilder: (context, index) {
-                        return ServiceWidgetVertical(service: serviceController.categoryList[categoryIndex].servicesByCategory![index],  isAvailable: true,fromType: '',);
+                        return ServiceWidgetVertical(service: serviceController.categoryList[categoryIndex].servicesByCategory![index],  isAvailable: true,fromType: '');
                       },
                     ),
                   )
