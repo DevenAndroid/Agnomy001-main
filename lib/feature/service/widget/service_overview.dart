@@ -126,7 +126,7 @@ class ServiceOverview extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                            Text("within${providers[index].distance!.toInt()}miles"),
-/*
+
                           SizedBox(
                             height: 30,
                             child:  GetBuilder<CartController>(builder: (cartControllerInit) {
@@ -139,22 +139,18 @@ class ServiceOverview extends StatelessWidget {
                                         : ElevatedButton(
                                       onPressed: () {
                                         print("ADD CARD1");
-                                        cartControllerInit.isButton
-                                            ? () async {
-                                          cartController.updateQuantity(index, true);
-                                          cartController.showMinimumAndMaximumOrderValueToaster();
 
+                                        if(Get.find<SplashController>().configModel.content?.biddingStatus==1);
+
+                                        cartController.updateQuantity(index, true);
+                                        cartController.showMinimumAndMaximumOrderValueToaster();
 
                                           if (addToCart) {
                                             addToCart = false;
-                                            await cartController
-                                                .addMultipleCartToServer();
-                                            await cartController
-                                                .getCartListFromServer(
-                                                shouldUpdate: true);
+                                             cartController.addMultipleCartToServer();
+                                             cartController.getCartListFromServer(shouldUpdate: true);
                                           }
-                                        }
-                                            : SizedBox();
+
                                         print("ADD CARD");
                                       },
                                       child:
@@ -168,7 +164,7 @@ class ServiceOverview extends StatelessWidget {
                           ),
                           )
 
- */
+
                         ],
                       ),
                     ],
