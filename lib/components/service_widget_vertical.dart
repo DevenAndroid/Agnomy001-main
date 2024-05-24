@@ -317,6 +317,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                       ),
                     ),
 
+
                     if( fromPage == 'trending_services')
                       Expanded(
                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,

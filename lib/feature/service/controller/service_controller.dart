@@ -232,14 +232,15 @@ class ServiceController extends GetxController implements GetxService {
 
 
 
-  Future<void> getFeatherCategoryList({required int offset, required bool reload, int? distance, String? placeId }) async {
+  Future<void> getFeatherCategoryList(
+      {required bool reload, required String placeId, required int distance}) async {
 
     if(_featheredCategoryContent == null || reload){
       if(reload){
         _categoryList =[];
         _featheredCategoryContent = null;
       }
-      Response response = await serviceRepo.getFeatheredCategoryServiceList(offset: offset,placeID: placeId,distance: distance);
+      Response response = await serviceRepo.getFeatheredCategoryServiceList(placeID : placeId, distance: distance);
       if (response.statusCode == 200) {
         _featheredCategoryContent = FeatheredCategoryModel.fromJson(response.body).content;
 

@@ -22,8 +22,9 @@ class ServiceRepo extends GetxService {
     return await apiClient.getData('${AppConstants.recentlyViewedServiceUri}?offset=$offset&limit=10');
   }
 
-  Future<Response> getFeatheredCategoryServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants.getFeaturedCategoryService}?offset=$offset&limit=10&placeid=$placeID&distance=$distance');
+  Future<Response> getFeatheredCategoryServiceList(
+      {required String placeID, required int distance}) async {
+    return await apiClient.getData('${AppConstants.getFeaturedCategoryService}&placeid=$placeID&distance=$distance');
   }
 
   Future<Response> getRecommendedServiceList({required int offset, int? distance, String? placeID}) async {

@@ -26,7 +26,7 @@ class HomeScreen extends StatefulWidget {
       if(Get.find<AuthController>().isLoggedIn()){
         Get.find<ServiceController>().getRecentlyViewedServiceList(1,reload);
       }
-      Get.find<ServiceController>().getFeatherCategoryList(reload: reload,offset: 1,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue) );
+      Get.find<ServiceController>().getFeatherCategoryList(reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue) );
       Get.find<ServiceAreaController>().getZoneList(reload: reload);
       Get.find<WebLandingController>().getWebLandingContent();
     }
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
               await Get.find<ServiceController>().getRecentlyViewedServiceList(1,true,);
               await Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
               await Get.find<CampaignController>().getCampaignList(true);
-              await Get.find<ServiceController>().getFeatherCategoryList(reload: true,offset: 1,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
+              await Get.find<ServiceController>().getFeatherCategoryList(reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
               await Get.find<CartController>().getCartListFromServer();
             }else{
               await Get.find<BannerController>().getBannerList(true);
