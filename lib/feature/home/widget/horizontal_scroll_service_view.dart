@@ -204,7 +204,7 @@ class HorizontalScrollServiceView extends GetView<ServiceController> {
                                         context: context,
                                         useRootNavigator: true,
                                         isScrollControlled: true,
-                                        builder: (context) => ServiceCenterDialog(service: service,),
+                                        builder: (context) => ServiceCenterDialog(service: service),
                                         backgroundColor: Colors.transparent
 
                                     );},

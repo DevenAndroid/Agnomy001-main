@@ -2,6 +2,8 @@ import 'package:demandium/components/service_center_dialog.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:get/get.dart';
 
+import '../../../components/service_center_dialog1.dart';
+
 class ServiceInformationCard extends StatelessWidget {
   final Discount? discount;
   final Service service;
@@ -186,7 +188,7 @@ class ServiceInformationCard extends StatelessWidget {
                                   useRootNavigator: true,
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,
-                                  builder: (context) => ServiceCenterDialog(service: service, isFromDetails: true,)
+                                  builder: (context) => ServiceCenterDialog1(service: service, isFromDetails: true,)
                               );
                             },
                             child: Text('${"add".tr} +',style: ubuntuRegular.copyWith(color: Colors.white),),
