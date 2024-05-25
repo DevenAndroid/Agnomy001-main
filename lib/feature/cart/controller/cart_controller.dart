@@ -3,11 +3,14 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import  'package:demandium/feature/provider/model/provider_model.dart';
 
+import '../../../components/service_center_dialog.dart';
+
 
 
 class CartController extends GetxController implements GetxService {
   final CartRepo cartRepo;
-  CartController({required this.cartRepo});
+  final int? providerId;
+  CartController({required this.cartRepo,this.providerId,});
 
   List<CartModel> _cartList = [];
   List<CartModel> _initialCartList = [];
@@ -357,28 +360,19 @@ class CartController extends GetxController implements GetxService {
     update();
   }
 
-  Future<void> addToCartApi(CartModel cartModel)async{
+  Future<void> addToCartApi(CartModel cartModel)  async{
 
-    if(selectedProviderId!=""){
+
      await cartRepo.addToCartListToServer(CartModelBody(
         serviceId:cartModel.service!.id,
         categoryId: cartModel.categoryId,
         variantKey: cartModel.variantKey,
         quantity: cartModel.quantity.toString(),
         subCategoryId: cartModel.subCategoryId,
-        providerId: selectedProviderId,
+        providerId: providerIds,//cartModel.provider!.id.toString(),
         guestId: Get.find<SplashController>().getGuestId(),
       ));
-    }else{
-       await cartRepo.addToCartListToServer(CartModelBody(
-        serviceId:cartModel.service!.id,
-        categoryId: cartModel.categoryId,
-        variantKey: cartModel.variantKey,
-        quantity: cartModel.quantity.toString(),
-        subCategoryId: cartModel.subCategoryId,
-        guestId: Get.find<SplashController>().getGuestId(),
-      ));
-    }
+
   }
 
 
@@ -410,7 +404,7 @@ class CartController extends GetxController implements GetxService {
     return index;
   }
 
-  setInitialCartList(Service service) {
+  setInitialCartList(Service service, int? providerId) {
     _totalPrice = 0;
     _initialCartList = [];
     service.variationsAppFormat?.zoneWiseVariations?.forEach((variation) {

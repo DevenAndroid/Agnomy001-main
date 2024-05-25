@@ -5,11 +5,16 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
+import '../../../components/service_center_dialog.dart';
+
 class ServiceOverview extends StatelessWidget {
   final String description;
   List<Providers> providers;
+  List<Variations>? variations;
+  final Service service;
 
-   ServiceOverview({Key? key, required this.description, required this. providers})
+
+   ServiceOverview({Key? key, required this.description, required this. providers, required this. variations, required this.service,})
       : super(key: key);
 
   @override
@@ -95,16 +100,7 @@ class ServiceOverview extends StatelessWidget {
                                 children: [
 
                                    RatingBar(rating: providers![index].avgRating),
-                                  // RatingBarIndicator(
-                                  //   rating: 2.75,
-                                  //   itemBuilder: (context, index) =>  const Icon(
-                                  //     Icons.star,
-                                  //     color: Colors.amber,
-                                  //   ),
-                                  //   itemCount: providers![index].avgRating!.toInt(),
-                                  //   itemSize: 10.0,
-                                  //   direction: Axis.horizontal,
-                                  // ),
+
 
                                   Gaps.horizontalGapOf(5),
                                   Directionality(
@@ -126,6 +122,26 @@ class ServiceOverview extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                            Text("within${providers[index].distance!.toInt()}miles"),
+
+                          ElevatedButton(
+                            onPressed: () {
+                              var providerid= providers[index].id.toString();
+                              print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${providers[index].id.toString()}");
+                              Get.find<CartController>().resetPreselectedProviderInfo();
+                              showModalBottomSheet(
+                                  context: context,
+                                  useRootNavigator: true,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (context) => ServiceCenterDialog(
+                                    service: service, isFromDetails: true,
+                                    providerId: providers[index].distance!.toInt(),
+                                  logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providers![index].logo.toString()}",
+                                  )
+                              );
+                            },
+                            child: Text('${"add".tr} +',style: ubuntuRegular.copyWith(color: Colors.white),),
+                          ),
 /*
                           SizedBox(
                             height: 30,
@@ -139,22 +155,18 @@ class ServiceOverview extends StatelessWidget {
                                         : ElevatedButton(
                                       onPressed: () {
                                         print("ADD CARD1");
-                                        cartControllerInit.isButton
-                                            ? () async {
-                                          cartController.updateQuantity(index, true);
-                                          cartController.showMinimumAndMaximumOrderValueToaster();
 
+                                        if(Get.find<SplashController>().configModel.content?.biddingStatus==1);
+
+                                        cartController.updateQuantity(index, true);
+                                        cartController.showMinimumAndMaximumOrderValueToaster();
 
                                           if (addToCart) {
                                             addToCart = false;
-                                            await cartController
-                                                .addMultipleCartToServer();
-                                            await cartController
-                                                .getCartListFromServer(
-                                                shouldUpdate: true);
+                                             cartController.addMultipleCartToServer();
+                                             cartController.getCartListFromServer(shouldUpdate: true);
                                           }
-                                        }
-                                            : SizedBox();
+
                                         print("ADD CARD");
                                       },
                                       child:
@@ -169,6 +181,8 @@ class ServiceOverview extends StatelessWidget {
                           )
 
  */
+
+
                         ],
                       ),
                     ],

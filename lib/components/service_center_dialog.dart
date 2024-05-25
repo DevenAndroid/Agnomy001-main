@@ -2,24 +2,29 @@ import 'package:demandium/feature/cart/widget/available_provider_widgets.dart';
 import 'package:demandium/feature/cart/widget/selected_provider_widget.dart';
 import 'package:demandium/feature/cart/widget/unselected_provider_widget.dart';
 import 'package:demandium/feature/home/widget/bottom_create_post_dialog.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
+var providerIds ;
 
 class ServiceCenterDialog extends StatefulWidget {
   final Service? service;
   final CartModel? cart;
   final int? cartIndex;
+  final int? providerId;
+  final String? logoImage;
   final bool? isFromDetails;
 
-  const
-
-  ServiceCenterDialog({
+  const ServiceCenterDialog( {
     super.key,
     required this.service,
     this.cart,
     this.cartIndex,
-    this.isFromDetails = false});
+    this.providerId,
+    this.logoImage,
+    this.isFromDetails = false, });
 
   @override
   State<ServiceCenterDialog> createState() => _ProductBottomSheetState();
@@ -28,12 +33,13 @@ class ServiceCenterDialog extends StatefulWidget {
 class _ProductBottomSheetState extends State<ServiceCenterDialog> {
   @override
   void initState() {
-    Get.find<CartController>().setInitialCartList(widget.service!);
+    Get.find<CartController>().setInitialCartList(widget.service!,widget.providerId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var providerIds = widget.providerId;
     if(ResponsiveHelper.isDesktop(context)) {
       return  Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge)),
@@ -102,7 +108,8 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog> {
                       ),
                       const SizedBox(height: Dimensions.paddingSizeMini,),
                       Text(
-                        "${widget.service!.variationsAppFormat!.zoneWiseVariations!.length} ${'options_available'.tr}",
+                        // "Ankur",
+                       "${widget.service!.variationsAppFormat!.zoneWiseVariations!.length} ${'options_available'.tr}",
                         style: ubuntuRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.5)),
                       ),
                       Column(
@@ -213,33 +220,79 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog> {
                           children: [
 
                             Row(children: [
-                              if(Get.find<SplashController>().configModel.content?. directProviderBooking==1)
-                              cartControllerInit.preSelectedProvider?
-                              GestureDetector(
-                                onTap: (){
-                                  showModalBottomSheet(
-                                    useRootNavigator: true,
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    context: context, builder: (context) =>  AvailableProviderWidget(
-                                    subcategoryId: widget.service?.subCategoryId ??"",
-                                  ),);
-                                },
-                                child: const SelectedProductWidget(),
-                              ): GestureDetector(
-                                onTap: (){
-                                  showModalBottomSheet(
-                                  useRootNavigator: true,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  context: context, builder: (context) => AvailableProviderWidget(
-                                    subcategoryId: widget.service?.subCategoryId ??"",
-                                  ),);
-                                },
-                                child: const UnselectedProductWidget(),
-                              ),
+                              // AvailableProviderWidget(
+                              //   subcategoryId: widget.service?.subCategoryId ??"",
+                              // ),
+                              // if(Get.find<SplashController>().configModel.content?. directProviderBooking==1
+                              // )
+                                Container(
+                                  height:  ResponsiveHelper.isDesktop(context)? 50 : 45,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                    border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.5),width: 0.7),
+                                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  ),
+                                  padding:  EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                                  child: Center(child: Hero(tag: 'provide_image',
+                                    child: ClipRRect( borderRadius: BorderRadius.circular(Dimensions.radiusExtraMoreLarge),
+                                      child: Image.network(widget.logoImage.toString(),height: 30,width: 30,),
+                                    ),
+                                  )),
+                                ),
 
-                              if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
+                            //  cartControllerInit.preSelectedProvider?
+                              // GestureDetector(
+                              //   onTap: (){
+                              //      showModalBottomSheet(
+                              //     //   useRootNavigator: true,
+                              //     //   isScrollControlled: true,
+                              //     //   backgroundColor: Colors.transparent,
+                              //     //   context: context, builder: (context) =>  AvailableProviderWidget(
+                              //     //   subcategoryId: widget.service?.subCategoryId ??"",
+                              //     // ),);
+                              //   },
+                              //   child:   Container(
+                              //     height:  ResponsiveHelper.isDesktop(context)? 50 : 45,
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                              //       border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.5),width: 0.7),
+                              //       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                              //     ),
+                              //     padding:  EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                              //     child: Center(child: Hero(tag: 'provide_image',
+                              //       child: ClipRRect( borderRadius: BorderRadius.circular(Dimensions.radiusExtraMoreLarge),
+                              //         child: Image.network(widget.logoImage.toString(),height: 30,width: 30,),
+                              //       ),
+                              //     )),
+                              //   ),
+                              // ): GestureDetector(
+                              //   onTap: (){
+                              //     showModalBottomSheet(
+                              //     useRootNavigator: true,
+                              //     isScrollControlled: true,
+                              //     backgroundColor: Colors.transparent,
+                              //     context: context, builder: (context) => AvailableProviderWidget(
+                              //       subcategoryId: widget.service?.subCategoryId ??"",
+                              //     ),);
+                              //   },
+                              //   child: Container(
+                              //     height:  ResponsiveHelper.isDesktop(context)? 50 : 45,
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                              //       border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.5),width: 0.7),
+                              //       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                              //     ),
+                              //     padding:  EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                              //     child: Center(child: Hero(tag: 'provide_image',
+                              //       child: ClipRRect( borderRadius: BorderRadius.circular(Dimensions.radiusExtraMoreLarge),
+                              //         child: Image.network(Images.providerImage,height: 30,width: 30,),
+                              //       ),
+                              //     )),
+                              //   )
+                              //   //const UnselectedProductWidget(),
+                              // ),
+
+                              //if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
                               const SizedBox(width: Dimensions.paddingSizeSmall,),
 
                               if(Get.find<SplashController>().configModel.content?.biddingStatus==1)
@@ -286,7 +339,8 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog> {
                                     await cartController.getCartListFromServer(shouldUpdate: true);
                                   }
                                 }: null,
-                                buttonText:(cartController.cartList.isNotEmpty && cartController.cartList.elementAt(0).serviceId == widget.service!.id)
+                                buttonText:(cartController.cartList.isNotEmpty && cartController.cartList.elementAt(0).serviceId ==
+                                    widget.service!.id)
                                     ? 'update_cart'.tr : 'add_to_cart'.tr,
                                 ),
                               )

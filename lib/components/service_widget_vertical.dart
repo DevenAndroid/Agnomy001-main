@@ -521,7 +521,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       context: context,
                       builder: (context) =>
-                          ServiceCenterDialog(service: service));
+                          ServiceCenterDialog(service: service,));
                 }))
               ],
             ),
