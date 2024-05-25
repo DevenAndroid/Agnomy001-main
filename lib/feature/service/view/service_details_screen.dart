@@ -104,7 +104,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                         width: Dimensions.webMaxWidth,
                                         height: ResponsiveHelper.isDesktop(context) ? 280:150,
                                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
-                                        child: Center(child: Text(service.name ?? '',
+                                        child: Center(child: Text(
+                                            service.name ?? '',
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Colors.white))),
@@ -187,7 +188,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                               controller: controller.controller,
                               children: [
                                 SingleChildScrollView(child: ServiceOverview(description:service.description!,
-                                    providers:service.providers!)),
+                                    providers:service.providers!, variations: service.variations!, service: service,)),
                                 if(Get.find<ServiceDetailsController>().service!.faqs!.isNotEmpty)
                                   const SingleChildScrollView(child: ServiceDetailsFaqSection()),
                                 if(controller.reviewList != null)
