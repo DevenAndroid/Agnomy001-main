@@ -12,7 +12,9 @@ class ServiceCenterDialog extends StatefulWidget {
   final int? cartIndex;
   final bool? isFromDetails;
 
-  const ServiceCenterDialog({
+  const
+
+  ServiceCenterDialog({
     super.key,
     required this.service,
     this.cart,

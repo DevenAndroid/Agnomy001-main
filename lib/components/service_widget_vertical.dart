@@ -317,7 +317,6 @@ class ServiceWidgetVertical extends StatelessWidget {
                       ),
                     ),
 
-
                     if( fromPage == 'trending_services')
                       Expanded(
                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -397,6 +396,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                           ],
                         ),
                       ),
+
                     Expanded(
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -404,8 +404,6 @@ class ServiceWidgetVertical extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-
-
                                 Text(
                                   'Service ${service.providerCount.toString()} Provider'.tr,
                                   style: ubuntuRegular.copyWith(
