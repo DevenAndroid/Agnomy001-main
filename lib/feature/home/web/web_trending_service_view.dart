@@ -15,7 +15,7 @@ class WebTrendingServiceView extends StatelessWidget {
             return const SizedBox();
           }else{
             if(serviceController.trendingServiceList != null){
-              List<Service>? serviceList = serviceController.trendingServiceList!.where((element) => element.providerCount !=0 ).toList();
+              List<Service>? serviceList = serviceController.trendingServiceList!.where((element) => element.providerCount!.toInt() !=0 ).toList();
               return  Column(
                 children: [
                   Row(
@@ -46,7 +46,7 @@ class WebTrendingServiceView extends StatelessWidget {
                       ),
                       physics:const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: serviceList.length>5?5:serviceList.length,
+                      itemCount: serviceList.length,
                       itemBuilder: (context, index) {
                         return ServiceWidgetVertical(service: serviceController.trendingServiceList![index],  isAvailable: true,fromType: '',);
                       },

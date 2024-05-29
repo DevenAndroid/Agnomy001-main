@@ -1,4 +1,5 @@
 import 'package:demandium/components/service_widget_vertical.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 
@@ -37,22 +38,27 @@ class WebPopularServiceView extends StatelessWidget {
                   ),
                 ),
 
-                GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    childAspectRatio:ResponsiveHelper.isMobile(context) ? 0.78 : 0.79,
-                    crossAxisSpacing: Dimensions.paddingSizeDefault,
-                    mainAxisSpacing: Dimensions.paddingSizeDefault,
-                  ),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                  itemCount:   serviceList!.length > 7 ? 8 : serviceList.length,
-                  itemBuilder: (context, index){
-                     if(serviceController.serviceContent!.serviceList![index].providerCount.toString()!="0") {
-                       return ServiceWidgetVertical(service: serviceController.popularServiceList![index], isAvailable: true, fromType: '', );
-                     }
+                InkWell(
+                  onTap: (){
+                    print("object1::::::::::${serviceList.length}");
                   },
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      childAspectRatio:ResponsiveHelper.isMobile(context) ? 0.78 : 0.79,
+                      crossAxisSpacing: Dimensions.paddingSizeDefault,
+                      mainAxisSpacing: Dimensions.paddingSizeDefault,
+                    ),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                    itemCount:   serviceList!.length > 7 ? 8 : serviceList.length,
+                    itemBuilder: (context, index){
+                       if(serviceController.serviceContent!.serviceList![index].providerCount.toString()!="0") {
+                         return ServiceWidgetVertical(service: serviceController.popularServiceList![index], isAvailable: true, fromType: '', );
+                       }
+                    },
+                  ),
                 )
               ],
             );
