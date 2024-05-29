@@ -41,12 +41,14 @@ class ServiceViewVertical extends GetView<ServiceController> {
               crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : ResponsiveHelper.isTab(context) ? 3 : 5),
             physics: isScrollable! ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
             shrinkWrap: isScrollable! ? false : true,
-            itemCount: service!.length,
+            // itemCount: service!.where((element) => element.providerCount !=0 ).toList(),
+            itemCount:service!.length,
             padding: padding,
             itemBuilder: (context, index) {
-              bool isAvailable = service![index].isActive == 0 ? false:true;
+              bool isAvailable = service![index].isActive  == 0  ? false:true;
               controller.getServiceDiscount(service![index]);
-              return ServiceWidgetVertical(service: service![index],  isAvailable: isAvailable,fromType: '',fromPage: fromPage??"");
+              return service![index].providerCount!.toInt() == 0 ? null :
+                ServiceWidgetVertical(service: service![index],  isAvailable: isAvailable,fromType: '',fromPage: fromPage??"");
             },
           ) : length == 0 ?
           Center(
@@ -67,7 +69,8 @@ class ServiceViewVertical extends GetView<ServiceController> {
             itemCount: shimmerLength,
             padding: padding,
             itemBuilder: (context, index) {
-              return ServiceShimmer(isEnabled: true, hasDivider: index != shimmerLength! - 1);
+              return
+                ServiceShimmer(isEnabled: true, hasDivider: index != shimmerLength! - 1);
         },
       ),
     ]);

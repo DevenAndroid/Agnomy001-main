@@ -250,11 +250,11 @@ class _AllServiceViewState extends State<AllServiceView> {
                   serviceController.dropdownvalue.replaceAll("150+", "151")));
         },
         builder: (serviceController){
-          return FooterBaseView(
+          return     FooterBaseView(
             scrollController: scrollController,
             child: SizedBox(
               width: Dimensions.webMaxWidth,
-              child: Column(
+              child:  Column(
                 children: [
                   if(ResponsiveHelper.isDesktop(context))
                   Padding(
@@ -275,7 +275,9 @@ class _AllServiceViewState extends State<AllServiceView> {
                     onPaginate: (int offset) async {
                       return await serviceController.getRecommendedServiceList(offset: offset, reload: false,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
                     },
-                    itemView: ServiceViewVertical(
+                    itemView:
+
+                    ServiceViewVertical(
                       service: serviceController.recommendedBasedServiceContent != null ? serviceController.recommendedServiceList : null,
                       padding: EdgeInsets.symmetric(
                         horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall,

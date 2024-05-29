@@ -27,72 +27,75 @@ class WebRecommendedServiceView extends StatelessWidget {
                         style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
                   ),
 
-                  InkWell(
-                    onTap: (){
-                      print("object::::${recommendedServiceList}");
-                    },
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: recommendedServiceList!.length > 3 ? 4 : recommendedServiceList.length,
-                      itemBuilder: (context, index){
-                        Discount discount = PriceConverter.discountCalculation(serviceController.recommendedServiceList![index]);
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: recommendedServiceList!.length > 3 ? 4 : recommendedServiceList.length,
 
-                        return Padding(
+                    itemBuilder: (context, index){
+                      Discount discount = PriceConverter.discountCalculation(serviceController.recommendedServiceList![index]);
+
+                      return
+                        recommendedServiceList[index].providerCount.toString() == 0  &&
+                            serviceController.recommendedServiceList![index].providerCount.toString() == 0
+                            ?  Container(
+                          height: 20,color: Colors.blue,
+                        ) :
+                        Padding(
                           padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
                           child: InkWell(
                             onTap: () => Get.toNamed(RouteHelper.getServiceRoute(recommendedServiceList[index].id!)),
                             child: index == 3 ?
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  ServiceModelView(
-                                    serviceList: serviceController.recommendedServiceList!,
-                                    discountAmountType: discount.discountAmountType,
-                                    discountAmount: discount.discountAmount,
-                                    index: index,
-                                  ),
-                                  Positioned(
-                                    bottom: -10,
-                                    child: Container(
-                                      width: Dimensions.webMaxWidth / 3.5,
-                                      height: 80,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            Theme.of(context).cardColor, // Shadow color with opacity// Shadow color with opacity
-                                            Theme.of(context).cardColor.withOpacity(0.3), // Transparent to the top
-                                          ],
-                                        ),
+                            Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                ServiceModelView(
+                                  serviceList: serviceController.recommendedServiceList!,
+                                  discountAmountType: discount.discountAmountType,
+                                  discountAmount: discount.discountAmount,
+                                  index: index,
+                                ),
+                                Positioned(
+                                  bottom: -10,
+                                  child: Container(
+                                    width: Dimensions.webMaxWidth / 3.5,
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter,
+                                        colors: [
+                                          Theme.of(context).cardColor, // Shadow color with opacity// Shadow color with opacity
+                                          Theme.of(context).cardColor.withOpacity(0.3), // Transparent to the top
+                                        ],
                                       ),
                                     ),
                                   ),
+                                ),
 
-                                  Positioned(
-                                    bottom: 10, left: 0, right: 0,
-                                    child: CustomButton(
-                                      buttonText: 'see_more'.tr, width: 120,
-                                      radius: Dimensions.radiusExtraMoreLarge,
-                                      onPressed: () {
-                                        Get.toNamed(RouteHelper.allServiceScreenRoute("fromRecommendedScreen"));
-                                      },
-                                    ),
-                                  )
-                                ],
-                              )
+                                Positioned(
+                                  bottom: 0, left: 0, right: 0,
+                                  child: CustomButton(
+                                    buttonText: 'see_more'.tr, width: 120,
+                                    radius: Dimensions.radiusExtraMoreLarge,
+                                    onPressed: () {
+                                      Get.toNamed(RouteHelper.allServiceScreenRoute("fromRecommendedScreen"));
+                                    },
+                                  ),
+                                )
+                              ],
+                            )
 
-                            : ServiceModelView(
+                                : ServiceModelView(
                               serviceList: serviceController.recommendedServiceList!,
                               discountAmountType: discount.discountAmountType,
                               discountAmount: discount.discountAmount,
                               index: index,
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        )
+                        ;
+                    },
                   ),
                 ],
               ),
@@ -131,9 +134,11 @@ class ServiceModelView extends StatelessWidget {
         }
       }
     }
-    return Container(
+    return serviceList[index].providerCount.toString() == "0" ?
+    const SizedBox(height: 0,) :
+    Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor ,
+         color: Theme.of(context).cardColor ,
         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
         boxShadow:Get.isDarkMode ? null: cardShadow2,
       ),
@@ -184,6 +189,7 @@ class ServiceModelView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeMini),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+
               Text(
                 serviceList[index].name!,
                 style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall),

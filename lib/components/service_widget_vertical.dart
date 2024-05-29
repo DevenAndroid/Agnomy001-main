@@ -78,35 +78,37 @@ class ServiceWidgetVertical extends StatelessWidget {
     Discount discountModel = PriceConverter.discountCalculation(service);
 
     return
-
+      // service.providerCount!.toInt() == 0 ? Container(height:0,width:0,color: Colors.blue):
       Stack(
       alignment: Alignment.bottomRight,
       children: [
+
         Stack(
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
+                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                 boxShadow: Get.isDarkMode ? null : cardShadow2,
               ),
-              child: Padding(
+              child:  Padding(
                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //cover image and service name
+
                     Column(
                       children: [
                         Stack(
                           children: [
-                            ClipRRect(
+                               ClipRRect(
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(Dimensions.radiusSmall)),
+
                               child: CustomImage(
-                                image:
-                                    '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${service.thumbnail}',
+                                image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${service.thumbnail}',
                                 fit: BoxFit.cover,
                                 width: double.maxFinite,
                                 height: Dimensions.homeImageSize,
@@ -144,7 +146,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                         const SizedBox(
                           height: Dimensions.paddingSizeEight,
                         ),
-                        Padding(
+                          Padding(
                           padding: const EdgeInsets.all(
                               Dimensions.paddingSizeExtraSmall),
                           child: Text(
@@ -326,7 +328,6 @@ class ServiceWidgetVertical extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
 
-
                                   Text(
                                     'Service ${service.providerCount.toString()} Provider'.tr,
                                     style: ubuntuRegular.copyWith(
@@ -404,7 +405,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                  Text(
                                   'Service ${service.providerCount.toString()} Provider'.tr,
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
@@ -420,7 +421,7 @@ class ServiceWidgetVertical extends StatelessWidget {
 
                                 Text(
 
-                                  "Within ${service.maxDistanceProvider!.ceil().toString()} Miles",
+                                  "Within${service.maxDistanceProvider!.ceil().toString()} Miles",
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context).colorScheme.primary),
