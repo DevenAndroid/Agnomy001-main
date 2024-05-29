@@ -13,6 +13,7 @@ class WebRecentlyServiceView extends StatelessWidget {
         return const SizedBox();
       }else{
         if(serviceController.recentlyViewServiceList != null){
+          List<Service>? serviceList = serviceController.popularServiceList!.where((element) => element.providerCount !=0 ).toList();
           return  Column(
             children: [
               Row(

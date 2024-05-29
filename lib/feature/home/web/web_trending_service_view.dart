@@ -1,5 +1,6 @@
 import 'package:demandium/components/service_widget_vertical.dart';
 import 'package:demandium/components/core_export.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WebTrendingServiceView extends StatelessWidget {
@@ -14,6 +15,7 @@ class WebTrendingServiceView extends StatelessWidget {
             return const SizedBox();
           }else{
             if(serviceController.trendingServiceList != null){
+              List<Service>? serviceList = serviceController.trendingServiceList!.where((element) => element.providerCount !=0 ).toList();
               return  Column(
                 children: [
                   Row(
@@ -30,20 +32,25 @@ class WebTrendingServiceView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: Dimensions.paddingSizeLarge,),
-                  GridView.builder(
-                    key: UniqueKey(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: Dimensions.paddingSizeDefault,
-                      mainAxisSpacing:  Dimensions.paddingSizeDefault,
-                      childAspectRatio: ResponsiveHelper.isDesktop(context) || ResponsiveHelper.isTab(context)  ? 0.92 : .70,
-                      crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : ResponsiveHelper.isTab(context) ? 3 : 5,
-                    ),
-                    physics:const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: serviceController.trendingServiceList!.length>5?5:serviceController.trendingServiceList!.length,
-                    itemBuilder: (context, index) {
-                      return ServiceWidgetVertical(service: serviceController.trendingServiceList![index],  isAvailable: true,fromType: '',);
+                  InkWell(
+                    onTap: (){
+                      print("object::::::::::${serviceList}");
                     },
+                    child: GridView.builder(
+                      key: UniqueKey(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisSpacing: Dimensions.paddingSizeDefault,
+                        mainAxisSpacing:  Dimensions.paddingSizeDefault,
+                        childAspectRatio: ResponsiveHelper.isDesktop(context) || ResponsiveHelper.isTab(context)  ? 0.92 : .70,
+                        crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : ResponsiveHelper.isTab(context) ? 3 : 5,
+                      ),
+                      physics:const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: serviceList.length>5?5:serviceList.length,
+                      itemBuilder: (context, index) {
+                        return ServiceWidgetVertical(service: serviceController.trendingServiceList![index],  isAvailable: true,fromType: '',);
+                      },
+                    ),
                   )
                 ],
               );

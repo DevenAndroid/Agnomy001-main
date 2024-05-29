@@ -72,7 +72,12 @@ class _AllServiceViewState extends State<AllServiceView> {
     if(fromPage == 'popular_services') {
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getPopularServiceList( offset: 1, reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
+          Get.find<ServiceController>().getPopularServiceList(
+              offset: 1,
+              reload: true,
+              placeId: placedIdGloabal.value,
+              distance: int.parse(
+                  serviceController.dropdownvalue.replaceAll("150+", "151")));
           Get.find<ServiceController>().getPopularServiceList;
         },
         builder: (serviceController){
@@ -124,7 +129,12 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'trending_services') {
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
+          Get.find<ServiceController>().getTrendingServiceList(
+              offset: 1,
+              reload: true,
+              placeId: placedIdGloabal.value,
+              distance: int.parse(
+                  serviceController.dropdownvalue.replaceAll("150+", "151")));
         },
         builder: (serviceController){
           return FooterBaseView(
@@ -232,7 +242,12 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'fromRecommendedScreen'){
       return GetBuilder<ServiceController>(
         initState: (state){
-          Get.find<ServiceController>().getRecommendedServiceList(offset: 1,reload: true,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
+          Get.find<ServiceController>().getRecommendedServiceList(
+              offset: 1,
+              reload: true,
+              placeId: placedIdGloabal.value,
+              distance: int.parse(
+                  serviceController.dropdownvalue.replaceAll("150+", "151")));
         },
         builder: (serviceController){
           return FooterBaseView(
@@ -280,8 +295,13 @@ class _AllServiceViewState extends State<AllServiceView> {
     else if(fromPage == 'all_service'){
       return GetBuilder<ServiceController>(
           initState: (state){
-            Get.find<ServiceController>().getAllServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
-          },
+            Get.find<ServiceController>().getAllServiceList(
+            offset: 1,
+            reload: true,
+            placeId: placedIdGloabal.value,
+            distance: int.parse(
+                serviceController.servicevalue.replaceAll("150+", "151")));
+      },
           builder: (serviceController) {
         return FooterBaseView(
           scrollController: scrollController,

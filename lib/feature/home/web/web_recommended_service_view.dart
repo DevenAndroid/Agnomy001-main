@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 
@@ -13,7 +14,7 @@ class WebRecommendedServiceView extends StatelessWidget {
           return const SizedBox();
         }else{
           if(serviceController.recommendedServiceList != null){
-            List<Service>? recommendedServiceList = serviceController.recommendedServiceList;
+            List<Service>? recommendedServiceList = serviceController.recommendedServiceList!.where((element) => element.providerCount !=0 ).toList();
             return SizedBox(
               width: Dimensions.webMaxWidth / 3.5,
               child: Column(
@@ -26,67 +27,72 @@ class WebRecommendedServiceView extends StatelessWidget {
                         style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
                   ),
 
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: recommendedServiceList!.length > 3 ? 4 : recommendedServiceList.length,
-                    itemBuilder: (context, index){
-                      Discount discount = PriceConverter.discountCalculation(serviceController.recommendedServiceList![index]);
+                  InkWell(
+                    onTap: (){
+                      print("object::::${recommendedServiceList}");
+                    },
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: recommendedServiceList!.length > 3 ? 4 : recommendedServiceList.length,
+                      itemBuilder: (context, index){
+                        Discount discount = PriceConverter.discountCalculation(serviceController.recommendedServiceList![index]);
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                        child: InkWell(
-                          onTap: () => Get.toNamed(RouteHelper.getServiceRoute(recommendedServiceList[index].id!)),
-                          child: index == 3 ?
-                            Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                ServiceModelView(
-                                  serviceList: serviceController.recommendedServiceList!,
-                                  discountAmountType: discount.discountAmountType,
-                                  discountAmount: discount.discountAmount,
-                                  index: index,
-                                ),
-                                Positioned(
-                                  bottom: -10,
-                                  child: Container(
-                                    width: Dimensions.webMaxWidth / 3.5,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.bottomCenter,
-                                        end: Alignment.topCenter,
-                                        colors: [
-                                          Theme.of(context).cardColor, // Shadow color with opacity// Shadow color with opacity
-                                          Theme.of(context).cardColor.withOpacity(0.3), // Transparent to the top
-                                        ],
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+                          child: InkWell(
+                            onTap: () => Get.toNamed(RouteHelper.getServiceRoute(recommendedServiceList[index].id!)),
+                            child: index == 3 ?
+                              Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  ServiceModelView(
+                                    serviceList: serviceController.recommendedServiceList!,
+                                    discountAmountType: discount.discountAmountType,
+                                    discountAmount: discount.discountAmount,
+                                    index: index,
+                                  ),
+                                  Positioned(
+                                    bottom: -10,
+                                    child: Container(
+                                      width: Dimensions.webMaxWidth / 3.5,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.bottomCenter,
+                                          end: Alignment.topCenter,
+                                          colors: [
+                                            Theme.of(context).cardColor, // Shadow color with opacity// Shadow color with opacity
+                                            Theme.of(context).cardColor.withOpacity(0.3), // Transparent to the top
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                
-                                Positioned(
-                                  bottom: 10, left: 0, right: 0,
-                                  child: CustomButton(
-                                    buttonText: 'see_more'.tr, width: 120,
-                                    radius: Dimensions.radiusExtraMoreLarge,
-                                    onPressed: () {
-                                      Get.toNamed(RouteHelper.allServiceScreenRoute("fromRecommendedScreen"));
-                                    },
-                                  ),
-                                )
-                              ],
-                            )
 
-                          : ServiceModelView(
-                            serviceList: serviceController.recommendedServiceList!,
-                            discountAmountType: discount.discountAmountType,
-                            discountAmount: discount.discountAmount,
-                            index: index,
+                                  Positioned(
+                                    bottom: 10, left: 0, right: 0,
+                                    child: CustomButton(
+                                      buttonText: 'see_more'.tr, width: 120,
+                                      radius: Dimensions.radiusExtraMoreLarge,
+                                      onPressed: () {
+                                        Get.toNamed(RouteHelper.allServiceScreenRoute("fromRecommendedScreen"));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              )
+
+                            : ServiceModelView(
+                              serviceList: serviceController.recommendedServiceList!,
+                              discountAmountType: discount.discountAmountType,
+                              discountAmount: discount.discountAmount,
+                              index: index,
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

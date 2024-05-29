@@ -15,7 +15,7 @@ class WebPopularServiceView extends StatelessWidget {
           return const SizedBox();
         }else{
           if(serviceController.popularServiceList != null){
-            List<Service>? serviceList = serviceController.popularServiceList;
+            List<Service>? serviceList = serviceController.popularServiceList!.where((element) => element.providerCount !=0 ).toList();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -36,6 +36,7 @@ class WebPopularServiceView extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
@@ -46,9 +47,11 @@ class WebPopularServiceView extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                  itemCount: serviceList!.length > 7 ? 8 : serviceList.length,
+                  itemCount:   serviceList!.length > 7 ? 8 : serviceList.length,
                   itemBuilder: (context, index){
-                    return ServiceWidgetVertical(service: serviceController.popularServiceList![index], isAvailable: true, fromType: '', );
+                     if(serviceController.serviceContent!.serviceList![index].providerCount.toString()!="0") {
+                       return ServiceWidgetVertical(service: serviceController.popularServiceList![index], isAvailable: true, fromType: '', );
+                     }
                   },
                 )
               ],

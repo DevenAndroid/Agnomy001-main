@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const CampaignView(),
                         HorizontalScrollServiceView(fromPage: 'trending_services',serviceList: serviceController.trendingServiceList),
 
-                        const SizedBox(height: Dimensions.paddingSizeDefault,),
+                         const SizedBox(height: Dimensions.paddingSizeDefault,),
 
                         const FeatheredCategoryView(),
 
