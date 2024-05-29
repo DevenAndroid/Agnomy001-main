@@ -78,14 +78,12 @@ class ServiceWidgetVertical extends StatelessWidget {
     Discount discountModel = PriceConverter.discountCalculation(service);
 
     return
-      // service.providerCount!.toInt() == 0 ? Container(height:0,width:0,color: Colors.blue):
       Stack(
       alignment: Alignment.bottomRight,
       children: [
-
         Stack(
           children: [
-            Container(
+             Container(
               decoration: BoxDecoration(
                  color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),

@@ -32,7 +32,7 @@ class WebTrendingServiceView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: Dimensions.paddingSizeLarge,),
-                  InkWell(
+                  GestureDetector(
                     onTap: (){
                       print("object::::::::::${serviceList}");
                     },
@@ -48,7 +48,9 @@ class WebTrendingServiceView extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: serviceList.length,
                       itemBuilder: (context, index) {
-                        return ServiceWidgetVertical(service: serviceController.trendingServiceList![index],  isAvailable: true,fromType: '',);
+                        return
+                          serviceController.trendingServiceList![index].providerCount!.toInt() ==0 ? null:
+                          ServiceWidgetVertical(service: serviceController.trendingServiceList![index],  isAvailable: true,fromType: '',);
                       },
                     ),
                   )
