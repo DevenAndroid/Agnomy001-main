@@ -16,22 +16,29 @@ class WebShadowWrap extends StatelessWidget {
       padding: ResponsiveHelper.isMobile(context) ? EdgeInsets.zero : const EdgeInsets.symmetric(
         vertical: Dimensions.paddingSizeLarge, horizontal: Dimensions.paddingSizeExtraSmall,
       ),
-      child: Container(
-        constraints: BoxConstraints(
-          minHeight: minHeight ?? MediaQuery.of(context).size.height * 0.6,
-          maxHeight: maxHeight !=null ? maxHeight! : double.infinity,
-        ),
-        padding: !ResponsiveHelper.isMobile(context) ? const EdgeInsets.all(Dimensions.paddingSizeDefault) : null,
-        decoration: !ResponsiveHelper.isMobile(context) ? BoxDecoration(
-          color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(10),
-          boxShadow: [BoxShadow(
-            offset: const Offset(1, 1),
-            blurRadius: 5,
-            color: Theme.of(context).primaryColor.withOpacity(0.12),
-          )],
-        ) : null,
-        width: width,
-        child: child,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            constraints: BoxConstraints(
+              minHeight: minHeight ?? MediaQuery.of(context).size.height * 0.6,
+              maxHeight: maxHeight !=null ? maxHeight! : double.infinity,
+            ),
+            padding: !ResponsiveHelper.isMobile(context) ? const EdgeInsets.all(Dimensions.paddingSizeDefault) : null,
+            decoration: !ResponsiveHelper.isMobile(context) ? BoxDecoration(
+              color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(10),
+              boxShadow: [BoxShadow(
+                offset: const Offset(1, 1),
+                blurRadius: 5,
+                color: Theme.of(context).primaryColor.withOpacity(0.12),
+              )],
+            ) : null,
+            width: width,
+            child: child,
+          ),
+
+        ],
       ),
     ) : child;
   }

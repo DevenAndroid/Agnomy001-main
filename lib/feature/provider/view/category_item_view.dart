@@ -53,7 +53,9 @@ class CategorySection extends StatelessWidget {
               ),
             );
           },
-        ) :GridView.builder(
+        ) :
+        // category.serviceList[index].providerCount==0&&category.serviceList[index].providerCount== null ?
+        GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisSpacing: Dimensions.paddingSizeDefault,
             mainAxisSpacing:  Dimensions.paddingSizeDefault,
@@ -66,9 +68,14 @@ class CategorySection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 0),
           itemBuilder: (context, index) {
             bool isAvailable = true;
-            return ServiceWidgetVertical(service:  category.serviceList[index],  isAvailable: isAvailable,fromType: 'provider_details',);
+            return
+              category.serviceList[index].providerCount==0 && category.serviceList[index].providerCount==null ?
+              ServiceWidgetVertical(service:  category.serviceList[index],  isAvailable: isAvailable,fromType: 'provider_details',)
+                  : const SizedBox(height: 0,);
+                  // : Text("No Found Data",style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),);
           },
         ),
+            // :  Text("No Data Found",style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),) ,
       ]):const SizedBox(),
     );
   }

@@ -248,7 +248,8 @@ class ServiceWidgetVertical extends StatelessWidget {
 
 
                                 Text(
-                                  'Service ${service.providerCount.toString()} Provider'.tr,
+
+                                   'Service ${service.providerCount.toString()} Provider'.tr,
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context)
@@ -419,7 +420,7 @@ class ServiceWidgetVertical extends StatelessWidget {
 
                                 Text(
 
-                                  "Within${service.maxDistanceProvider!.ceil().toString()} Miles",
+                                  "Within ${service.maxDistanceProvider!.ceil().toString()} Miles",
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context).colorScheme.primary),

@@ -191,12 +191,18 @@ class ServiceInformationCard extends StatelessWidget {
                                   builder: (context) => ServiceCenterDialog1(service: service, isFromDetails: true,)
                               );
                             },
-                            child: Text('${"add".tr} +',style: ubuntuRegular.copyWith(color: Colors.white),),
+                            child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
                           ),
                         ],
                       ),
+
+
+
+
+
                     ],
                   ),
+
                 )
               ],
             ),

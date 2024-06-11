@@ -7,6 +7,10 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/core/helper/decorated_tab_bar.dart';
 
+import '../../../components/service_center_dialog.dart';
+
+
+
 class ServiceDetailsScreen extends StatefulWidget {
   final String serviceID;
   final String fromPage;
@@ -172,6 +176,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                         },
                                         tabs: serviceTabController.serviceDetailsTabs()
                                     ),
+
+
                                   ),
                                 ),
                               ),
@@ -187,8 +193,174 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                             Widget tabBarView = TabBarView(
                               controller: controller.controller,
                               children: [
-                                SingleChildScrollView(child: ServiceOverview(description:service.description!,
-                                    providers:service.providers!, variations: service.variations!, service: service,)),
+                                SingleChildScrollView(child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    ServiceOverview(
+                                      description:service.description!,
+                                        providers:service.providers!,
+                                      variations: service.variations!,
+                                      service: service,),
+
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: Dimensions.paddingSizeDefault,
+                                          vertical: Dimensions.paddingSizeEight),
+                                      child: Text(
+                                        "Service Provider in your area:",
+                                        style: ubuntuRegular.copyWith(
+                                            fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
+                                      ),
+                                    ), const SizedBox(height: 20,),
+
+                                    GridView.builder(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical, // Change this to Axis.horizontal if you want horizontal scrolling
+                                      itemCount:service.providers!.length,
+                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        mainAxisSpacing: 10.0,
+                                        crossAxisSpacing: 10.0,
+                                        childAspectRatio: 6 / 2,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          // height: 10,
+                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                          decoration: BoxDecoration(
+                                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                            border: Border.all(color: Colors.grey),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    // height: 20,
+                                                    // width: 25,
+                                                    child: Image(
+                                                      image: NetworkImage(
+                                                          "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${service.providers![index].logo.toString()}"
+                                                      ),
+                                                      height: 30,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 20),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(service.providers![index].companyName.toString()),
+                                                      Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        children: [
+                                                          RatingBar(rating: service.providers![index].avgRating),
+                                                          Gaps.horizontalGapOf(5),
+                                                          Directionality(
+                                                            textDirection: TextDirection.ltr,
+                                                            child:  Text('${service.providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
+                                                              fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                                                            )),
+                                                          ),
+                                                          // const Text("0 Reviews"),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width*0.178,
+                                                        child: Text(service.providers![index].companyDescription.toString(),
+                                                          style: ubuntuRegular.copyWith(
+                                                            overflow:TextOverflow.ellipsis,
+                                                            fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                                                          ),textAlign: TextAlign.start,maxLines:1,softWrap: true,overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                      )// width: Get.width*0.2,
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              Gaps.horizontalGapOf(6),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text("with in ${service.providers![index].distance!.toInt()} miles"),
+
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      var providerid= service.providers![index].id.toString();
+                                                      print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${service.providers![index].id.toString()}");
+                                                      Get.find<CartController>().resetPreselectedProviderInfo();
+                                                      showModalBottomSheet(
+                                                          context: context,
+                                                          useRootNavigator: true,
+                                                          isScrollControlled: true,
+                                                          backgroundColor: Colors.transparent,
+                                                          builder: (context) => ServiceCenterDialog(
+                                                            service: service, isFromDetails: true,
+                                                            providerId: service.providers![index].distance!.toInt(),
+                                                            logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${service.providers![index].logo.toString()}",
+                                                          )
+                                                      );
+                                                    },
+                                                    child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
+                                                  ),
+                                                  /*
+                          SizedBox(
+                            height: 30,
+                            child:  GetBuilder<CartController>(builder: (cartControllerInit) {
+                              return GetBuilder<CartController>(
+                                  builder: (cartController) {
+                                    bool addToCart = true;
+                                    return cartController.isLoading
+                                        ? const Center(
+                                        child: CircularProgressIndicator())
+                                        : ElevatedButton(
+                                      onPressed: () {
+                                        print("ADD CARD1");
+
+                                        if(Get.find<SplashController>().configModel.content?.biddingStatus==1);
+
+                                        cartController.updateQuantity(index, true);
+                                        cartController.showMinimumAndMaximumOrderValueToaster();
+
+                                          if (addToCart) {
+                                            addToCart = false;
+                                             cartController.addMultipleCartToServer();
+                                             cartController.getCartListFromServer(shouldUpdate: true);
+                                          }
+
+                                        print("ADD CARD");
+                                      },
+                                      child:
+
+                                    Text('${"add".tr} +',style: ubuntuRegular.copyWith(color: Colors.white),
+                                    )
+                                    );
+                                  }
+                              );
+                            }
+                          ),
+                          )
+
+                       */
+
+
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    
+                                    
+                                  ],
+                                )),
+
                                 if(Get.find<ServiceDetailsController>().service!.faqs!.isNotEmpty)
                                   const SingleChildScrollView(child: ServiceDetailsFaqSection()),
                                 if(controller.reviewList != null)
@@ -200,6 +372,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                 else
                                   const EmptyReviewWidget()
                               ],
+                              
                             );
 
                             if(ResponsiveHelper.isMobile(context)){

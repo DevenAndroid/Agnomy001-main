@@ -45,7 +45,7 @@ class ServiceOverview extends StatelessWidget {
                       : Colors.transparent,
                   child: HtmlWidget(description)),
             ),
-            Padding(
+           /* Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Dimensions.paddingSizeDefault,
                   vertical: Dimensions.paddingSizeEight),
@@ -55,7 +55,7 @@ class ServiceOverview extends StatelessWidget {
                     fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
               ),
             ), const SizedBox(height: 20,),
-            GridView.builder(
+             GridView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical, // Change this to Axis.horizontal if you want horizontal scrolling
               itemCount: providers.length,
@@ -97,11 +97,10 @@ class ServiceOverview extends StatelessWidget {
                             children: [
                               Text(providers![index].companyName.toString()),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-
                                    RatingBar(rating: providers![index].avgRating),
-
-
                                   Gaps.horizontalGapOf(5),
                                   Directionality(
                                     textDirection: TextDirection.ltr,
@@ -112,16 +111,24 @@ class ServiceOverview extends StatelessWidget {
                                   // const Text("0 Reviews"),
                                 ],
                               ),
-                               Text(providers![index].companyDescription.toString()),
+                               SizedBox(
+                                 width: Get.width*0.178,
+                                 child: Text(providers![index].companyDescription.toString(),
+                                     style: ubuntuRegular.copyWith(
+                                       overflow:TextOverflow.ellipsis,
+                                       fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                                     ),textAlign: TextAlign.start,maxLines:1,softWrap: true,overflow: TextOverflow.ellipsis,
+                                 ),
+                               )// width: Get.width*0.2,
                             ],
                           ),
                         ],
                       ),
-                      Gaps.horizontalGapOf(5),
+                       Gaps.horizontalGapOf(6),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                           Text("within${providers[index].distance!.toInt()}miles"),
+                           Text("with in ${providers[index].distance!.toInt()} miles"),
 
                           ElevatedButton(
                             onPressed: () {
@@ -140,9 +147,9 @@ class ServiceOverview extends StatelessWidget {
                                   )
                               );
                             },
-                            child: Text('${"add".tr} +',style: ubuntuRegular.copyWith(color: Colors.white),),
+                            child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
                           ),
-/*
+                      /*
                           SizedBox(
                             height: 30,
                             child:  GetBuilder<CartController>(builder: (cartControllerInit) {
@@ -180,7 +187,7 @@ class ServiceOverview extends StatelessWidget {
                           ),
                           )
 
- */
+                       */
 
 
                         ],
@@ -190,6 +197,9 @@ class ServiceOverview extends StatelessWidget {
                 );
               },
             ),
+
+
+            */
             const SizedBox(height: 20,),
          /*   SizedBox(
               height: 115,

@@ -79,7 +79,7 @@ class ProviderReviewScreen extends StatelessWidget {
                       );
                     },
                   ),
-                ):SizedBox(height: Get.height*.4,child: const Center(child: EmptyReviewWidget())),
+                ):SizedBox(height: Get.height*.42,child: const Center(child: EmptyReviewWidget())),
               ])
             ],
             ):const Center(child: CircularProgressIndicator()),

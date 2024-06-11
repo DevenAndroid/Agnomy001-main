@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:demandium/feature/cart/widget/available_provider_widgets.dart';
 import 'package:demandium/feature/cart/widget/selected_provider_widget.dart';
 import 'package:demandium/feature/cart/widget/unselected_provider_widget.dart';
@@ -5,6 +7,7 @@ import 'package:demandium/feature/home/widget/bottom_create_post_dialog.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
 
 class ServiceCenterDialog1 extends StatefulWidget {
   final Service? service;
@@ -26,9 +29,15 @@ class ServiceCenterDialog1 extends StatefulWidget {
 }
 
 class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
+
+
+
+
+
   @override
   void initState() {
     Get.find<CartController>().setInitialCartList(widget.service!,widget.providerId);
+    fetchServiceProviders();
     super.initState();
   }
 
@@ -327,5 +336,39 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
         ),
       ),
     );
+  }
+
+
+  // api hit function
+
+  Future<void> fetchServiceProviders() async {
+    final String url = 'https://admin.agnomy.com/api/v1/customer/service/providders';
+    final String serviceId = '9308bf05-b4f3-49e4-afd1-321c4a3dccd7';
+    final String placeId = 'ChIJHdIyrYGgmoAReSIXpzjmr4Q';
+    final String zoneId = '97ecf553-b2ea-41fa-8857-d706741111b9';
+
+    final Uri uri = Uri.parse('$url?service_id=$serviceId&placeid=$placeId');
+
+    try {
+      final response = await http.get(
+        uri,
+        headers: {
+          'zoneId': zoneId,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // If the server returns an OK response, parse the JSON
+        final data = json.decode(response.body);
+        // Handle the data as needed
+        print('Response data Ankurrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $data');
+      } else {
+        // If the server did not return a 200 OK response,
+        // throw an exception.
+        print('Failed to load service providers: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 }

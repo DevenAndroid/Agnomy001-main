@@ -27,13 +27,14 @@ class WebPopularServiceView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('popular_services'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
+                      serviceList.length >= 3 ?
                       InkWell(
                         onTap: () => Get.toNamed(RouteHelper.allServiceScreenRoute("popular_services")),
                         child: Text('see_all'.tr, style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
                           decoration: TextDecoration.underline,
                           color:Get.isDarkMode ?Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6) : Theme.of(context).colorScheme.primary,
                         )),
-                      ),
+                      ):const SizedBox(),
                     ],
                   ),
                 ),
@@ -42,7 +43,9 @@ class WebPopularServiceView extends StatelessWidget {
                   onTap: (){
                     print("object1::::::::::${serviceList.length}");
                   },
-                  child: GridView.builder(
+                    child:
+               //   child:serviceList.length==0?
+                  GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       childAspectRatio:ResponsiveHelper.isMobile(context) ? 0.78 : 0.79,
@@ -58,7 +61,8 @@ class WebPopularServiceView extends StatelessWidget {
                          return ServiceWidgetVertical(service: serviceController.popularServiceList![index], isAvailable: true, fromType: '', );
                        }
                     },
-                  ),
+                  )
+                      // : const SizedBox(height: 0),
                 )
               ],
             );
