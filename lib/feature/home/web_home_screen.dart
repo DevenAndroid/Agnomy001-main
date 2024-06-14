@@ -15,6 +15,7 @@ class WebHomeScreen extends StatelessWidget {
     Get.find<BannerController>().setCurrentIndex(0, false);
     ConfigModel configModel = Get.find<SplashController>().configModel;
 
+    if(availableServiceCount > 0){}
     return CustomScrollView(
       controller: scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
@@ -28,111 +29,111 @@ class WebHomeScreen extends StatelessWidget {
           ),
         ),
         if(availableServiceCount > 0)
-        const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge)),
+          const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge)),
         if(availableServiceCount > 0)
-        const SliverToBoxAdapter(child: CategoryView()),
+          const SliverToBoxAdapter(child: CategoryView()),
         if(availableServiceCount > 0)
-        const SliverToBoxAdapter(
-          child: Center(
-            child: SizedBox(width: Dimensions.webMaxWidth,
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                WebRecommendedServiceView(),
-                SizedBox(width: Dimensions.paddingSizeLarge,),
-                Expanded(child: WebPopularServiceView()),
-              ],),
-            ),
-          ),
-        ),
-
-        if(availableServiceCount > 0)
-        const SliverToBoxAdapter(
-          child: SizedBox(height: Dimensions.paddingSizeLarge),
-        ),
-
-        if(availableServiceCount > 0)
-        SliverToBoxAdapter(
-          child: Center(
-            child: GetBuilder<ProviderBookingController>(builder: (providerController){
-              return SizedBox(
-                width: Dimensions.webMaxWidth,
-                child: GetBuilder<ServiceController>(
-                  builder: (serviceController) {
-                    return Row(
-                      children:  [
-                        if(configModel.content!.biddingStatus == 1)
-                          (serviceController.serviceContent != null && serviceController.allService != null && serviceController.allService!.isEmpty) ? const SizedBox() :
-                          SizedBox(
-                            width: providerController.providerList != null && providerController.providerList!.isNotEmpty && configModel.content?.directProviderBooking==1
-                                ? Dimensions.webMaxWidth/3.5 : Dimensions.webMaxWidth,
-                            height:  240,
-                            child: const HomeCreatePostView(),
-                          ),
-                        if(configModel.content?.directProviderBooking==1 && configModel.content!.biddingStatus == 1 && providerController.providerList != null && providerController.providerList!.isNotEmpty)
-                          const SizedBox(width: Dimensions.paddingSizeLarge+55),
-                       if(configModel.content?.directProviderBooking == 1 && serviceController.allService != null && serviceController.allService!.isNotEmpty)
-                          Expanded(child: ClipRRect(
-                            borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                            child: const HomeRecommendProvider()),
-                          ),
-                      ],
-                    );
-                  }
-                ),
-              );
-            }),
-          ),
-        ),
-        if(availableServiceCount > 0)
-        const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge,),),
-
-        if(availableServiceCount > 0)
-        const SliverToBoxAdapter(
-          child: Center(
-            child: SizedBox(width: Dimensions.webMaxWidth,
-                child: WebTrendingServiceView()
-            ),
-          ),
-        ),
-        if(availableServiceCount > 0)
-        const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge,),),
-
-        if(Get.find<AuthController>().isLoggedIn() && availableServiceCount > 0)
-        const SliverToBoxAdapter(child: Center(
-          child: SizedBox(width: Dimensions.webMaxWidth,
-            child: WebRecentlyServiceView(),
-          ),
-        )),
-
-        if(availableServiceCount > 0)
-        const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge,),),
-
-        if(availableServiceCount > 0)
-        const SliverToBoxAdapter(
-          child: Center(
-            child: SizedBox(
-              width: Dimensions.webMaxWidth,
-              child: Column(
-                children: [
-                  SizedBox(height: Dimensions.paddingSizeLarge),
-                  WebCampaignView(),
-                  SizedBox(height: Dimensions.paddingSizeLarge),
-                ],
+          const SliverToBoxAdapter(
+            child: Center(
+              child: SizedBox(width: Dimensions.webMaxWidth,
+                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  WebRecommendedServiceView(),
+                  SizedBox(width: Dimensions.paddingSizeLarge,),
+                  Expanded(child: WebPopularServiceView()),
+                ],),
               ),
             ),
           ),
-        ),
 
         if(availableServiceCount > 0)
-        const SliverToBoxAdapter(
-          child: Center(
-            child: SizedBox(
-              width: Dimensions.webMaxWidth,
-              child: WebFeatheredCategoryView(),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: Dimensions.paddingSizeLarge),
+          ),
+
+        if(availableServiceCount > 0)
+          SliverToBoxAdapter(
+            child: Center(
+              child: GetBuilder<ProviderBookingController>(builder: (providerController){
+                return SizedBox(
+                  width: Dimensions.webMaxWidth,
+                  child: GetBuilder<ServiceController>(
+                      builder: (serviceController) {
+                        return Row(
+                          children:  [
+                            if(configModel.content!.biddingStatus == 1)
+                              (serviceController.serviceContent != null && serviceController.allService != null && serviceController.allService!.isEmpty) ? const SizedBox() :
+                              SizedBox(
+                                width: providerController.providerList != null && providerController.providerList!.isNotEmpty && configModel.content?.directProviderBooking==1
+                                    ? Dimensions.webMaxWidth/3.5 : Dimensions.webMaxWidth,
+                                height:  240,
+                                child: const HomeCreatePostView(),
+                              ),
+                            if(configModel.content?.directProviderBooking==1 && configModel.content!.biddingStatus == 1 && providerController.providerList != null && providerController.providerList!.isNotEmpty)
+                              const SizedBox(width: Dimensions.paddingSizeLarge+55),
+                            if(configModel.content?.directProviderBooking == 1 && serviceController.allService != null && serviceController.allService!.isNotEmpty)
+                              Expanded(child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                  child: const HomeRecommendProvider()),
+                              ),
+                          ],
+                        );
+                      }
+                  ),
+                );
+              }),
             ),
           ),
-        ),
         if(availableServiceCount > 0)
-        const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge)),
+          const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge,),),
+
+        if(availableServiceCount > 0)
+          const SliverToBoxAdapter(
+            child: Center(
+              child: SizedBox(width: Dimensions.webMaxWidth,
+                  child: WebTrendingServiceView()
+              ),
+            ),
+          ),
+        if(availableServiceCount > 0)
+          const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge,),),
+
+        if(Get.find<AuthController>().isLoggedIn() && availableServiceCount > 0)
+          const SliverToBoxAdapter(child: Center(
+            child: SizedBox(width: Dimensions.webMaxWidth,
+              child: WebRecentlyServiceView(),
+            ),
+          )),
+
+        if(availableServiceCount > 0)
+          const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge,),),
+
+        if(availableServiceCount > 0)
+          const SliverToBoxAdapter(
+            child: Center(
+              child: SizedBox(
+                width: Dimensions.webMaxWidth,
+                child: Column(
+                  children: [
+                    SizedBox(height: Dimensions.paddingSizeLarge),
+                    WebCampaignView(),
+                    SizedBox(height: Dimensions.paddingSizeLarge),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+        if(availableServiceCount > 0)
+          const SliverToBoxAdapter(
+            child: Center(
+              child: SizedBox(
+                width: Dimensions.webMaxWidth,
+                child: WebFeatheredCategoryView(),
+              ),
+            ),
+          ),
+        if(availableServiceCount > 0)
+          const SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeLarge)),
 
         if(availableServiceCount > 0)
           SliverToBoxAdapter(child: Center(

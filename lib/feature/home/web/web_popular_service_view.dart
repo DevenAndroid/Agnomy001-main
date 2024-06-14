@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demandium/components/service_widget_vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +18,7 @@ class WebPopularServiceView extends StatelessWidget {
           return const SizedBox();
         }else{
           if(serviceController.popularServiceList != null){
-            List<Service>? serviceList = serviceController.popularServiceList!.where((element) => element.providerCount !=0 ).toList();
+            // List<Service>? serviceList = serviceController.popularServiceList!.where((element) => element.providerCount !=0 ).toList();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -27,7 +29,7 @@ class WebPopularServiceView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('popular_services'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
-                      serviceList.length >= 3 ?
+                      serviceController.popularServiceList!.length >= 3 ?
                       InkWell(
                         onTap: () => Get.toNamed(RouteHelper.allServiceScreenRoute("popular_services")),
                         child: Text('see_all'.tr, style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
@@ -39,30 +41,23 @@ class WebPopularServiceView extends StatelessWidget {
                   ),
                 ),
 
-                InkWell(
-                  onTap: (){
-                    print("object1::::::::::${serviceList.length}");
+                GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    childAspectRatio:ResponsiveHelper.isMobile(context) ? 0.78 : 0.79,
+                    crossAxisSpacing: Dimensions.paddingSizeDefault,
+                    mainAxisSpacing: Dimensions.paddingSizeDefault,
+                  ),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                  itemCount:   serviceController.popularServiceList!.length > 7 ? 8 : serviceController.popularServiceList!.length,
+                  itemBuilder: (context, index){
+
+                     // if(serviceController.serviceContent!.serviceList![index].providerCount.toString()!="0") {
+                       return ServiceWidgetVertical(service: serviceController.popularServiceList![index], isAvailable: true, fromType: '', );
+                     // }
                   },
-                    child:
-               //   child:serviceList.length==0?
-                  GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio:ResponsiveHelper.isMobile(context) ? 0.78 : 0.79,
-                      crossAxisSpacing: Dimensions.paddingSizeDefault,
-                      mainAxisSpacing: Dimensions.paddingSizeDefault,
-                    ),
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                    itemCount:   serviceList!.length > 7 ? 8 : serviceList.length,
-                    itemBuilder: (context, index){
-                       if(serviceController.serviceContent!.serviceList![index].providerCount.toString()!="0") {
-                         return ServiceWidgetVertical(service: serviceController.popularServiceList![index], isAvailable: true, fromType: '', );
-                       }
-                    },
-                  )
-                      // : const SizedBox(height: 0),
                 )
               ],
             );

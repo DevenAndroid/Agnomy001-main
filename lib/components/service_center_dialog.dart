@@ -161,7 +161,8 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog> {
                                               // Expanded(child: SizedBox()),
                                               Expanded( flex:1,
                                                 child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                                                  cartControllerInit.initialCartList[index].quantity > 0 ? InkWell(
+                                                  cartControllerInit.initialCartList[index].quantity > 0 ?
+                                                  InkWell(
                                                     onTap: (){
                                                       cartController.updateQuantity(index, false);
                                                     },

@@ -47,15 +47,24 @@ class ServiceViewVertical extends GetView<ServiceController> {
             itemBuilder: (context, index) {
               bool isAvailable = service![index].isActive  == 0  ? false:true;
               controller.getServiceDiscount(service![index]);
-              return service![index].providerCount!.toInt() == 0 ? null :
-                ServiceWidgetVertical(service: service![index],  isAvailable: isAvailable,fromType: '',fromPage: fromPage??"");
-            },
+                    if(service![index].providerCount.toString()!="0") {
+                      return
+                        // service![index].providerCount!.toInt() == 0
+                        //   ? null
+                        //   :
+                      ServiceWidgetVertical(service: service![index],
+                          isAvailable: isAvailable,
+                          fromType: '',
+                          fromPage: fromPage ?? "");
+                    }
+              },
           ) : length == 0 ?
           Center(
             child: SizedBox(
                 height: MediaQuery.of(context).size.height*.6,
                 child: ServiceNotAvailableScreen(fromPage: fromPage ?? "",)),
-          ) :
+          )
+              :
           GridView.builder(
             key: UniqueKey(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

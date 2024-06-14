@@ -6,7 +6,7 @@ class ServicewiseProviderModel {
 
   ServicewiseProviderModel(
       {this.responseCode, this.message, this.content,
-      //  this.errors
+        //  this.errors
       });
 
   ServicewiseProviderModel.fromJson(Map<String, dynamic> json) {
@@ -44,6 +44,10 @@ class Content {
   String? providerId;
   String? name;
   int? distance;
+  int value = 0;
+  bool isAdding = false;
+  bool isRemove = false;
+
 
   Content({this.providerId, this.name, this.distance});
 
@@ -51,6 +55,7 @@ class Content {
     providerId = json['provider_id'];
     name = json['name'];
     distance = json['distance'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -58,6 +63,7 @@ class Content {
     data['provider_id'] = this.providerId;
     data['name'] = this.name;
     data['distance'] = this.distance;
+
     return data;
   }
 }

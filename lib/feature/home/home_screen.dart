@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
       Get.find<BannerController>().getBannerList(reload);
     }else{
       final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
-      Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value,distance: int.parse(serviceController.servicevalue));
+      Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value, distance: int.parse(serviceController.servicevalue));
       Get.find<BannerController>().getBannerList(reload);
       Get.find<CategoryController>().getCategoryList(1,reload);
       Get.find<ServiceController>().getPopularServiceList( offset: 1,reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue) );

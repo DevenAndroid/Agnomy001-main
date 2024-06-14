@@ -142,7 +142,7 @@ class ServiceController extends GetxController implements GetxService {
       if(reload){
         _allService = null;
       }
-      Response response = await serviceRepo.getAllServiceList(offset: offset,placeID: placeId,distance: distance);
+      Response response = await serviceRepo.getAllServiceList( offset: offset,placeID: placeId,distance: distance);
       if (response.statusCode == 200) {
         if(reload){
           _allService = [];
@@ -173,6 +173,7 @@ class ServiceController extends GetxController implements GetxService {
 
         if(_popularServiceList != null && offset != 1){
           _popularServiceList!.addAll(_popularBasedServiceContent!.serviceList!);
+
         }else{
           _popularServiceList = [];
           _popularServiceList!.addAll(_popularBasedServiceContent!.serviceList!);

@@ -85,6 +85,7 @@ class ServiceWidgetVertical extends StatelessWidget {
           children: [
              Container(
               decoration: BoxDecoration(
+                // color: Colors.red,
                  color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                 boxShadow: Get.isDarkMode ? null : cardShadow2,
@@ -477,8 +478,11 @@ class ServiceWidgetVertical extends StatelessWidget {
                 ),
               ),
             ),
+
+
+
+
             Positioned.fill(child: RippleButton(onTap: () {
-              print("ANKURRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
               print("placeid:::${placedIdGloabal.value}");
               if (fromPage == "search_page") {
                 print("search page");
@@ -495,7 +499,7 @@ class ServiceWidgetVertical extends StatelessWidget {
             }))
           ],
         ),
-        //add to cart button
+        // add to cart button
         if (fromType != 'fromCampaign')
           Align(
             alignment: Get.find<LocalizationController>().isLtr

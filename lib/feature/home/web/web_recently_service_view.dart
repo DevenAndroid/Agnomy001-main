@@ -20,13 +20,14 @@ class WebRecentlyServiceView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('recently_view_services'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
-                  InkWell(
+                  serviceController.recentlyViewServiceList!.length >=3
+                  ?  InkWell(
                     onTap: () => Get.toNamed(RouteHelper.allServiceScreenRoute("recently_view_services")),
                     child: Text('see_all'.tr, style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
                       decoration: TextDecoration.underline,
                       color:Get.isDarkMode ?Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6) : Theme.of(context).colorScheme.primary,
                     )),
-                  ),
+                  ) : SizedBox(height: 0,width: 0,)
                 ],
               ),
               const SizedBox(height: Dimensions.paddingSizeLarge,),
@@ -42,8 +43,14 @@ class WebRecentlyServiceView extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: serviceController.recentlyViewServiceList!.length>5?5:serviceController.recentlyViewServiceList!.length,
                 itemBuilder: (context, index) {
-                  return ServiceWidgetVertical(service: serviceController.recentlyViewServiceList![index],  isAvailable: true,fromType: '',);
-                },
+        //   if(serviceController.serviceContent!.serviceList![index].providerCount.toString()!="0"
+        // || serviceController.serviceContent!.serviceList![index].providerCount == null ) {
+      return ServiceWidgetVertical(
+        service: serviceController.recentlyViewServiceList![index],
+        isAvailable: true,
+        fromType: '',);
+
+                  },
               )
             ],
           );

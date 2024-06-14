@@ -72,7 +72,7 @@ class _PaginatedListViewState extends State<PaginatedListView> {
       Get.find<CreatePostController>().resetCreatePostValue();
     }
   }
-
+// final <ServiceController>
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +93,7 @@ class _PaginatedListViewState extends State<PaginatedListView> {
         padding: (_isLoading || ResponsiveHelper.isDesktop(context)) ? const EdgeInsets.all(Dimensions.paddingSizeSmall) : EdgeInsets.zero,
         child: _isLoading ?
         const CircularProgressIndicator() : (ResponsiveHelper.isDesktop(context) && widget.totalSize != null) ?
+            // serviceController.allService.length >= 4 ?
         InkWell(
           radius: 50,
           onTap: _paginate,

@@ -333,7 +333,7 @@ class CartController extends GetxController implements GetxService {
               await addToCartApi(_initialCartList[index]);
             }
           }
-         await getCartListFromServer();
+          await getCartListFromServer();
           _isLoading = false;
           Get.back();
           if(fromServiceCenterDialog){

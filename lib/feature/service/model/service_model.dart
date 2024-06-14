@@ -129,7 +129,7 @@ class Service {
   int? ratingCount;
   double? avgRating;
   String? createdAt;
-  int? providerCount;
+  dynamic providerCount;
   double? maxDistanceProvider;
   List<Providers>? providers;
   String? updatedAt;
