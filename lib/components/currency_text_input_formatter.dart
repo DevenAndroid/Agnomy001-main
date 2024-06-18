@@ -2,8 +2,9 @@
 import 'dart:math';
 
 
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
+import 'core_export.dart';
 
 class CurrencyTextInputFormatter extends TextInputFormatter {
   CurrencyTextInputFormatter({

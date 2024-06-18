@@ -1,6 +1,7 @@
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/checkout/widget/order_details_section/provider_details_card.dart';
 import 'package:demandium/feature/checkout/widget/order_details_section/wallet_payment_card.dart';
+import 'package:demandium/feature/checkout/widget/payment_section/quote_list.dart';
 import 'package:get/get.dart';
 
 class OrderDetailsPage extends StatelessWidget {
@@ -23,7 +24,8 @@ class OrderDetailsPage extends StatelessWidget {
 
       showWalletPaymentCart? const WalletPaymentCard(fromPage: 'checkout',): const SizedBox(),
 
-      const CartSummery()
+        CartSummery()
+      //QuoteList()
 
     ]));
   }

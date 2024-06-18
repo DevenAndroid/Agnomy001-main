@@ -68,7 +68,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               CheckoutHeaderWidget(pageState: widget.pageState,),
 
               checkoutController.currentPageState == PageState.orderDetails  && PageState.orderDetails.name == widget.pageState ? ResponsiveHelper.isDesktop(context) ?
-              const OrderDetailsPageWeb() :  const OrderDetailsPage() : checkoutController.currentPageState == PageState.payment || PageState.payment.name == widget.pageState ?
+               OrderDetailsPageWeb() :  const OrderDetailsPage() : checkoutController.currentPageState == PageState.payment || PageState.payment.name == widget.pageState ?
               PaymentPage(addressId: widget.addressId, tooltipController: tooltipController,fromPage: "checkout",) :
               CompletePage(token: widget.token,),
 

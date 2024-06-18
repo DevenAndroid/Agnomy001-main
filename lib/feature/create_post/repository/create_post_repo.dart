@@ -3,6 +3,8 @@ import 'package:demandium/feature/create_post/model/create_post_body.dart';
 import 'package:demandium/utils/app_constants.dart';
 import 'package:get/get.dart';
 
+import '../../../components/service_center_dialog1.dart';
+
 class CreatePostRepo{
   final ApiClient apiClient;
   CreatePostRepo({required this.apiClient});
@@ -47,8 +49,9 @@ class CreatePostRepo{
   Future<Response>  makePayment({String? paymentMethod,String? postId, String? providerId, String? address,
     String? serviceAddressID,String? schedule,String? zoneId, int? isPartial, String? offlinePaymentId, String? customerInformation
   }) async {
+    print(" that is api in call 2 ");
     return await apiClient.postData(AppConstants.placeRequest, {
-      "payment_method": paymentMethod,
+      "payment_method": "offline_payment", //paymentMethod,
       "zone_id": zoneId,
       "service_schedule": schedule,
       "service_address_id": serviceAddressID,
@@ -57,7 +60,8 @@ class CreatePostRepo{
       "provider_id":providerId,
       "is_partial" : isPartial,
       "offline_payment_id" : offlinePaymentId,
-      "customer_information" : customerInformation
+      "customer_information" : customerInformation,
+      "quote_id":quote_id,
     });
   }
 }

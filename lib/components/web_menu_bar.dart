@@ -30,10 +30,12 @@ class WebMenuBar extends StatelessWidget implements PreferredSizeWidget {
                   const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                   Icon(locationController.getUserAddress()!.addressType == 'home' ?
                   Icons.home_filled : locationController.getUserAddress()!.addressType == 'office' ? Icons.work : Icons.location_on,
-                    size: 20, color: Theme.of(context).textTheme.bodyLarge!.color,
+                    size: 18, color: Theme.of(context).textTheme.bodyLarge!.color,
                   ),
                   const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                  Flexible( child: Text( locationController.getUserAddress()?.address ?? "",
+                  Flexible(
+                      flex: 2,
+                      child: Text( locationController.getUserAddress()?.address ?? "",
                     style: ubuntuRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge?.color, fontSize: Dimensions.fontSizeExtraSmall,),
                     maxLines: 1, overflow: TextOverflow.ellipsis,
                   )),

@@ -131,9 +131,16 @@ class _SelectAddressDialogState extends State<SelectAddressDialog> {
                   buttonText: "use_my_current_location".tr,
                   icon: Icons.my_location,backgroundColor: Colors.transparent,transparent: true,
                   onPressed: (){
-                    Get.back();
-                    Get.toNamed(RouteHelper.getEditAddressRoute(Get.find<LocationController>().getUserAddress()??Get.find<LocationController>().selectedAddress??AddressModel(), true));
-                  },
+               try {
+                 Get.back();
+                 Get.toNamed(RouteHelper.getEditAddressRoute(Get.find<LocationController>().getUserAddress()??Get.find<LocationController>().selectedAddress??AddressModel(), true));
+
+               }
+               catch (e) {
+                 print(" AnkuRRRRRRRRRRRRRRRRRRRRRRRRRRR${e.toString()}");
+                 customSnackBar("${e.toString()}",duration:1000);
+               }
+                 },
                 ),
               ),
 

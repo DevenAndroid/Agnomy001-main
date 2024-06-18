@@ -22,9 +22,9 @@ class CheckoutHeaderWidget extends StatelessWidget {
               const CustomHeaderLine(color: Color(0xffFF833D), gradientColor1: Color(0xffFDA21A), gradientColor2: Colors.orangeAccent,) :
               const CustomHeaderLine(gradientColor1: Colors.deepOrange, gradientColor2: Colors.orangeAccent),
 
-              CustomHeaderIcon(assetIconSelected: Images.paymentSelected, assetIconUnSelected: Images.paymentUnSelected,
-                isActiveColor: controller.currentPageState == PageState.payment ? true : false,
-              ),
+              // CustomHeaderIcon(assetIconSelected: Images.paymentSelected, assetIconUnSelected: Images.paymentUnSelected,
+              //   isActiveColor: controller.currentPageState == PageState.payment ? true : false,
+              // ),
 
               controller.cancelPayment ?
               const CustomHeaderLine(cancelOrder: true, gradientColor1: Colors.grey, gradientColor2: Colors.grey,) : controller.currentPageState == PageState.payment ?
@@ -80,7 +80,8 @@ class CheckoutHeaderWidget extends StatelessWidget {
           child: Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,  crossAxisAlignment: CrossAxisAlignment.center, children:  [
             CustomText( text: "booking_details".tr, isActive :controller.currentPageState == PageState.orderDetails && PageState.orderDetails.name == pageState),
             Padding(padding: const EdgeInsets.only(right: 25.0),
-              child: CustomText(text: "payment".tr,isActive :controller.currentPageState == PageState.payment || PageState.payment.name == pageState),
+
+             // child: CustomText(text: "payment".tr,isActive :controller.currentPageState == PageState.payment || PageState.payment.name == pageState),
             ),
             CustomText(text: "complete".tr,isActive : controller.currentPageState == PageState.complete  || pageState == 'complete'),
           ]),

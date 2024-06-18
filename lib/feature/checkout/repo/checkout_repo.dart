@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:demandium/components/core_export.dart';
+import 'package:demandium/components/service_center_dialog1.dart';
 import 'package:get/get.dart';
 
 
@@ -16,8 +17,10 @@ class CheckoutRepo extends GetxService {
     required String zoneId, required int isPartial, required String offlinePaymentId, required String customerInformation
   }) async {
     String address = jsonEncode(serviceAddress);
+    print(" that is api in call 1 ");
     return await apiClient.postData(AppConstants.placeRequest, {
-      "payment_method" : paymentMethod,
+     // "payment_method" : paymentMethod,
+     "payment_method": "offline_payment",
       "zone_id" : zoneId,
       "service_schedule" : schedule,
       "service_address_id" : serviceAddressID,
@@ -25,7 +28,8 @@ class CheckoutRepo extends GetxService {
       "service_address" : address,
       "is_partial" : isPartial,
       "offline_payment_id" : offlinePaymentId,
-      "customer_information" : customerInformation
+      "customer_information" : customerInformation,
+      "quote_id":quote_id,
     });
   }
 }
