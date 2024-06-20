@@ -85,7 +85,8 @@ class CartServiceWidget extends StatelessWidget {
                                           SizedBox(
                                             width: Get.width * 0.4,
                                             child: Text(
-                                             cart.provider!.companyName.toString(),
+                                              "",
+                                             // cart.provider!.companyName.toString(),
                                               // "",
                                               // cart.variantKey,
                                               style: ubuntuMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6), fontSize: Dimensions.fontSizeDefault),

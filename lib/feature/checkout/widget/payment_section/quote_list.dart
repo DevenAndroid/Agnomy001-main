@@ -20,7 +20,7 @@ class _QuoteListState extends State<QuoteList> {
   @override
 @override
   void initState() {
-
+    print("getQuoteList");
     final quoteId ='2176e147-6233-4468-8104-24b4b320628b';
     getQuoteList(quoteId);
     super.initState();
@@ -179,14 +179,22 @@ Rx<QuotesListModel> quotesListModel= QuotesListModel().obs;
 RxBool success = false.obs;
 
 Future<QuotesListModel> getQuoteList(String quoteId) async {
+  print("quoteId:=${quoteId}");
   final url ='https://admin.agnomy.com/api/v1/customer/quote-list?quote_id=$quoteId'; //'https://admin.agnomy.com/api/v1/customer/quote-list?guest_id=$guestId';
-  final response = await http.get(Uri.parse(url));
+  final headers = {
+    'Accept' : 'application/json',
+    'Authorization': "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}",
+  };
+
+  final response = await http.get(Uri.parse(url), headers: headers);
+  // final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    print('Response data: ${response.body}');
+    print('Response data: 1${response.body}');
+    print("QuotesListModel");
     return QuotesListModel.fromJson(json.decode(response.body));
   } else {
-    print('Failed to load quotes. Status code: ${response.statusCode}');
+    print('Failed to load quotes. Status code: 1${response.statusCode}');
     return QuotesListModel.fromJson(json.decode(response.body));
   }
 
@@ -221,23 +229,23 @@ Future<QuotesListModel> getQuoteList(String quoteId) async {
 
 
 // post api
-Future<void> checkoutSummeryApiCall() async {
-  var url = Uri.parse('https://admin.agnomy.com/api/v1/customer/checkout-summery');
-
-  var request = http.MultipartRequest('POST', url)
-    ..fields['question_input'] = 'dsafdsf'
-    ..fields['service_description'] = 'd333333333'
-    ..fields['quote_id'] = '46536da6-ed71-4ef8-a83f-c864c30ec9f0';
-
-  try {
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      var responseData = await http.Response.fromStream(response);
-      print('Response data: ${responseData.body}');
-    } else {
-      print('Request failed with status: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error: $e');
-  }
-}
+// Future<void> checkoutSummeryApiCall() async {
+//   var url = Uri.parse('https://admin.agnomy.com/api/v1/customer/checkout-summery');
+//
+//   var request = http.MultipartRequest('POST', url)
+//     ..fields['question_input'] = 'dsafdsf'
+//     ..fields['service_description'] = 'd333333333'
+//     ..fields['quote_id'] = '46536da6-ed71-4ef8-a83f-c864c30ec9f0';
+//
+//   try {
+//     var response = await request.send();
+//     if (response.statusCode == 200) {
+//       var responseData = await http.Response.fromStream(response);
+//       print('Response data: ${responseData.body}');
+//     } else {
+//       print('Request failed with status: ${response.statusCode}');
+//     }
+//   } catch (e) {
+//     print('Error: $e');
+//   }
+// }

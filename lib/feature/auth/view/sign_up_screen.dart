@@ -75,7 +75,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     const ConditionCheckBox(),
                     const SizedBox(height: Dimensions.paddingSizeExtraLarge),
-                    !authController.isLoading! ? CustomButton(
+                    !authController.isLoading! ?
+                    CustomButton(
                       buttonText: 'sign_up'.tr,
                       onPressed: authController.acceptTerms
                           ? () => _register(authController)

@@ -423,33 +423,34 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
                                                                                   SizedBox(
                                                                                     width: 6,
                                                                                   ),
-
-                                                                                  InkWell(
-                                                                                    onTap: () {
-                                                                                      if (servicewiseProviderModel.value.content![index].value > 0) {
-                                                                                        servicewiseProviderModel.value.content![index].value--;
-                                                                                        servicewiseProviderModel.value.content![index].isRemove = !servicewiseProviderModel.value.content![index].isRemove;
-                                                                                        removeOneServiceIDs(index);
-                                                                                        cartControllerInit.update();
-                                                                                      }
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      height: 30,
-                                                                                      width: 30,
-                                                                                      margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                                                                                      decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).colorScheme.secondary),
-                                                                                      alignment: Alignment.center,
-                                                                                      child: Icon(
-                                                                                        Icons.remove,
-                                                                                        size: 15,
-                                                                                        color: Theme.of(context).cardColor,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
+                                                                                  servicewiseProviderModel.value.content![index].value == 1
+                                                                                      ? InkWell(
+                                                                                          onTap: () {
+                                                                                            if (servicewiseProviderModel.value.content![index].value > 0) {
+                                                                                              servicewiseProviderModel.value.content![index].value--;
+                                                                                              servicewiseProviderModel.value.content![index].isRemove = !servicewiseProviderModel.value.content![index].isRemove;
+                                                                                              removeOneServiceIDs(index);
+                                                                                              cartControllerInit.update();
+                                                                                            }
+                                                                                          },
+                                                                                          child: Container(
+                                                                                            height: 30,
+                                                                                            width: 30,
+                                                                                            margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                                                                                            decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).colorScheme.secondary),
+                                                                                            alignment: Alignment.center,
+                                                                                            child: Icon(
+                                                                                              Icons.remove,
+                                                                                              size: 15,
+                                                                                              color: Theme.of(context).cardColor,
+                                                                                            ),
+                                                                                          ),
+                                                                                        )
+                                                                                      : SizedBox(),
                                                                                   Text(
                                                                                     '${servicewiseProviderModel.value.content![index].value}',
                                                                                   ),
-                                                                servicewiseProviderModel.value.content![index].value == 0     ?InkWell(
+                                                                                  InkWell(
                                                                                       onTap: () {
                                                                                         if (servicewiseProviderModel.value.content![index].value < 1) {
                                                                                           // print("IDS${id}");
@@ -475,7 +476,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
                                                                                           size: 15,
                                                                                           color: Theme.of(context).cardColor,
                                                                                         ),
-                                                                                      )): SizedBox(),
+                                                                                      ))
                                                                                 ],
                                                                               ),
                                                                             ],
@@ -501,46 +502,53 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
                               children: [
                                 CustomButton(
                                     onPressed: () async {
-                                      await createQuote();
-                                      print("Get Quote Button first pop");
-                                      if (Get.find<SplashController>()
-                                                  .configModel
-                                                  .content
-                                                  ?.guestCheckout ==
-                                              0 &&
-                                          !Get.find<AuthController>()
-                                              .isLoggedIn()) {
-                                        Get.toNamed(
-                                            RouteHelper.getNotLoggedScreen(
-                                                RouteHelper.cart, "cart"));
+                                      if (serviceProviderIDs!.isNotEmpty) {
+                                        await createQuote();
+                                        print("Get Quote Button first pop");
+                                        if (Get.find<SplashController>()
+                                                    .configModel
+                                                    .content
+                                                    ?.guestCheckout ==
+                                                0 &&
+                                            !Get.find<AuthController>()
+                                                .isLoggedIn()) {
+                                          Get.toNamed(
+                                              RouteHelper.getNotLoggedScreen(
+                                                  RouteHelper.cart, "cart"));
+                                        } else {
+                                          Get.find<CheckOutController>()
+                                              .updateState(
+                                                  PageState.orderDetails);
+                                          Get.toNamed(
+                                              RouteHelper.getCheckoutRoute(
+                                                  'cart',
+                                                  'orderDetails',
+                                                  'null'));
+                                        }
+                                        // Get.to(CheckoutScreen(
+                                        //   Get.parameters.containsKey('flag') &&
+                                        //           Get.parameters['flag']! ==
+                                        //               'success'
+                                        //       ? 'complete'
+                                        //       : Get.parameters['currentPage']
+                                        //           .toString(),
+                                        //   Get.parameters['addressID'] != null
+                                        //       ? Get.parameters['addressID']!
+                                        //       : 'null',
+                                        //   reload: Get.parameters['reload']
+                                        //                   .toString() ==
+                                        //               "true" ||
+                                        //           Get.parameters['reload']
+                                        //                   .toString() ==
+                                        //               "null"
+                                        //       ? true
+                                        //       : false,
+                                        //   token: Get.parameters["token"],
+                                        // ));
                                       } else {
-                                        Get.find<CheckOutController>()
-                                            .updateState(
-                                                PageState.orderDetails);
-                                        Get.toNamed(
-                                            RouteHelper.getCheckoutRoute('cart',
-                                                'orderDetails', 'null'));
+                                        customSnackBar("please any one add to provider",duration:2);
+                                        //snackbar
                                       }
-                                      // Get.to(CheckoutScreen(
-                                      //   Get.parameters.containsKey('flag') &&
-                                      //           Get.parameters['flag']! ==
-                                      //               'success'
-                                      //       ? 'complete'
-                                      //       : Get.parameters['currentPage']
-                                      //           .toString(),
-                                      //   Get.parameters['addressID'] != null
-                                      //       ? Get.parameters['addressID']!
-                                      //       : 'null',
-                                      //   reload: Get.parameters['reload']
-                                      //                   .toString() ==
-                                      //               "true" ||
-                                      //           Get.parameters['reload']
-                                      //                   .toString() ==
-                                      //               "null"
-                                      //       ? true
-                                      //       : false,
-                                      //   token: Get.parameters["token"],
-                                      // ));
                                     },
                                     backgroundColor:
                                         Theme.of(context).colorScheme.secondary,
@@ -769,6 +777,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
       ServicewiseProviderModel().obs;
   RxBool success = false.obs;
 
+
   Future<ServicewiseProviderModel> fetchServiceProviders() async {
     final String url =
         'https://admin.agnomy.com/api/v1/customer/service/providders';
@@ -776,10 +785,12 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
     final String placeId = placedIdGloabal.value;
     final String? zoneId = addressModel?.zoneId.toString(); //
     final Uri uri = Uri.parse('$url?service_id=$serviceId&placeid=$placeId');
+    print("zoneId${zoneId.toString()}");
     final response = await http.get(
       uri,
       headers: {
         'zoneId': zoneId.toString(),
+        'Authorization':"Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
       },
     );
 
@@ -800,11 +811,16 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
     final String categoryID = widget.service!.categoryId.toString();
     final String subCategoryID = widget.service!.subCategoryId.toString();
 
-    final url =
-        Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
+    final url = Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
+    print("token 3${ Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+    print("getGuestId${ Get.find<SplashController>().getGuestId()}");
 
     final request = http.MultipartRequest('POST', url)
       ..headers['Accept'] = 'application/json'
+      ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
+       // ..headers['Authorization']= Get.find<SplashController>().splashRepo.apiClient.token.toString() //
+      //'Bearer YOUR_ACCESS_TOKEN_HERE'//  HttpHeaders.authorizationHeader: "Bearer ${user.user!.token}"
+
       ..fields['service_id'] =
           serviceId //'0d6aa3e6-20f3-4d36-83b2-ebf024ddf39e'
       ..fields['category_id'] =
@@ -812,8 +828,8 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
       ..fields['sub_category_id'] =
           subCategoryID //'eaa49fe9-ae1c-41de-862f-9753d7fa20da'
       ..fields['guest_id'] = Get.find<SplashController>().getGuestId();
-    print(
-        "Listttttttttttttttttt${jsonEncode(serviceProviderIDs)}"); //'0d6aa3e6-20f3-4d36-83b2-ebf024ddf39f';
+    print("Listttttttttttttttttt${jsonEncode(serviceProviderIDs)}");
+    //'0d6aa3e6-20f3-4d36-83b2-ebf024ddf39f';
 
     // Add provider[] as repeated fields
     request.fields['provider'] = serviceProviderIDs != null

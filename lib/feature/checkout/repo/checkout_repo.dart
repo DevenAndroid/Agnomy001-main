@@ -18,7 +18,19 @@ class CheckoutRepo extends GetxService {
   }) async {
     String address = jsonEncode(serviceAddress);
     print(" that is api in call 1 ");
-    return await apiClient.postData(AppConstants.placeRequest, {
+    print(" zoneId${zoneId}");
+    print("schedule${schedule}");
+    print("serviceAddressID${serviceAddressID} ");
+    print(" Get.find<SplashController>().getGuestId()${ Get.find<SplashController>().getGuestId()}");
+    print("address${address}");
+    print("isPartial${isPartial}");
+    print("offlinePaymentId${offlinePaymentId}");
+    print("customerInformation${customerInformation}");
+    print("quote_id${quote_id}");
+    print("token${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+    return await apiClient.postData(AppConstants.placeRequest,headers: {
+      'Authorization': "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}",
+    }, {
      // "payment_method" : paymentMethod,
      "payment_method": "offline_payment",
       "zone_id" : zoneId,

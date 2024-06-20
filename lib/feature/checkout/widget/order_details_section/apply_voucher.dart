@@ -25,7 +25,8 @@ class ApplyVoucher extends StatelessWidget {
             ),
           )]
         )
-      )),
+      )
+      ),
     );
   }
 }

@@ -333,23 +333,36 @@ class _CartSummeryState extends State<CartSummery> {
     });
   }
 
+
+
   //get api call
   Rx<QuotesListModel> quotesListModel = QuotesListModel().obs;
   RxBool success = false.obs;
 
   Future<void> getQuoteList() async {
     final url =
-        'https://admin.agnomy.com/api/v1/customer/quote-list?quote_id=$quote_id'; //'https://admin.agnomy.com/api/v1/customer/quote-list?guest_id=$guestId';
-    final response = await http.get(Uri.parse(url));
+        'https://admin.agnomy.com/api/v1/customer/quote-list?quote_id=$quote_id';
+    final headers = {
+      'Accept' : 'application/json',
+      'Authorization': "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}",
+    };
+
+    final response = await http.get(Uri.parse(url), headers: headers);
+
+    // final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      print('Response data: ${response.body}');
-      refereshInt.value = DateTime.now().microsecondsSinceEpoch;
-      quotesListModel.value =
-          QuotesListModel.fromJson(json.decode(response.body));
+      print('Response data: 2${response.body}');
+
+      setState(() {
+        refereshInt.value = DateTime.now().microsecondsSinceEpoch;
+      });
+
+      quotesListModel.value = QuotesListModel.fromJson(json.decode(response.body));
+      print("DAta+=${quotesListModel.value.message.toString()}");
       Get.find<CartController>().update();
     } else {
-      print('Failed to load quotes. Status code: ${response.statusCode}');
+      print('Failed to load quotes. Status code: 2${response.statusCode}');
       refereshInt.value = DateTime.now().microsecondsSinceEpoch;
       quotesListModel.value =
           QuotesListModel.fromJson(json.decode(response.body));

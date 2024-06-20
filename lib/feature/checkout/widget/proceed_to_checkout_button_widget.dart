@@ -24,6 +24,10 @@ class ProceedToCheckoutButtonWidget extends StatefulWidget {
 class _ProceedToCheckoutButtonWidgetState
     extends State<ProceedToCheckoutButtonWidget> {
   Future<void> checkoutSummeryApiCall() async {
+    print("proceed_to_checkout");
+    print("question_input");
+    print("quote_id${quote_id}");
+    print("quote_id${quote_id}");
     if (questionController.text != null &&
         messageController.text != null &&
         questionController.text.isNotEmpty &&
@@ -32,6 +36,7 @@ class _ProceedToCheckoutButtonWidgetState
           'https://admin.agnomy.com/api/v1/customer/checkout-summery');
 
       var request = http.MultipartRequest('POST', url)
+        ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
         ..fields['question_input'] = questionController.text
         ..fields['service_description'] = messageController.text
         ..fields['quote_id'] = quote_id;
@@ -40,7 +45,7 @@ class _ProceedToCheckoutButtonWidgetState
         var response = await request.send();
         if (response.statusCode == 200) {
           var responseData = await http.Response.fromStream(response);
-          print('Response data: ${responseData.body}');
+          print('Response data checkoutSummeryApiCall: ${responseData.body}');
 
         } else {
           customSnackBar(
@@ -108,7 +113,49 @@ class _ProceedToCheckoutButtonWidgetState
                   if (Get.find<CartController>().cartList.isEmpty) {
                     print('if 1');
 
-                    Get.offAllNamed(RouteHelper.getMainRoute('home'));
+                    if (questionController.text != null &&
+                        messageController.text != null &&
+                        questionController.text.isNotEmpty &&
+                        messageController.text.isNotEmpty)
+
+                    {
+                      checkoutController.updateState(PageState.payment);
+                      if (GetPlatform.isWeb) {
+                        // Get.toNamed(RouteHelper.getCheckoutRoute(
+                        //   'cart',
+                        //   Get.find<CheckOutController>()
+                        //       .currentPageState.name,
+                        //   widget.pageState == 'payment'
+                        //       ? widget.addressId
+                        //       : addressModel.id.toString(),
+                        //   reload: false,
+                        // ));
+
+                        checkoutController.placeBookingRequest(
+                          paymentMethod: "cash_after_service",
+                          schedule: schedule,
+                          isPartial: isPartialPayment &&
+                              cartController.walletPaymentStatus
+                              ? 1
+                              : 0,
+                          address: addressModel!,
+                        );
+
+                      }
+
+
+
+                      checkoutSummeryApiCall();
+
+                    }
+
+                    else {
+                      print("error in textfrom feild");
+                      customSnackBar("please enter the field it is required",duration:2);
+
+                    }
+
+                   // Get.offAllNamed(RouteHelper.getMainRoute('home'));
                   } else if (cartController.cartList.isNotEmpty &&
                       cartController.preSelectedProvider &&
                       cartController.cartList[0].provider != null &&

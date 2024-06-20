@@ -133,6 +133,7 @@ class _SelectAddressDialogState extends State<SelectAddressDialog> {
                   onPressed: (){
                try {
                  Get.back();
+
                  Get.toNamed(RouteHelper.getEditAddressRoute(Get.find<LocationController>().getUserAddress()??Get.find<LocationController>().selectedAddress??AddressModel(), true));
 
                }

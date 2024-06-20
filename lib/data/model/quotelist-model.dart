@@ -55,8 +55,8 @@ class Content {
 
 class QuoteData {
   String? id;
-  Null? userId;
-  String? guestId;
+  String? userId;
+  Null? guestId;
   String? serviceId;
   String? serviceName;
   String? serviceShortDescription;
