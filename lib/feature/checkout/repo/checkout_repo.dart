@@ -27,21 +27,18 @@ class CheckoutRepo extends GetxService {
     print("offlinePaymentId${offlinePaymentId}");
     print("customerInformation${customerInformation}");
     print("quote_id${quote_id}");
-    print("token${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
-    return await apiClient.postData(AppConstants.placeRequest,headers: {
-      'Authorization': "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}",
-    }, {
-     // "payment_method" : paymentMethod,
-     "payment_method": "offline_payment",
+    return await apiClient.postDatato(AppConstants.placeRequest, {
+      "payment_method": "offline_payment",
       "zone_id" : zoneId,
       "service_schedule" : schedule,
       "service_address_id" : serviceAddressID,
       "guest_id" : Get.find<SplashController>().getGuestId(),
-      "service_address" : address,
+       "service_address" : address,
       "is_partial" : isPartial,
       "offline_payment_id" : offlinePaymentId,
       "customer_information" : customerInformation,
       "quote_id":quote_id,
-    });
+    }
+    );
   }
 }

@@ -139,6 +139,7 @@ class CheckOutController extends GetxController implements GetxService{
        customerInformation: customerInformation ?? ""
      );
      if(response.statusCode == 200 && response.body["response_code"] == "booking_place_success_200"){
+       print("booking200=>${response.body}");
        _isPlacedOrderSuccessfully = true;
        _bookingReadableId = response.body['content']['readable_id'].toString();
        updateState(PageState.complete);
@@ -146,13 +147,14 @@ class CheckOutController extends GetxController implements GetxService{
          String token = base64Encode(utf8.encode("&&attribute_id=$_bookingReadableId"));
          Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null", token: token));
        }else{
-
+         print("booking else=>${response.body}");
        }
        Get.find<CartController>().getCartListFromServer();
        Get.find<CartController>().clearCartList();
        customSnackBar('${response.body['message']}'.tr,isError: false,margin: 55);
 
      }else{
+       print("booking else2=>${response.body}");
        _isPlacedOrderSuccessfully = false;
        _bookingReadableId = "";
        updateState(PageState.complete);

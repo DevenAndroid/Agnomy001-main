@@ -23,11 +23,12 @@ class ProceedToCheckoutButtonWidget extends StatefulWidget {
 
 class _ProceedToCheckoutButtonWidgetState
     extends State<ProceedToCheckoutButtonWidget> {
+
   Future<void> checkoutSummeryApiCall() async {
     print("proceed_to_checkout");
     print("question_input");
     print("quote_id${quote_id}");
-    print("quote_id${quote_id}");
+    print("zoneId${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
     if (questionController.text != null &&
         messageController.text != null &&
         questionController.text.isNotEmpty &&
@@ -39,7 +40,8 @@ class _ProceedToCheckoutButtonWidgetState
         ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
         ..fields['question_input'] = questionController.text
         ..fields['service_description'] = messageController.text
-        ..fields['quote_id'] = quote_id;
+        ..fields['quote_id'] = quote_id
+        ..fields['zone_id'] =  Get.find<LocationController>().getUserAddress()!.zoneId.toString();
 
       try {
         var response = await request.send();
@@ -57,6 +59,44 @@ class _ProceedToCheckoutButtonWidgetState
       }
     }
   }
+
+
+  // Future<void> sendBookingRequest() async {
+  //   print("token=> ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+  //   print("quote_id${quote_id}");
+  //   print("zoneId${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
+  //   const url = 'https://admin.agnomy.com/api/v1/customer/booking/request/send';
+  //   const serviceAddressId = '22';
+  //   const serviceSchedule = '2024-06-20 22:11:41';
+  //   const serviceAddress = 'sdafdsfds';
+  //
+  //   try {
+  //     var request = http.MultipartRequest('POST', Uri.parse(url))
+  //       ..headers['Accept'] = 'application/json'
+  //       ..headers['Authorization'] = 'Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}'
+  //       ..fields['payment_method'] = 'offline_payment'
+  //       ..fields['zone_id'] = Get.find<LocationController>().getUserAddress()!.zoneId.toString()
+  //       ..fields['quote_id'] = quote_id
+  //       ..fields['service_address_id'] = serviceAddressId
+  //       ..fields['service_schedule'] = serviceSchedule
+  //       ..fields['service_address'] = serviceAddress;
+  //
+  //     var response = await request.send();
+  //
+  //     if (response.statusCode == 200) {
+  //       print('Request sent successfully');
+  //     } else {
+  //       print('Failed to send request: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print('Error occurred: $e');
+  //   }
+  // }
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +151,7 @@ class _ProceedToCheckoutButtonWidgetState
                           Get.find<LocationController>().getUserAddress();
 
                   if (Get.find<CartController>().cartList.isEmpty) {
+
                     print('if 1');
 
                     if (questionController.text != null &&
@@ -120,25 +161,30 @@ class _ProceedToCheckoutButtonWidgetState
 
                     {
                       checkoutController.updateState(PageState.payment);
-                      if (GetPlatform.isWeb) {
-                        // Get.toNamed(RouteHelper.getCheckoutRoute(
-                        //   'cart',
-                        //   Get.find<CheckOutController>()
-                        //       .currentPageState.name,
-                        //   widget.pageState == 'payment'
-                        //       ? widget.addressId
-                        //       : addressModel.id.toString(),
-                        //   reload: false,
-                        // ));
-
+                      if (GetPlatform.isWeb ) {
+                        print("placeBookingRequest");
+                        // checkoutController.placeBookingRequest(
+                        //   paymentMethod: "offline_payment",
+                        //   schedule: schedule,
+                        //   isPartial: isPartialPayment &&
+                        //       cartController.walletPaymentStatus
+                        //       ? 1
+                        //       : 0,
+                        //   address: addressModel!,
+                        // );
                         checkoutController.placeBookingRequest(
-                          paymentMethod: "cash_after_service",
+                          paymentMethod: "offline_payment",
                           schedule: schedule,
                           isPartial: isPartialPayment &&
                               cartController.walletPaymentStatus
                               ? 1
                               : 0,
                           address: addressModel!,
+                          offlinePaymentId:
+                          checkoutController.selectedOfflineMethod?.id,
+                          customerInformation: base64Url.encode(utf8.encode(
+                              jsonEncode(checkoutController
+                                  .offlinePaymentInputFieldValues))),
                         );
 
                       }
@@ -191,6 +237,7 @@ class _ProceedToCheckoutButtonWidgetState
                   } else if (checkoutController.currentPageState ==
                           PageState.orderDetails &&
                       PageState.orderDetails.name == widget.pageState) {
+
                     print('if 3');
 
                     if (!Get.find<ScheduleController>().checkScheduleTime()) {

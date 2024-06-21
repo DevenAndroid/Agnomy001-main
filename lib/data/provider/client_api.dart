@@ -77,6 +77,24 @@ class ApiClient extends GetxService {
     }
   }
 
+
+  Future<Response> postDatato(String? uri, dynamic body, {Map<String, String>? headers}) async {
+    printLog('====> API Call post: $uri\nHeader: $headers');
+    printLog('====> body : ${body.toString()}');
+
+
+    http.Response response = await http.post(
+      Uri.parse(appBaseUrl! + uri!),
+      body: jsonEncode(body),
+      headers:  headers,
+    ).timeout(Duration(seconds: timeoutInSeconds));
+    try {
+      return handleResponse(response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
   Future<Response> postMultipartDataConversation(
       String? uri,
       Map<String, String> body,

@@ -73,59 +73,97 @@ class _CartSummeryState extends State<CartSummery> {
                       .value.content!.quoteData!.quoteProviders!.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: Get.isDarkMode
-                              ? Theme.of(context).hoverColor
-                              : Theme.of(context).cardColor,
-                          boxShadow: Get.isDarkMode ? null : shadow),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 40,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: CachedNetworkImage(
-                                  imageUrl: '${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${quotesListModel.value.content!.quoteData!.quoteProviders![index].logo.toString()}',
-                                    //imageUrl: quotesListModel.value.content!.quoteData!.quoteProviders![index].logo.toString(),
-                                    errorWidget: (_, __, ___) =>
-                                    const Icon(
-                                      Icons.person,
-                                      color: Colors.white,
-                                    ),
-                                    placeholder: (_, __) =>
-                                    const Icon(
-                                      Icons.person,
-                                      color: Colors.white,
-                                    ),
-                                // child: Image.network(quotesListModel
-                                //     .value.content!.quoteData!
-                                //     .quoteProviders![index]
-                                //     .logo.toString(),
-                                fit: BoxFit.cover,
-                                //
-                                // ),
-                              ),
-                            ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              children: [
-                                Text(quotesListModel.value.content!.quoteData!
-                                    .quoteProviders![index].providerName
-                                    .toString()),
-                              ],
-                            ),
-                          ],
-                        ),
+                    return
+
+                      Container(
+                      decoration: BoxDecoration(color: Theme.of(context).cardColor , borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.3)),
                       ),
+                      padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                      margin: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+
+                      child:  Row(children: [
+                        ClipRRect( borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                          child: CustomImage(
+                            image: "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${quotesListModel.value.content!.quoteData!.quoteProviders![index].logo.toString()}",
+                            height: 60,width: 60,),
+                        ),
+                        const SizedBox(width: Dimensions.paddingSizeDefault,),
+
+                        Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.start,children: [
+                          Text(quotesListModel.value.content!.quoteData!.quoteProviders![index].providerName
+                              ?? "",
+                              style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
+                              maxLines: 1, overflow: TextOverflow.ellipsis),
+
+                          Text.rich(TextSpan(
+                              style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeLarge,color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)),
+                              children:  [
+
+
+                                WidgetSpan(child: Icon(Icons.star,color: Theme.of(context).colorScheme.primaryContainer,size: 15,), alignment: PlaceholderAlignment.middle),
+                                const TextSpan(text: " "),
+                                TextSpan(text: "0",style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault))
+
+                              ])),
+                        ],)
+                      ]),
                     );
+
+
+                    //   Container(
+                    //   decoration: BoxDecoration(
+                    //       color: Get.isDarkMode
+                    //           ? Theme.of(context).hoverColor
+                    //           : Theme.of(context).cardColor,
+                    //       boxShadow: Get.isDarkMode ? null : shadow),
+                    //   child: Padding(
+                    //     padding:
+                    //         const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                    //     child: Row(
+                    //       children: [
+                    //         Container(
+                    //           height: 40,
+                    //           width: 40,
+                    //           child: ClipRRect(
+                    //             borderRadius: BorderRadius.circular(50),
+                    //             child: CachedNetworkImage(
+                    //               imageUrl: '${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${quotesListModel.value.content!.quoteData!.quoteProviders![index].logo.toString()}',
+                    //                 //imageUrl: quotesListModel.value.content!.quoteData!.quoteProviders![index].logo.toString(),
+                    //                 errorWidget: (_, __, ___) =>
+                    //                 const Icon(
+                    //                   Icons.person,
+                    //                   color: Colors.white,
+                    //                 ),
+                    //                 placeholder: (_, __) =>
+                    //                 const Icon(
+                    //                   Icons.person,
+                    //                   color: Colors.white,
+                    //                 ),
+                    //             // child: Image.network(quotesListModel
+                    //             //     .value.content!.quoteData!
+                    //             //     .quoteProviders![index]
+                    //             //     .logo.toString(),
+                    //             fit: BoxFit.cover,
+                    //             //
+                    //             // ),
+                    //           ),
+                    //         ),
+                    //         ),
+                    //         const SizedBox(
+                    //           width: 10,
+                    //         ),
+                    //         Column(
+                    //           children: [
+                    //             Text(quotesListModel.value.content!.quoteData!
+                    //                 .quoteProviders![index].providerName
+                    //                 .toString()),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // );
                   },
                 ),
                 Divider(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)),

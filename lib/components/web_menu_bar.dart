@@ -30,7 +30,7 @@ class WebMenuBar extends StatelessWidget implements PreferredSizeWidget {
                   const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                   Icon(locationController.getUserAddress()!.addressType == 'home' ?
                   Icons.home_filled : locationController.getUserAddress()!.addressType == 'office' ? Icons.work : Icons.location_on,
-                    size: 18, color: Theme.of(context).textTheme.bodyLarge!.color,
+                    size: 16, color: Theme.of(context).textTheme.bodyLarge!.color,
                   ),
                   const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                   Flexible(

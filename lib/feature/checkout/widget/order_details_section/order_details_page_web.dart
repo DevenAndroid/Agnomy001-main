@@ -4,6 +4,8 @@ import 'package:demandium/feature/checkout/widget/order_details_section/wallet_p
 import 'package:demandium/feature/checkout/widget/payment_section/quote_list.dart';
 import 'package:get/get.dart';
 
+import '../service_schedule2.dart';
+
 class OrderDetailsPageWeb extends StatelessWidget {
   OrderDetailsPageWeb({Key? key}) : super(key: key);
 
@@ -26,14 +28,15 @@ class OrderDetailsPageWeb extends StatelessWidget {
                   child: WebShadowWrap(
                       minHeight: Get.height * 0.1,
                       child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        const ServiceSchedule(),
+                         ServiceSchedule(),
+                       // SingleServiceSchedule(),
                         const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: Dimensions.paddingSizeDefault),
                             child: AddressInformation()),
-                        (cartController.preSelectedProvider)
-                            ? const ProviderDetailsCard()
-                            : const SizedBox(),
+                        // (cartController.preSelectedProvider)
+                        //     ? const ProviderDetailsCard()
+                        //     : const SizedBox(),
                         const SizedBox(
                           height: Dimensions.paddingSizeDefault,
                         ),
