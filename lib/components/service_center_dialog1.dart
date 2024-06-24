@@ -447,9 +447,9 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
                                                                                           ),
                                                                                         )
                                                                                       : SizedBox(),
-                                                                                  Text(
-                                                                                    '${servicewiseProviderModel.value.content![index].value}',
-                                                                                  ),
+                                                                                  servicewiseProviderModel.value.content![index].value == 0 ? Text(
+                                                                                    "", // '${servicewiseProviderModel.value.content![index].value}',
+                                                                                  ): Text("1"),
                                                                                   InkWell(
                                                                                       onTap: () {
                                                                                         if (servicewiseProviderModel.value.content![index].value < 1) {

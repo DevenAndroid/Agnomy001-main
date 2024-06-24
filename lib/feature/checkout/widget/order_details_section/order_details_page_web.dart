@@ -28,8 +28,8 @@ class OrderDetailsPageWeb extends StatelessWidget {
                   child: WebShadowWrap(
                       minHeight: Get.height * 0.1,
                       child: Column(mainAxisSize: MainAxisSize.min, children: [
-                         ServiceSchedule(),
-                       // SingleServiceSchedule(),
+                        ServiceSchedule(),
+                        //SingleServiceSchedule(),
                         const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: Dimensions.paddingSizeDefault),

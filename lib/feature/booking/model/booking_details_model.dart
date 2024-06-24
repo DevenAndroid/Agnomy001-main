@@ -38,6 +38,7 @@ class BookingDetailsContent {
   String? paymentMethod;
   String? transactionId;
   double? totalBookingAmount;
+  int? quoteOfferedPrice;
   num? totalTaxAmount;
   num? totalDiscountAmount;
   String? serviceSchedule;
@@ -74,6 +75,7 @@ class BookingDetailsContent {
         this.paymentMethod,
         this.transactionId,
         this.totalBookingAmount,
+        this.quoteOfferedPrice,
         this.totalTaxAmount,
         this.totalDiscountAmount,
         this.serviceSchedule,
@@ -111,6 +113,7 @@ class BookingDetailsContent {
     paymentMethod = json['payment_method'];
     transactionId = json['transaction_id'];
     totalBookingAmount = double.tryParse(json['total_booking_amount'].toString());
+    quoteOfferedPrice = json['quote_offered_price'];
     totalTaxAmount = json['total_tax_amount'];
     totalDiscountAmount = json['total_discount_amount'];
     serviceSchedule = json['service_schedule'];
@@ -179,6 +182,7 @@ class BookingDetailsContent {
     data['payment_method'] = paymentMethod;
     data['transaction_id'] = transactionId;
     data['total_booking_amount'] = totalBookingAmount;
+    data['quote_offered_price'] = quoteOfferedPrice;
     data['total_tax_amount'] = totalTaxAmount;
     data['total_discount_amount'] = totalDiscountAmount;
     data['service_schedule'] = serviceSchedule;

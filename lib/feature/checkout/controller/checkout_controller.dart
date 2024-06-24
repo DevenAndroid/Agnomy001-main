@@ -129,7 +129,7 @@ class CheckOutController extends GetxController implements GetxService{
 
    if(Get.find<CartController>().cartList.isNotEmpty){
      Response response = await checkoutRepo.placeBookingRequest(
-       paymentMethod : paymentMethod,
+       paymentMethod : "",  //paymentMethod,
        zoneId : zoneId,
        schedule : schedule,
        serviceAddressID : address.id == "null" ? "" : address.id,

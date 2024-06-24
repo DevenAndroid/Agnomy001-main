@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:demandium/feature/service/widget/service_details_faq_section.dart';
 import 'package:demandium/feature/service/widget/service_details_shimmer_widget.dart';
 import 'package:demandium/feature/service/widget/service_info_card.dart';
@@ -6,11 +7,13 @@ import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/core/helper/decorated_tab_bar.dart';
+import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 import '../../../components/service_center_dialog.dart';
 
  late RxString serviceID ;
-
+String quote_idss = '';
 class ServiceDetailsScreen extends StatefulWidget {
   final String serviceID;
   final String fromPage;
@@ -23,6 +26,11 @@ class ServiceDetailsScreen extends StatefulWidget {
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
   final ScrollController scrollController = ScrollController();
   final scaffoldState = GlobalKey<ScaffoldState>();
+  List<dynamic>? serviceProviderIDss = [];
+  String? subCategoryId ;
+  String? categoryId ;
+
+
 
   @override
   void initState() {
@@ -353,21 +361,63 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                                               Text("with in ${service.providers![index].distance!.toInt()} miles"),
 
                                                                               ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  var providerid= service.providers![index].id.toString();
-                                                                                  print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${service.providers![index].id.toString()}");
-                                                                                  Get.find<CartController>().resetPreselectedProviderInfo();
-                                                                                  showModalBottomSheet(
-                                                                                      context: context,
-                                                                                      useRootNavigator: true,
-                                                                                      isScrollControlled: true,
-                                                                                      backgroundColor: Colors.transparent,
-                                                                                      builder: (context) => ServiceCenterDialog(
-                                                                                        service: service, isFromDetails: true,
-                                                                                        providerId: service.providers![index].distance!.toInt(),
-                                                                                        logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${service.providers![index].logo.toString()}",
-                                                                                      )
-                                                                                  );
+                                                                                onPressed: () async {
+                                                                               categoryId = service.providers![index].categoryId;
+                                                                               subCategoryId = service.providers![index].subCategoryId;
+                                                                                  serviceProviderIDss = [serviceID];
+                                                                                  print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+                                                                                  if(Get.find<AuthController>().isLoggedIn()) {
+                                                                                    Get.find<CartController>().resetPreselectedProviderInfo();
+
+
+                                                                                    if (serviceProviderIDss!.isNotEmpty) {
+                                                                                      await createQuote();
+                                                                                      print("Get Quote Button first pop");
+                                                                                      if (Get.find<SplashController>()
+                                                                                          .configModel.content
+                                                                                          ?.guestCheckout ==
+                                                                                          0 &&
+                                                                                          !Get.find<AuthController>()
+                                                                                              .isLoggedIn()) {
+                                                                                        Get.toNamed(
+                                                                                            RouteHelper.getNotLoggedScreen(
+                                                                                                RouteHelper.cart, "cart"));
+                                                                                      } else {
+                                                                                        Get.find<CheckOutController>()
+                                                                                            .updateState(
+                                                                                            PageState.orderDetails);
+                                                                                        Get.toNamed(RouteHelper.getCheckoutRoute('cart', 'orderDetails', 'null'));
+                                                                                      }
+                                                                                      // Get.to(CheckoutScreen(
+                                                                                      //   Get.parameters.containsKey('flag') &&
+                                                                                      //           Get.parameters['flag']! ==
+                                                                                      //               'success'
+                                                                                      //       ? 'complete'
+                                                                                      //       : Get.parameters['currentPage']
+                                                                                      //           .toString(),
+                                                                                      //   Get.parameters['addressID'] != null
+                                                                                      //       ? Get.parameters['addressID']!
+                                                                                      //       : 'null',
+                                                                                      //   reload: Get.parameters['reload']
+                                                                                      //                   .toString() ==
+                                                                                      //               "true" ||
+                                                                                      //           Get.parameters['reload']
+                                                                                      //                   .toString() ==
+                                                                                      //               "null"
+                                                                                      //       ? true
+                                                                                      //       : false,
+                                                                                      //   token: Get.parameters["token"],
+                                                                                      // ));
+                                                                                    } else {
+                                                                                      customSnackBar(
+                                                                                          "please any one add to provider", duration: 2);
+                                                                                      //snackbar
+                                                                                    }
+                                                                                  } else {
+                                                                                    customSnackBar("please login First",duration:2);
+                                                                                    Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+                                                                                  }
+
                                                                                 },
                                                                                 child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
                                                                               ),
@@ -432,5 +482,54 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
       ),
     );
   }
+
+
+
+  Future<void> createQuote() async {
+    final String serviceId = serviceID.toString();// widget.service!.id.toString();
+    final String? categoryID =  categoryId; //widget.service!.categoryId.toString();
+    final String? subCategoryID = subCategoryId; //widget.service!.subCategoryId.toString();
+print("categoryID${categoryID.toString()}");
+print("subCategoryID${subCategoryID.toString()}");
+    final url = Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
+    print("token 3${ Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+    print("getGuestId${ Get.find<SplashController>().getGuestId()}");
+
+    final request = http.MultipartRequest('POST', url)
+      ..headers['Accept'] = 'application/json'
+      ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
+
+      ..fields['service_id'] = serviceId //'0d6aa3e6-20f3-4d36-83b2-ebf024ddf39e'
+      ..fields['category_id'] = categoryID.toString() //'33f46f95-e8c0-4e91-86fb-0819ba4adebc'
+      ..fields['sub_category_id'] = subCategoryID.toString() //'eaa49fe9-ae1c-41de-862f-9753d7fa20da'
+      ..fields['guest_id'] = Get.find<SplashController>().getGuestId();
+
+    print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+    request.fields['provider'] = serviceProviderIDss != null
+        ? jsonEncode(serviceProviderIDss):
+    jsonEncode(serviceProviderIDss);
+
+    // request.fields['provider'] = serviceProviderIDss != null
+    //     ? jsonEncode(serviceProviderIDss)
+    //     : jsonEncode(serviceProviderIDss);
+
+
+    try {
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final responseData = jsonDecode(responseBody);
+        print('Response data single: $responseData');
+        quote_idss = responseData['content']['quote_id'];
+        print('quote_id is: $quote_idss');
+      } else {
+        print('Failed to create quote. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
 }
 

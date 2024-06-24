@@ -7,6 +7,8 @@ import 'package:demandium/components/core_export.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
+import '../../checkout/view/payment_screen.dart';
+
 class BookingDetailsScreen extends StatefulWidget {
   final String bookingID;
   final String phone;
@@ -24,6 +26,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> with Single
 
   @override
   void initState() {
+    AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
     if(widget.fromPage == "track-booking") {
       Get.find<BookingDetailsController>().trackBookingDetails(widget.bookingID, "+${widget.phone.trim()}", reload: false);
     } else{
@@ -31,6 +34,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> with Single
     }
     tabController = TabController(length: BookingDetailsTabs.values.length, vsync: this);
     super.initState();
+    print("address${addressModel!.address.toString()}");
   }
 
 
@@ -123,6 +127,53 @@ class BookingTabBar extends StatelessWidget {
                 BookingDetailsContent? bookingDetailsContent = bookingDetailsController.bookingDetailsContent;
 
                 return bookingDetailsContent != null ? Expanded(child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+
+
+
+
+                   bookingDetailsContent.bookingStatus.toString() == "pending"
+                       ?
+
+                  Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child:  GetBuilder<CheckOutController>(builder: (checkoutController) {
+                      return  InkWell(
+                      onTap: (){
+                       // String url = '${AppConstants.baseUrl}/payment?payment_method=${paymentMethod?.gateway}&access_token=${base64Url.encode(utf8.encode(userId))}&zone_id=$zoneId'
+                       //      '&service_schedule=$schedule&service_address_id=$addressId&callback=$callbackUrl&service_address=$encodedAddress&is_partial=$isPartial&payment_platform=$platform';
+                        checkoutController.updateState(PageState.payment);
+                        Get.to(() => PaymentScreen(
+                          url: '${AppConstants.baseUrl}/payment?payment_method=',
+                          fromPage: "checkout",
+                        ));
+
+                        print(bookingDetailsContent.bookingStatus.toString());
+                        print("payment");
+                      },
+                      child:
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge,vertical:4),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeEight),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                            border:Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
+                          ),
+                          child:Center(child:
+                              Text("Payment Now".tr, style: ubuntuMedium.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: Dimensions.fontSizeSmall))),
+                        ),
+                      ),
+
+
+                    );
+                    }
+                    ))
+                       :
+
+
+
+                   const SizedBox(height: 0,width: 0,),
 
                   Padding(padding: const EdgeInsets.all(6.0),
                     child: InkWell(

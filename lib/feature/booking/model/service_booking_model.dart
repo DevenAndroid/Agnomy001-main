@@ -95,6 +95,7 @@ class BookingModel {
   String? paymentMethod;
   String? transactionId;
   num? totalBookingAmount;
+  int? quoteOfferedPrice;
   num? totalTaxAmount;
   num? totalDiscountAmount;
   String? serviceSchedule;
@@ -116,6 +117,7 @@ class BookingModel {
         this.paymentMethod,
         this.transactionId,
         this.totalBookingAmount,
+        this.quoteOfferedPrice,
         this.totalTaxAmount,
         this.totalDiscountAmount,
         this.serviceSchedule,
@@ -137,6 +139,7 @@ class BookingModel {
     paymentMethod = json['payment_method'];
     transactionId = json['transaction_id'];
     totalBookingAmount = json['total_booking_amount'];
+    quoteOfferedPrice = json['quote_offered_price'];
     totalTaxAmount = json['total_tax_amount'];
     totalDiscountAmount = json['total_discount_amount'];
     serviceSchedule = json['service_schedule'];
@@ -160,6 +163,7 @@ class BookingModel {
     data['payment_method'] = paymentMethod;
     data['transaction_id'] = transactionId;
     data['total_booking_amount'] = totalBookingAmount;
+    data['quote_offered_price'] = quoteOfferedPrice;
     data['total_tax_amount'] = totalTaxAmount;
     data['total_discount_amount'] = totalDiscountAmount;
     data['service_schedule'] = serviceSchedule;

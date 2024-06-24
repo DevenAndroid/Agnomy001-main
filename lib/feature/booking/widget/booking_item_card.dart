@@ -30,7 +30,7 @@ class BookingItemCard extends StatelessWidget {
 
               Directionality(
                 textDirection: TextDirection.ltr,
-                child: Text(PriceConverter.convertPrice(bookingModel.totalBookingAmount!.toDouble()),
+                child: Text(PriceConverter.convertPrice(bookingModel.quoteOfferedPrice!.toDouble()),
                   style: ubuntuBold.copyWith(color: Theme.of(context).colorScheme.primary),
                 ),
               ),

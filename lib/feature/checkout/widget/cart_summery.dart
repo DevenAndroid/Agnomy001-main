@@ -1,12 +1,14 @@
 import 'dart:convert';
-import 'package:demandium/components/service_center_dialog1.dart';
+// import 'package:demandium/components/service_center_dialog1.dart';
 import 'package:http/http.dart' as http;
 import 'package:demandium/core/helper/checkout_helper.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/checkout/widget/row_text.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
+import '../../../components/service_center_dialog1.dart';
 import '../../../data/model/quotelist-model.dart';
+import '../../service/widget/service_overview.dart';
 
 TextEditingController questionController = TextEditingController();
 TextEditingController messageController = TextEditingController();
@@ -95,17 +97,17 @@ class _CartSummeryState extends State<CartSummery> {
                               ?? "",
                               style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
                               maxLines: 1, overflow: TextOverflow.ellipsis),
-
-                          Text.rich(TextSpan(
-                              style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeLarge,color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)),
-                              children:  [
-
-
-                                WidgetSpan(child: Icon(Icons.star,color: Theme.of(context).colorScheme.primaryContainer,size: 15,), alignment: PlaceholderAlignment.middle),
-                                const TextSpan(text: " "),
-                                TextSpan(text: "0",style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault))
-
-                              ])),
+                          //
+                          // Text.rich(TextSpan(
+                          //     style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeLarge,color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)),
+                          //     children:  [
+                          //
+                          //
+                          //       WidgetSpan(child: Icon(Icons.star,color: Theme.of(context).colorScheme.primaryContainer,size: 15,), alignment: PlaceholderAlignment.middle),
+                          //       const TextSpan(text: " "),
+                          //       TextSpan(text: "0",style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault))
+                          //
+                          //     ])),
                         ],)
                       ]),
                     );
@@ -245,9 +247,8 @@ class _CartSummeryState extends State<CartSummery> {
                         ),
                         CustomTextField(
                           controller: messageController,
-                          title: 'question ask'.tr,
+                          title: 'Question Ask'.tr,
                           hintText: 'please enter the question'.tr,
-                          // controller: authController.signInPhoneController,
                           // focusNode: _phoneFocus,
                           capitalization: TextCapitalization.words,
                           // onValidate: (String? value){
@@ -256,10 +257,9 @@ class _CartSummeryState extends State<CartSummery> {
                         ),
                         CustomTextField(
                           controller: questionController,
-                          title: 'message'.tr, //service description box
-                          hintText: 'please enter the your message'
-                              .tr, //please enter the service description
-                          // controller: authController.signInPhoneController,
+                          title: 'Message'.tr, //service description box
+                          hintText: 'please enter the your message'.tr,
+
                           // focusNode: _phoneFocus,
                           capitalization: TextCapitalization.words,
                           // onValidate: (String? value){
@@ -378,16 +378,22 @@ class _CartSummeryState extends State<CartSummery> {
   RxBool success = false.obs;
 
   Future<void> getQuoteList() async {
-    final url =
-        'https://admin.agnomy.com/api/v1/customer/quote-list?quote_id=$quote_id';
+    print("quote id====>>>>>>>>${quote_id}");
+    print("quote ids====>>>>>>>>${quote_ids}");
+    print("quote ids====>>>>>>>>${quote_idss}");
+
+    if (quote_id == null || quote_id.isEmpty) {
+      quote_id = quote_ids;
+      quote_ids = quote_idss;
+    }
+
+    final url = 'https://admin.agnomy.com/api/v1/customer/quote-list?quote_id=$quote_id';
     final headers = {
       'Accept' : 'application/json',
       'Authorization': "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}",
     };
 
     final response = await http.get(Uri.parse(url), headers: headers);
-
-    // final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       print('Response data: 2${response.body}');

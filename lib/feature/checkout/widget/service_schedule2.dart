@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../../components/custom_snackbar.dart';
 import '../../../core/helper/date_converter.dart';
 import '../../../utils/app_constants.dart';
 import '../../../utils/dimensions.dart';
@@ -150,11 +149,4 @@ class _SingleServiceScheduleState extends State<SingleServiceSchedule> {
 
 
 
-// Future<void> updatePostInformation(String postId,String scheduleTime) async {
-  //   Response response = await scheduleRepo.changePostScheduleTime(postId,scheduleTime);
-  //
-  //   if(response.statusCode==200 && response.body['response_code']=="default_update_200"){
-  //     customSnackBar("service_schedule_updated_successfully".tr,isError: false);
-  //   }
-  // }
 }

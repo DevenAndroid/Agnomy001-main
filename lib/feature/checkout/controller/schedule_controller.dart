@@ -34,7 +34,9 @@ class ScheduleController extends GetxController{
         context: Get.context!,
         initialDate: DateTime.now(),
         firstDate: DateTime.now().subtract(const Duration(days: 0)),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2101),
+    );
+
     if (picked != null) {
       _selectedDate = picked;
       update();

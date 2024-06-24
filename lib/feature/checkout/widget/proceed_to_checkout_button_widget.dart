@@ -5,6 +5,7 @@ import 'package:demandium/components/service_center_dialog1.dart';
 import 'package:demandium/core/helper/checkout_helper.dart';
 import 'package:demandium/feature/cart/widget/available_provider_widgets.dart';
 import 'package:demandium/feature/checkout/view/payment_screen.dart';
+import 'package:path/path.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -146,9 +147,7 @@ class _ProceedToCheckoutButtonWidgetState
             InkWell(
               onTap: () {
                 if (Get.find<AuthController>().acceptTerms) {
-                  AddressModel? addressModel =
-                      Get.find<LocationController>().selectedAddress ??
-                          Get.find<LocationController>().getUserAddress();
+                  AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
 
                   if (Get.find<CartController>().cartList.isEmpty) {
 
@@ -238,6 +237,7 @@ class _ProceedToCheckoutButtonWidgetState
                           PageState.orderDetails &&
                       PageState.orderDetails.name == widget.pageState) {
 
+
                     print('if 3');
 
                     if (!Get.find<ScheduleController>().checkScheduleTime()) {
@@ -284,7 +284,7 @@ class _ProceedToCheckoutButtonWidgetState
                             messageController.text.isNotEmpty)
 
                         {
-                          checkoutController.updateState(PageState.payment);
+                          //checkoutController.updateState(PageState.payment); // payment vali screen pe navigation in use for
                           if (GetPlatform.isWeb) {
                             // Get.toNamed(RouteHelper.getCheckoutRoute(
                             //   'cart',
@@ -297,20 +297,26 @@ class _ProceedToCheckoutButtonWidgetState
                             // ));
 
                             checkoutController.placeBookingRequest(
-                              paymentMethod: "cash_after_service",
+                              paymentMethod: "offline_payment",
                               schedule: schedule,
                               isPartial: isPartialPayment &&
                                   cartController.walletPaymentStatus
                                   ? 1
                                   : 0,
                               address: addressModel!,
+                              offlinePaymentId:
+                              checkoutController.selectedOfflineMethod?.id,
+                              customerInformation: base64Url.encode(utf8.encode(
+                                  jsonEncode(checkoutController
+                                      .offlinePaymentInputFieldValues))),
                             );
-
                           }
 
 
 
                           checkoutSummeryApiCall();
+                          questionController.clear();
+                          messageController.clear();
 
                         }
 

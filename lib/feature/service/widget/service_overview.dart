@@ -1,13 +1,21 @@
+import 'dart:convert';
+import 'package:demandium/components/service_center_dialog1.dart';
 import 'package:demandium/utils/images.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 import '../../../components/service_center_dialog.dart';
+import '../../../data/model/servicewiseprovider_model.dart';
+import '../../web_landing/widget/web_landing_search_box.dart';
 
-class ServiceOverview extends StatelessWidget {
+
+String quote_ids = '';
+
+class ServiceOverview extends StatefulWidget {
   final String description;
   List<Providers> providers;
   List<Variations>? variations;
@@ -17,6 +25,31 @@ class ServiceOverview extends StatelessWidget {
    ServiceOverview({Key? key, required this.description, required this. providers, required this. variations, required this.service,})
       : super(key: key);
 
+  @override
+  State<ServiceOverview> createState() => _ServiceOverviewState();
+}
+
+class _ServiceOverviewState extends State<ServiceOverview> {
+  List<dynamic>? serviceProviderIDss = [];
+  // void addOneServiceIDs(int index) {
+  //   if (!serviceProviderIDss!
+  //       .contains(widget.providers[index].id)) {
+  //     serviceProviderIDss!
+  //         .add(widget.providers[index].id);
+  //   }
+  // }
+
+
+  @override
+  void initState() {
+    // serviceProviderIDss = [];
+    // serviceProviderIDss =  serviceProviderIDss!.map((provider) => provider.providerId).atoList();
+   // addOneServiceIDs(1);
+
+
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -47,7 +80,7 @@ class ServiceOverview extends StatelessWidget {
                       color: ResponsiveHelper.isMobile(context)
                           ? Theme.of(context).cardColor
                           : Colors.transparent,
-                      child: HtmlWidget(description)),
+                      child: HtmlWidget(widget.description)),
                 ),
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(
@@ -386,7 +419,7 @@ class ServiceOverview extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.vertical, // Change this to Axis.horizontal if you want horizontal scrolling
-            itemCount: providers.length,
+            itemCount: widget.providers.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               mainAxisSpacing: 10.0,
@@ -394,6 +427,7 @@ class ServiceOverview extends StatelessWidget {
               childAspectRatio: 6 / 2,
             ),
             itemBuilder: (context, index) {
+           // serviceProviderIDss = [widget.providers[index].id];
               return Container(
                 // height: 10,
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -418,7 +452,7 @@ class ServiceOverview extends StatelessWidget {
                               borderRadius: BorderRadius.circular(50),
                               child: Image(
                                 image: NetworkImage(
-                                    "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${service.providers![index].logo.toString()}"
+                                    "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${widget.service.providers![index].logo.toString()}"
                                 ),
                                 height: 30,
                                 width:30,fit: BoxFit.cover,
@@ -431,16 +465,16 @@ class ServiceOverview extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(providers![index].companyName.toString()),
+                            Text(widget.providers![index].companyName.toString()),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                RatingBar(rating: providers![index].avgRating),
+                                RatingBar(rating: widget.providers![index].avgRating),
                                 Gaps.horizontalGapOf(5),
                                 Directionality(
                                   textDirection: TextDirection.ltr,
-                                  child:  Text('${providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
+                                  child:  Text('${widget.providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
                                     fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
                                   )),
                                 ),
@@ -449,7 +483,7 @@ class ServiceOverview extends StatelessWidget {
                             ),
                             SizedBox(
                               width: Get.width*0.178,
-                              child: Text(providers![index].companyDescription.toString(),
+                              child: Text(widget.providers![index].companyDescription.toString(),
                                 style: ubuntuRegular.copyWith(
                                   overflow:TextOverflow.ellipsis,
                                   fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
@@ -461,29 +495,108 @@ class ServiceOverview extends StatelessWidget {
                       ],
                     ),
                     Gaps.horizontalGapOf(6),
+                    // Text(serviceProviderIDss.toString()),
+                    // Text(widget.providers[index].id.toString()),
                     Padding(
                       padding: const EdgeInsets.only(left: 50.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("with in ${providers[index].distance!.toInt()} miles"),
+                          Text("with in ${widget.providers[index].distance!.toInt()} miles"),
+
                           ElevatedButton(
-                            onPressed: () {
-                              var providerid= providers[index].id.toString();
-                              print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${providers[index].id.toString()}");
-                              Get.find<CartController>().resetPreselectedProviderInfo();
-                              showModalBottomSheet(
-                                  context: context,
-                                  useRootNavigator: true,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (context) => ServiceCenterDialog(
-                                    service: service, isFromDetails: true,
-                                    providerId: providers[index].distance!.toInt(),
-                                    logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providers![index].logo.toString()}",
-                                  )
-                              );
+                            onPressed: () async {
+                              serviceProviderIDss = [widget.providers[index].id];
+                              print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+                              if(Get.find<AuthController>().isLoggedIn()) {
+                                Get.find<CartController>().resetPreselectedProviderInfo();
+
+
+                                if (serviceProviderIDss!.isNotEmpty) {
+                                  await createQuote();
+                                  print("Get Quote Button first pop");
+                                  if (Get.find<SplashController>()
+                                      .configModel.content
+                                      ?.guestCheckout ==
+                                      0 &&
+                                      !Get.find<AuthController>()
+                                          .isLoggedIn()) {
+                                    Get.toNamed(
+                                        RouteHelper.getNotLoggedScreen(
+                                            RouteHelper.cart, "cart"));
+                                  } else {
+                                    Get.find<CheckOutController>()
+                                        .updateState(
+                                        PageState.orderDetails);
+                                     Get.toNamed(RouteHelper.getCheckoutRoute('cart', 'orderDetails', 'null'));
+                                  }
+                                  // Get.to(CheckoutScreen(
+                                  //   Get.parameters.containsKey('flag') &&
+                                  //           Get.parameters['flag']! ==
+                                  //               'success'
+                                  //       ? 'complete'
+                                  //       : Get.parameters['currentPage']
+                                  //           .toString(),
+                                  //   Get.parameters['addressID'] != null
+                                  //       ? Get.parameters['addressID']!
+                                  //       : 'null',
+                                  //   reload: Get.parameters['reload']
+                                  //                   .toString() ==
+                                  //               "true" ||
+                                  //           Get.parameters['reload']
+                                  //                   .toString() ==
+                                  //               "null"
+                                  //       ? true
+                                  //       : false,
+                                  //   token: Get.parameters["token"],
+                                  // ));
+                                } else {
+                                  customSnackBar(
+                                      "please any one add to provider", duration: 2);
+                                  //snackbar
+                                }
+                              } else {
+                                customSnackBar("please login First",duration:2);
+                                Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+                              }
+
                             },
+                            // onPressed: () {
+                            //   if (Get.find<AuthController>().isLoggedIn()) {
+                            //     Get.find<CartController>()
+                            //         .resetPreselectedProviderInfo();
+                            //     showModalBottomSheet(
+                            //         context: context,
+                            //         useRootNavigator: true,
+                            //         isScrollControlled: true,
+                            //         backgroundColor: Colors.transparent,
+                            //         builder: (context) => ServiceCenterDialog1(
+                            //           service: service,
+                            //           isFromDetails: true,
+                            //         ));
+                            //   } else {
+                            //     customSnackBar("please login First",duration:2);
+                            //     // Get.toNamed(RouteHelper.getSignInRoute(
+                            //     //     Get.currentRoute));
+                            //     Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+                            //   }
+                            //
+                            //
+                            //   // var providerid= providers[index].id.toString();
+                            //   // print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${providers[index].id.toString()}");
+                            //   // Get.find<CartController>().resetPreselectedProviderInfo();
+                            //   // showModalBottomSheet(
+                            //   //     context: context,
+                            //   //     useRootNavigator: true,
+                            //   //     isScrollControlled: true,
+                            //   //     backgroundColor: Colors.transparent,
+                            //   //     builder: (context) => ServiceCenterDialog(
+                            //   //       service: service, isFromDetails: true,
+                            //   //       providerId: providers[index].distance!.toInt(),
+                            //   //       logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providers![index].logo.toString()}",
+                            //   //     )
+                            //   // );
+                            // },
                             child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
                           ),
 
@@ -559,5 +672,59 @@ class ServiceOverview extends StatelessWidget {
         ],
       ),
     );
+  }
+
+
+
+
+
+
+
+  Future<void> createQuote() async {
+    final String serviceId = widget.service.id.toString();// widget.service!.id.toString();
+    final String categoryID =widget.service.categoryId.toString(); //widget.service!.categoryId.toString();
+    final String subCategoryID =widget.service.subCategoryId.toString(); //widget.service!.subCategoryId.toString();
+
+    final url = Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
+    print("token 3${ Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+    print("getGuestId${ Get.find<SplashController>().getGuestId()}");
+
+    final request = http.MultipartRequest('POST', url)
+      ..headers['Accept'] = 'application/json'
+      ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
+
+      ..fields['service_id'] =
+          serviceId //'0d6aa3e6-20f3-4d36-83b2-ebf024ddf39e'
+      ..fields['category_id'] =
+          categoryID //'33f46f95-e8c0-4e91-86fb-0819ba4adebc'
+      ..fields['sub_category_id'] =
+          subCategoryID //'eaa49fe9-ae1c-41de-862f-9753d7fa20da'
+      ..fields['guest_id'] = Get.find<SplashController>().getGuestId();
+
+    print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+    request.fields['provider'] = serviceProviderIDss != null
+                     ? jsonEncode(serviceProviderIDss):
+                       jsonEncode(serviceProviderIDss);
+
+    // request.fields['provider'] = serviceProviderIDss != null
+    //     ? jsonEncode(serviceProviderIDss)
+    //     : jsonEncode(serviceProviderIDss);
+
+
+    try {
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final responseData = jsonDecode(responseBody);
+        print('Response data single: $responseData');
+        quote_ids = responseData['content']['quote_id'];
+        print('quote_id is: $quote_ids');
+      } else {
+        print('Failed to create quote. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 }

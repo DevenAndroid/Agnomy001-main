@@ -263,6 +263,7 @@ class ServiceInformationCard extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
+
                               if (Get.find<AuthController>().isLoggedIn()) {
                                 Get.find<CartController>()
                                     .resetPreselectedProviderInfo();
@@ -277,8 +278,6 @@ class ServiceInformationCard extends StatelessWidget {
                                         ));
                               } else {
                                 customSnackBar("please login First",duration:2);
-                                // Get.toNamed(RouteHelper.getSignInRoute(
-                                //     Get.currentRoute));
                                 Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
                               }
                             },
