@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/booking/widget/booking_otp_widget.dart';
 import 'package:demandium/feature/booking/widget/booking_screen_shimmer.dart';
@@ -217,7 +219,8 @@ class WebBookingDetailsSection extends StatelessWidget {
 
 
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  bookingDetailsContent.provider != null ? SizedBox(
+                  bookingDetailsContent.provider != null ?
+                  SizedBox(
                     height: 165, width: 285,
                     child: Container(
                       width:double.infinity,
@@ -246,7 +249,8 @@ class WebBookingDetailsSection extends StatelessWidget {
                             ),
                           ),
                           Gaps.verticalGapOf(Dimensions.paddingSizeExtraSmall),
-                          Text("${bookingDetailsContent.provider?.companyName}",style:ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall)),
+                          Text("${bookingDetailsContent.provider?.companyName}"
+                              ,style:ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall)),
                           Gaps.verticalGapOf(Dimensions.paddingSizeExtraSmall),
                           Text("${bookingDetailsContent.provider?.companyPhone}",style:ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall)),
                           Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
@@ -290,12 +294,60 @@ class WebBookingDetailsSection extends StatelessWidget {
                           Gaps.verticalGapOf(Dimensions.paddingSizeExtraSmall),
                           Text("${bookingDetailsContent.serviceman!.user!.phone}",style:ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall)),
                           Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
+
                         ],
                       ),
                     ),
                   ) : const SizedBox(),
                 ],
                 ),
+
+                const SizedBox(height: Dimensions.paddingSizeDefault),
+                bookingDetailsContent.posts!.latestbid !=null?
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 100, width: 285,
+                      child: Container(
+                        width:double.infinity,
+                        decoration: BoxDecoration(color: Theme.of(context).cardColor , borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                            border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.3)), boxShadow: searchBoxShadow
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment:MainAxisAlignment.start,
+                            children: [
+                              Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
+                              Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                                  child: Text("Service Provider Offer Info",
+                                      style:ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall))
+                              ),
+                              Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
+                              Row(
+                                children: [
+                                  Text("Provider Notes :-",
+                                      style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
+                                          color: Theme.of(context).textTheme.bodyLarge!.color!)),
+
+                                  Text(bookingDetailsContent.posts!.latestbid!.providerNote ?? "",
+                                      style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color!)),
+
+                                ],
+                              )
+
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox()
+                  ],
+                )
+                : SizedBox(),
 
               ],
               ),
@@ -317,8 +369,7 @@ class WebBookingDetailsSection extends StatelessWidget {
                 FloatingActionButton( hoverColor: Colors.transparent, elevation: 0.0,
                   backgroundColor: Theme.of(context).colorScheme.primary, onPressed: () {
                     BookingDetailsContent bookingDetailsContent = bookingDetailsController.bookingDetailsContent!;
-
-                    if (bookingDetailsContent.provider != null ) {
+                    if (bookingDetailsContent.provider != null  ) {
                       showModalBottomSheet( useRootNavigator: true, isScrollControlled: true,
                         backgroundColor: Colors.transparent, context: context, builder: (context) => CreateChannelDialog(
                           customerID: bookingDetailsContent.customerId,

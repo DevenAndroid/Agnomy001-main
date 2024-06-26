@@ -58,7 +58,7 @@ class _BookingListScreenState extends State<BookingListScreen> {
                       padding: EdgeInsets.symmetric( horizontal: ResponsiveHelper.isDesktop(context) ? 0 : Dimensions.paddingSizeDefault,),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: ResponsiveHelper.isDesktop(context)? 2 : 1,
-                        mainAxisExtent: Get.find<LocalizationController>().isLtr ? 130 : 175,
+                        mainAxisExtent: Get.find<LocalizationController>().isLtr ? 190 : 175,
                         crossAxisSpacing: Dimensions.paddingSizeDefault,
                         mainAxisSpacing : Dimensions.paddingSizeDefault,
                       ),

@@ -61,6 +61,8 @@ class BookingDetailsContent {
   List<String>? photoEvidence;
   double? extraFee;
   double ? additionalCharge;
+  Posts? posts;
+
 
 
 
@@ -97,7 +99,9 @@ class BookingDetailsContent {
         this.bookingOtp,
         this.photoEvidence,
         this.extraFee,
-        this.additionalCharge
+        this.additionalCharge,
+        this.posts
+
 
 
       });
@@ -167,6 +171,7 @@ class BookingDetailsContent {
     photoEvidence = json["evidence_photos"]!=null? json["evidence_photos"].cast<String>(): [];
     extraFee = double.tryParse(json["extra_fee"].toString());
     additionalCharge = double.tryParse(json['additional_charge'].toString());
+    posts = json['post'] != null ? new Posts.fromJson(json['post']) : null;
 
   }
 
@@ -219,6 +224,10 @@ class BookingDetailsContent {
     if (serviceman != null) {
       data['serviceman'] = serviceman!.toJson();
     }
+    if (this.posts != null) {
+      data['post'] = this.posts!.toJson();
+    }
+
     return data;
   }
 }
@@ -506,3 +515,134 @@ class PartialPayment {
   }
 }
 
+class Posts {
+  dynamic id;
+  dynamic serviceDescription;
+  dynamic serviceName;
+  dynamic quoteProviderId;
+  dynamic bookingSchedule;
+ dynamic isBooked;
+ dynamic isChecked;
+ dynamic customerUserId;
+ dynamic providerId;
+ dynamic serviceId;
+ dynamic categoryId;
+ dynamic subCategoryId;
+ dynamic serviceAddressId;
+ dynamic zoneId;
+  dynamic bookingId;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic isGuest;
+  Latestbid? latestbid;
+
+  Posts(
+      {this.id,
+        this.serviceDescription,
+        this.serviceName,
+        this.quoteProviderId,
+        this.bookingSchedule,
+        this.isBooked,
+        this.isChecked,
+        this.customerUserId,
+        this.providerId,
+        this.serviceId,
+        this.categoryId,
+        this.subCategoryId,
+        this.serviceAddressId,
+        this.zoneId,
+        this.bookingId,
+        this.createdAt,
+        this.updatedAt,
+        this.isGuest,
+        this.latestbid});
+
+  Posts.fromJson(Map<String, dynamic> json) {
+    print("anKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${json['latestbid']}");
+    id = json['id'];
+    serviceDescription = json['service_description'];
+    serviceName = json['service_name'];
+    quoteProviderId = json['quote_provider_id'];
+    bookingSchedule = json['booking_schedule'];
+    isBooked = json['is_booked'];
+    isChecked = json['is_checked'];
+    customerUserId = json['customer_user_id'];
+    providerId = json['provider_id'];
+    serviceId = json['service_id'];
+    categoryId = json['category_id'];
+    subCategoryId = json['sub_category_id'];
+    serviceAddressId = json['service_address_id'];
+    zoneId = json['zone_id'];
+    bookingId = json['booking_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    isGuest = json['is_guest'];
+    latestbid = json['latestbid'] != null
+        ? new Latestbid.fromJson(json['latestbid'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['service_description'] = this.serviceDescription;
+    data['service_name'] = this.serviceName;
+    data['quote_provider_id'] = this.quoteProviderId;
+    data['booking_schedule'] = this.bookingSchedule;
+    data['is_booked'] = this.isBooked;
+    data['is_checked'] = this.isChecked;
+    data['customer_user_id'] = this.customerUserId;
+    data['provider_id'] = this.providerId;
+    data['service_id'] = this.serviceId;
+    data['category_id'] = this.categoryId;
+    data['sub_category_id'] = this.subCategoryId;
+    data['service_address_id'] = this.serviceAddressId;
+    data['zone_id'] = this.zoneId;
+    data['booking_id'] = this.bookingId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['is_guest'] = this.isGuest;
+    if (this.latestbid != null) {
+      data['latestbid'] = this.latestbid!.toJson();
+    }
+    return data;
+  }
+}
+
+class Latestbid {
+  dynamic id;
+  dynamic offeredPrice;
+  dynamic providerNote;
+  dynamic status;
+  dynamic postId;
+  dynamic providerId;
+  dynamic createdAt;
+  dynamic updatedAt;
+
+  Latestbid(
+      {this.id,
+        this.offeredPrice,
+        this.providerNote,
+        this.status,
+        this.postId,
+        this.providerId,
+        this.createdAt,
+        this.updatedAt});
+
+  Latestbid.fromJson(Map<String, dynamic> json) {
+    providerNote = json['provider_note'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['offered_price'] = this.offeredPrice;
+    data['provider_note'] = this.providerNote;
+    data['status'] = this.status;
+    data['post_id'] = this.postId;
+    data['provider_id'] = this.providerId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}

@@ -198,6 +198,7 @@ class BookingSummeryWidget extends StatelessWidget{
                                     color: Theme.of(context).textTheme.bodyLarge!.color
                                 ),
                               ),
+
                             ],
                           ),
                         ),
@@ -240,8 +241,10 @@ class BookingSummeryWidget extends StatelessWidget{
                               PriceConverter.convertPrice(bookingDetailsController.bookingDetailsContent!.totalBookingAmount!.toDouble(),isShowLongPrice: true),
                               style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor),),
                           ),
+                          
                         ],),
-                      ) : Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                      ) :
+                      Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                         child: DottedBorder(
                           dashPattern: const [8, 4],
                           strokeWidth: 1.1,
@@ -267,6 +270,7 @@ class BookingSummeryWidget extends StatelessWidget{
                                       PriceConverter.convertPrice( totalBookingAmount ,isShowLongPrice: true),
                                       style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault, color : Theme.of(context).colorScheme.primary,),),
                                   ),
+
                                 ],),
 
                                 const SizedBox(height: Dimensions.paddingSizeSmall,),
@@ -478,6 +482,7 @@ class BookingSummeryWidget extends StatelessWidget{
                               PriceConverter.convertPrice( totalBookingAmount,isShowLongPrice: true),
                               style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor),),
                           ),
+
                         ]),
                       ),
                     ],
@@ -543,7 +548,7 @@ class ServiceInfoItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                //const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
                 SizedBox(
                   width: Get.width / 1.5,
                   child: Text(bookingService.variantKey??"",

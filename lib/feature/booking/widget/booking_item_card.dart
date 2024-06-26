@@ -23,8 +23,6 @@ class BookingItemCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-
             Row( children: [
               Expanded(child: Text('${'booking'.tr}# ${bookingModel.readableId}', style: ubuntuBold.copyWith())),
 
@@ -37,11 +35,23 @@ class BookingItemCard extends StatelessWidget {
             ]),
             const SizedBox(height: Dimensions.paddingSizeEight,),
 
-            // Row( children: [
-            //   Text('${'booking_date'.tr} : ', style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6))),
-            //   Text(DateConverter.dateMonthYearTimeTwentyFourFormat(DateConverter.isoUtcStringToLocalDate(bookingModel.createdAt.toString())),textDirection: TextDirection.ltr,
-            //         style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6))),],),
-            // const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+            Row(children: [
+              Text('Service Name : ', style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6))),
+              Text(bookingModel.post!.serviceName ?? "",
+                  style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)))
+            ],),
+            const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+            Row(children: [
+              Text('Provider Name : ', style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6))),
+              Text(bookingModel.providerss!.companyName ?? "",
+                  style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)))
+            ],),
+            const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+            Row( children: [
+              Text('${'booking_date'.tr} : ', style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6))),
+              Text(DateConverter.dateMonthYearTimeTwentyFourFormat(DateConverter.isoUtcStringToLocalDate(bookingModel.createdAt.toString())),textDirection: TextDirection.ltr,
+                    style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6))),],),
+            const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
 
             Row( children: [
               SizedBox( height: 15, width: 30, child: Image.asset(Images.bscheduled)),
@@ -50,8 +60,8 @@ class BookingItemCard extends StatelessWidget {
                 textDirection: TextDirection.ltr,
               ),
             ],),
-            const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
 
+            const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
             Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,  children: [
 
               Container(
@@ -100,6 +110,7 @@ class BookingItemCard extends StatelessWidget {
                 }
               ) : const SizedBox(),
             ],),
+
           ],
         ),
       ),

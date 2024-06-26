@@ -333,7 +333,7 @@ class _CustomPostCheckoutScreenState extends State<CustomPostCheckoutScreen> {
               '&callback=$callbackUrl&payment_platform=$platform&service_address=$encodedAddress&service_address_id=$addressId&is_partial=$isPartial&service_schedule=$schedule&post_id=${widget.postId}&provider_id=${widget.providerId}';
 
           if (GetPlatform.isWeb) {
-            printLog("url_with_digital_payment:$url");
+            printLog("url_with_digital_payment 1:$url");
             html.window.open(url, "_self");
           } else {
             printLog("url_with_digital_payment_mobile:$url");

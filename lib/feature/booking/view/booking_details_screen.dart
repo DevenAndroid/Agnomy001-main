@@ -1,13 +1,16 @@
 // ignore_for_file: deprecated_member_use
-
+import 'dart:convert';
 import 'package:demandium/feature/booking/controller/invoice_controller.dart';
 import 'package:demandium/feature/booking/view/web_booking_details_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
+import 'package:path/path.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
-
+import '../../../core/helper/checkout_helper.dart';
 import '../../checkout/view/payment_screen.dart';
+
+import 'package:universal_html/html.dart' as html;
 
 class BookingDetailsScreen extends StatefulWidget {
   final String bookingID;
@@ -122,10 +125,14 @@ class BookingTabBar extends StatelessWidget {
                 ),
               ),
 
+
               !ResponsiveHelper.isDesktop(context) ? const SizedBox() :
               GetBuilder<BookingDetailsController>(builder: (bookingDetailsController){
                 BookingDetailsContent? bookingDetailsContent = bookingDetailsController.bookingDetailsContent;
 
+                // bool isPartialPayment = CheckoutHelper.checkPartialPayment(
+                //     walletBalance: cartController.walletBalance,
+                //     bookingAmount: cartController.totalPrice);
                 return bookingDetailsContent != null ? Expanded(child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
 
 
@@ -137,15 +144,48 @@ class BookingTabBar extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(1.0),
                     child:  GetBuilder<CheckOutController>(builder: (checkoutController) {
-                      return  InkWell(
+
+                      AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+
+                      return
+                        GetBuilder<CartController>(builder: (cartController) {
+
+                          bool isPartialPayment = CheckoutHelper.checkPartialPayment(
+                              walletBalance: cartController.walletBalance,
+                              bookingAmount: cartController.totalPrice);
+                        return
+                        InkWell(
                       onTap: (){
-                       // String url = '${AppConstants.baseUrl}/payment?payment_method=${paymentMethod?.gateway}&access_token=${base64Url.encode(utf8.encode(userId))}&zone_id=$zoneId'
-                       //      '&service_schedule=$schedule&service_address_id=$addressId&callback=$callbackUrl&service_address=$encodedAddress&is_partial=$isPartial&payment_platform=$platform';
+                        print("addressModel=>${addressModel}");
+                        print(" checkoutController.selectedDigitalPaymentMethod=>${ checkoutController.selectedDigitalPaymentMethod}");
+                        print(" isPartialPayment=>${isPartialPayment}");
+
+
                         checkoutController.updateState(PageState.payment);
-                        Get.to(() => PaymentScreen(
-                          url: '${AppConstants.baseUrl}/payment?payment_method=',
-                          fromPage: "checkout",
-                        ));
+                        if(GetPlatform.isWeb) {
+                          Get.toNamed(RouteHelper.getCheckoutRoute(
+                            'cart',
+                            Get.find<CheckOutController>().currentPageState.name,
+                          pageState == 'payment' ?
+                          addressId.toString()
+                              : addressModel!.id.toString(),
+                            reload: false,
+                          ));
+                        }
+
+
+                        // if(checkoutController.selectedDigitalPaymentMethod !=
+                        //     null && checkoutController.selectedDigitalPaymentMethod?.gateway !=
+                        //     "offline"){
+                        //   checkoutController.updateState(PageState.payment);
+                        //   _makeDigitalPayment(addressModel,
+                        //     checkoutController.selectedDigitalPaymentMethod,
+                        //     isPartialPayment);
+                        // } else {
+                        //   print('if 21');
+                        //
+                        //   customSnackBar("select_any_payment_method".tr);
+                        // }
 
                         print(bookingDetailsContent.bookingStatus.toString());
                         print("payment");
@@ -167,13 +207,58 @@ class BookingTabBar extends StatelessWidget {
 
 
                     );
-                    }
+                    });}
                     ))
                        :
 
 
 
                    const SizedBox(height: 0,width: 0,),
+                  bookingDetailsContent.bookingStatus == "Accepted" ?
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                       // padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeEight),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                          border:Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
+                        ),
+                        child: Center(
+                          child:Text("accept".tr, style: ubuntuMedium.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: Dimensions.fontSizeSmall)),
+                        )
+                      ),
+                    ),
+                  ):
+                      SizedBox(height: 0,width: 0,)
+                  ,
+                  SizedBox(width:1),
+                  bookingDetailsContent.bookingStatus == "Accepted" ?
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                        //padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeEight),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                          border:Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
+                        ),
+                        child: Center(
+                      child:Text("decline".tr, style: ubuntuMedium.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: Dimensions.fontSizeSmall)),
+                    )
+                      ),
+                    ),
+                  )
+                  :SizedBox(height: 0,width: 0,)
+                  ,
 
                   Padding(padding: const EdgeInsets.all(6.0),
                     child: InkWell(
@@ -280,7 +365,10 @@ class BookingTabBar extends StatelessWidget {
                   ) : const SizedBox(),
 
 
-                ],)) : const SizedBox();
+                ],))
+
+
+                    : const SizedBox();
               })
             ],
           ),
@@ -288,4 +376,50 @@ class BookingTabBar extends StatelessWidget {
       );
     });
   }
+
+  //payment screen methods=>ankur
+  _makeDigitalPayment(AddressModel? address,
+      DigitalPaymentMethod? paymentMethod, bool isPartialPayment) {
+    String url = '';
+    String hostname = html.window.location.hostname!;
+    String protocol = html.window.location.protocol;
+    String port = html.window.location.port;
+    String? path = html.window.location.pathname;
+
+    String schedule = DateConverter.dateToDateOnly(
+        Get.find<ScheduleController>().selectedData);
+    String userId = Get.find<UserController>().userInfoModel?.id ??
+        Get.find<SplashController>().getGuestId();
+    String encodedAddress =
+    base64Encode(utf8.encode(jsonEncode(address?.toJson())));
+    String addressId =
+    (address?.id == "null" || address?.id == null) ? "" : address?.id ?? "";
+    String zoneId =
+        Get.find<LocationController>().getUserAddress()?.zoneId ?? "";
+    String callbackUrl = GetPlatform.isWeb
+        ? "$protocol//$hostname:$port$path"
+        : AppConstants.baseUrl;
+    int isPartial =
+    Get.find<CartController>().walletPaymentStatus && isPartialPayment
+        ? 1
+        : 0;
+    String platform = ResponsiveHelper.isWeb() ? "web" : "app";
+
+    url =
+    '${AppConstants.baseUrl}/payment?payment_method=${paymentMethod?.gateway}&access_token=${base64Url.encode(utf8.encode(userId))}&zone_id=$zoneId'
+        '&service_schedule=$schedule&service_address_id=$addressId&callback=$callbackUrl&service_address=$encodedAddress&is_partial=$isPartial&payment_platform=$platform';
+
+    if (GetPlatform.isWeb) {
+      printLog("url_with_digital_payment 2:$url");
+      html.window.open(url, "_self");
+    } else {
+      printLog("url_with_digital_payment_mobile:$url");
+      Get.to(() => PaymentScreen(
+        url: url,
+        fromPage: "checkout",
+      ));
+    }
+  }
 }
+
+

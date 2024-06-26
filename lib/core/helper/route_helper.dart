@@ -154,7 +154,7 @@ class RouteHelper {
       List<int> encodedAddress = utf8.encode(jsonEncode(previousAddress.toJson()));
       addressData  = base64Encode(encodedAddress);
     }
-   return '$pickMap?page=$page&route=${canRoute.toString()}&checkout=$isFromCheckout&zone=$zoneData&address=$addressData';
+    return '$pickMap?page=$page&route=${canRoute.toString()}&checkout=$isFromCheckout&zone=$zoneData&address=$addressData';
   }
   static String getMainRoute(String page, {AddressModel? previousAddress, String? showServiceNotAvailableDialog}) {
     String data = '';
@@ -180,7 +180,7 @@ class RouteHelper {
   static String getAddressRoute(String fromPage) => '$address?fromProfileScreen=$fromPage';
   static String getOrderSuccessRoute( String status) => '$orderSuccess?flag=$status';
   static String getCheckoutRoute(String page,String currentPage,String addressId, {bool? reload, String? token} ) {
-    return '$checkout?currentPage=$currentPage&addressID=$addressId&reload=$reload&token=$token';
+    return '$checkout?currentPage=$currentPage&addressID=$addressId&reload=$reload&token=$token}';
   }
 
   static String getCustomPostCheckoutRoute(String postId,String providerId,String amount) {
@@ -247,9 +247,9 @@ class RouteHelper {
     return '$rateReviewScreen?id=$id';
   }
 
-  static String allServiceScreenRoute(String fromPage, {String campaignID = ''}) => '$allServiceScreen?limit=100&fromPage=$fromPage&campaignID=$campaignID&placeid=$placedIdGloabal';
+  static String allServiceScreenRoute(String fromPage, {String campaignID = ''}) => '$allServiceScreen?fromPage=$fromPage&campaignID=$campaignID&placeid=$placedIdGloabal';
   static String getFeatheredCategoryService(String fromPage, CategoryData categoryData) {String data = base64Url.encode(utf8.encode(jsonEncode(categoryData.toJson())));
-    return '$featheredServiceScreen?fromPage=$fromPage&categoryData=$data';
+  return '$featheredServiceScreen?fromPage=$fromPage&categoryData=$data';
   }
   static String subCategoryScreenRoute(String categoryName,String categoryID,int subCategoryIndex) {
     return '$subCategoryScreen?categoryName=$categoryName&categoryId=$categoryID&subCategoryIndex=$subCategoryIndex';
@@ -278,7 +278,7 @@ class RouteHelper {
   static String getProviderOfferListScreen(String postId ,String status, MyPostData myPostData) {
     List<int> encoded = utf8.encode(jsonEncode(myPostData.toJson()));
     String data = base64Encode(encoded);
-     return "$providerOfferList?postId=$postId&myPostData=$data&status=$status";
+    return "$providerOfferList?postId=$postId&myPostData=$data&status=$status";
   }
   static String getProviderOfferDetailsScreen(String postId , ProviderOfferData providerOfferData) {
     List<int> encoded = utf8.encode(jsonEncode(providerOfferData.toJson()));
@@ -351,14 +351,14 @@ class RouteHelper {
           }
 
           return (fromAddress && pickMapScreen == null) ? const NotFoundScreen() :
-            pickMapScreen ?? PickMapScreen(
-              fromSignUp: Get.parameters['page'] == signUp,
-              fromAddAddress: fromAddress, route: Get.parameters['page']!,
-              canRoute: Get.parameters['route'] == 'true',
-              formCheckout: Get.parameters['checkout'] == 'true',
-              zone: zoneData, previousAddress: addressData,
-      );
-    }),
+          pickMapScreen ?? PickMapScreen(
+            fromSignUp: Get.parameters['page'] == signUp,
+            fromAddAddress: fromAddress, route: Get.parameters['page']!,
+            canRoute: Get.parameters['route'] == 'true',
+            formCheckout: Get.parameters['checkout'] == 'true',
+            zone: zoneData, previousAddress: addressData,
+          );
+        }),
     GetPage(
         binding: BottomNavBinding(),
         name: main,
@@ -442,12 +442,12 @@ class RouteHelper {
           List<int> decode = base64Decode(Get.parameters['address']!.replaceAll(' ', '+'));
           AddressModel data = AddressModel.fromJson(jsonDecode(utf8.decode(decode)));
           return getRoute(MapScreen( address: data));
-      }),
-      GetPage(
-          name: orderSuccess,
-          page: () => getRoute(OrderSuccessfulScreen(status: Get.parameters['flag'].toString().contains('success') ? 1 : 0,))
-      ),
-      GetPage( binding: CheckoutBinding(),
+        }),
+    GetPage(
+        name: orderSuccess,
+        page: () => getRoute(OrderSuccessfulScreen(status: Get.parameters['flag'].toString().contains('success') ? 1 : 0,))
+    ),
+    GetPage( binding: CheckoutBinding(),
         name: checkout, page: () {
 
           if(Get.parameters['flag'] == 'failed' || Get.parameters['flag'] == 'fail' || Get.parameters['flag'] == 'cancelled' || Get.parameters['flag'] == 'canceled' || Get.parameters['flag'] == 'cancel')  {
@@ -459,59 +459,59 @@ class RouteHelper {
             reload : Get.parameters['reload'].toString() == "true" || Get.parameters['reload'].toString() == "null" ? true : false,
             token: Get.parameters["token"],
           ));
-      }),
+        }),
 
-      GetPage(name: customPostCheckout, page: (){
-        List<int> decode = base64Decode(Get.parameters['amount']!);
-        String data = utf8.decode(decode);
-        return CustomPostCheckoutScreen(
-          postId: Get.parameters['postId']!,
-          providerId: Get.parameters['providerId']!,
-          amount: data,
-        );
-      }),
+    GetPage(name: customPostCheckout, page: (){
+      List<int> decode = base64Decode(Get.parameters['amount']!);
+      String data = utf8.decode(decode);
+      return CustomPostCheckoutScreen(
+        postId: Get.parameters['postId']!,
+        providerId: Get.parameters['providerId']!,
+        amount: data,
+      );
+    }),
 
-      GetPage(
-          binding: InitialBinding(),
-          name: html,
-          page: () => HtmlViewerScreen(
-              htmlType:
-              Get.parameters['page'] == 'terms-and-condition' ? HtmlType.termsAndCondition :
-              Get.parameters['page'] == 'privacy-policy' ? HtmlType.privacyPolicy :
-              Get.parameters['page'] == 'cancellation_policy' ? HtmlType.cancellationPolicy :
-              Get.parameters['page'] == 'refund_policy' ? HtmlType.refundPolicy :
-              HtmlType.aboutUs
-      )),
+    GetPage(
+        binding: InitialBinding(),
+        name: html,
+        page: () => HtmlViewerScreen(
+            htmlType:
+            Get.parameters['page'] == 'terms-and-condition' ? HtmlType.termsAndCondition :
+            Get.parameters['page'] == 'privacy-policy' ? HtmlType.privacyPolicy :
+            Get.parameters['page'] == 'cancellation_policy' ? HtmlType.cancellationPolicy :
+            Get.parameters['page'] == 'refund_policy' ? HtmlType.refundPolicy :
+            HtmlType.aboutUs
+        )),
 
-      GetPage(
-          name: categories,
-          page: () => getRoute(CategoryScreen(fromPage: Get.parameters['fromPage']!,campaignID:Get.parameters['campaignID']!))),
-      GetPage(
-          binding: CategoryBindings(),
-          name: categoryProduct,
-          page: () {
-            List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
-            String data = utf8.decode(decode);
-            return getRoute(CategorySubCategoryScreen(
-              categoryID: Get.parameters['id']!,
-              categoryName: data,
-              subCategoryIndex: Get.parameters['subCategoryIndex']!,
-            ));
-      }),
-      GetPage(name: support, page: () => ContactUsPage()),
-      GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
-      GetPage(name: cart, page: () => getRoute(const CartScreen(fromNav: false))),
-      GetPage(name: addAddress, page: () => getRoute(AddAddressScreen(fromCheckout: Get.parameters['page'] == 'checkout'))),
-      GetPage(
-          name: editAddress,
-          page: () => getRoute(AddAddressScreen(
-            fromCheckout: Get.parameters['page'] == 'checkout',
-            address: AddressModel.fromJson(jsonDecode(utf8.decode(base64Url.decode(Get.parameters['data']!.replaceAll(' ', '+'))))),
-      ))),
-      GetPage(
-          name: rateReview,
-          page: () => getRoute(Get.arguments ?? const NotFoundScreen())),
-     GetPage(name: chatScreen, page: () =>
+    GetPage(
+        name: categories,
+        page: () => getRoute(CategoryScreen(fromPage: Get.parameters['fromPage']!,campaignID:Get.parameters['campaignID']!))),
+    GetPage(
+        binding: CategoryBindings(),
+        name: categoryProduct,
+        page: () {
+          List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
+          String data = utf8.decode(decode);
+          return getRoute(CategorySubCategoryScreen(
+            categoryID: Get.parameters['id']!,
+            categoryName: data,
+            subCategoryIndex: Get.parameters['subCategoryIndex']!,
+          ));
+        }),
+    GetPage(name: support, page: () => ContactUsPage()),
+    GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
+    GetPage(name: cart, page: () => getRoute(const CartScreen(fromNav: false))),
+    GetPage(name: addAddress, page: () => getRoute(AddAddressScreen(fromCheckout: Get.parameters['page'] == 'checkout'))),
+    GetPage(
+        name: editAddress,
+        page: () => getRoute(AddAddressScreen(
+          fromCheckout: Get.parameters['page'] == 'checkout',
+          address: AddressModel.fromJson(jsonDecode(utf8.decode(base64Url.decode(Get.parameters['data']!.replaceAll(' ', '+'))))),
+        ))),
+    GetPage(
+        name: rateReview,
+        page: () => getRoute(Get.arguments ?? const NotFoundScreen())),
+    GetPage(name: chatScreen, page: () =>
         ConversationScreen(
           channelID: Get.parameters['channelID']!,
           image: Get.parameters['image']!,
@@ -526,38 +526,38 @@ class RouteHelper {
     GetPage(name: chatInbox,binding: ConversationBinding(), page: () => ChannelList(
       fromNotification: Get.parameters['fromNotification'],
     )),
-      GetPage(name: address, page: ()=>getRoute(
-          AddressScreen(fromPage:Get.parameters['fromProfileScreen']!)
-      ) ),
-      GetPage(binding: OnBoardBinding(),name: onBoardScreen, page: ()=>const OnBoardingScreen(),),
-      GetPage(name: settingScreen,binding: SettingsBinding(), page: ()=>const SettingScreen(),),
-      GetPage(name: voucherScreen, page: ()=> const CouponScreen(),),
-      GetPage(binding: BookingBinding(),name: bookingDetailsScreen, page: ()=> BookingDetailsScreen(
-        bookingID: Get.parameters['bookingID']!,
-        phone: Get.parameters['phone']!,
-        fromPage: Get.parameters['fromPage']!,
-      ),),
+    GetPage(name: address, page: ()=>getRoute(
+        AddressScreen(fromPage:Get.parameters['fromProfileScreen']!)
+    ) ),
+    GetPage(binding: OnBoardBinding(),name: onBoardScreen, page: ()=>const OnBoardingScreen(),),
+    GetPage(name: settingScreen,binding: SettingsBinding(), page: ()=>const SettingScreen(),),
+    GetPage(name: voucherScreen, page: ()=> const CouponScreen(),),
+    GetPage(binding: BookingBinding(),name: bookingDetailsScreen, page: ()=> BookingDetailsScreen(
+      bookingID: Get.parameters['bookingID']!,
+      phone: Get.parameters['phone']!,
+      fromPage: Get.parameters['fromPage']!,
+    ),),
 
-      GetPage(binding: BookingBinding(),name: trackBooking, page: ()=> const BookingTrackScreen(),),
-      GetPage(binding: ServiceBinding(),name: allServiceScreen, page:  ()=> getRoute(AllServiceView(fromPage: Get.parameters['fromPage']!,campaignID: Get.parameters['campaignID']!,)),),
-      GetPage(binding: ServiceBinding(),name: subCategoryScreen, page: ()=> SubCategoryScreen(
-        categoryTitle: Get.parameters['categoryName']!,
-        categoryID: Get.parameters['categoryId']!,
-        subCategoryIndex: int.parse(Get.parameters['subCategoryIndex']!),
-      ),),
-      GetPage(
-        binding: SubmitReviewBinding(),
-        name: rateReviewScreen, page: () {
-        // List<int> _decode = base64Decode(Get.parameters['bookingDetailsContent']!.replaceAll(' ', '+'));
-        // BookingDetailsContent _data = BookingDetailsContent.fromJson(jsonDecode(utf8.decode(_decode)));
-          return RateReviewScreen(
-            id : Get.parameters['id'].toString(),
-          );
-          },),
+    GetPage(binding: BookingBinding(),name: trackBooking, page: ()=> const BookingTrackScreen(),),
+    GetPage(binding: ServiceBinding(),name: allServiceScreen, page:  ()=> getRoute(AllServiceView(fromPage: Get.parameters['fromPage']!,campaignID: Get.parameters['campaignID']!,)),),
+    GetPage(binding: ServiceBinding(),name: subCategoryScreen, page: ()=> SubCategoryScreen(
+      categoryTitle: Get.parameters['categoryName']!,
+      categoryID: Get.parameters['categoryId']!,
+      subCategoryIndex: int.parse(Get.parameters['subCategoryIndex']!),
+    ),),
+    GetPage(
+      binding: SubmitReviewBinding(),
+      name: rateReviewScreen, page: () {
+      // List<int> _decode = base64Decode(Get.parameters['bookingDetailsContent']!.replaceAll(' ', '+'));
+      // BookingDetailsContent _data = BookingDetailsContent.fromJson(jsonDecode(utf8.decode(_decode)));
+      return RateReviewScreen(
+        id : Get.parameters['id'].toString(),
+      );
+    },),
     GetPage(binding: CheckoutBinding(),name: paymentPage, page: ()=> PaymentScreen(url: Get.parameters['url']!,)),
     GetPage(name: bookingListScreen, page: ()=> BookingListScreen( isFromMenu: Get.parameters['isFromMenu'] == "true"? true: false)),
     GetPage(name: notLoggedScreen, page: ()=> NotLoggedInScreen(
-        fromPage: Get.parameters['fromPage']!,
+      fromPage: Get.parameters['fromPage']!,
       appbarTitle: Get.parameters['appbarTitle']!,
     )
     ),
@@ -594,9 +594,9 @@ class RouteHelper {
     ),)),
     GetPage( name:providerOfferList, page:() {
 
-     List<int> decode = base64Decode(Get.parameters['myPostData']!.replaceAll(' ', '+'));
-     MyPostData data = MyPostData.fromJson(jsonDecode(utf8.decode(decode)));
-     return ProviderOfferListScreen(
+      List<int> decode = base64Decode(Get.parameters['myPostData']!.replaceAll(' ', '+'));
+      MyPostData data = MyPostData.fromJson(jsonDecode(utf8.decode(decode)));
+      return ProviderOfferListScreen(
         postId: Get.parameters['postId'],
         myPostData: data,
         status: Get.parameters['status']!,
@@ -607,10 +607,10 @@ class RouteHelper {
 
       List<int> decode = base64Decode(Get.parameters['providerOfferData']!.replaceAll(' ', '+'));
       ProviderOfferData data = ProviderOfferData.fromJson(jsonDecode(utf8.decode(decode)));
-       return ProviderOfferDetailsScreen(
-         postId: Get.parameters['postId'],
-         providerOfferData: data,
-       );
+      return ProviderOfferDetailsScreen(
+        postId: Get.parameters['postId'],
+        providerOfferData: data,
+      );
     }),
 
     GetPage(name: providerWebView, page: () => const ProviderWebView()),
@@ -632,4 +632,4 @@ class RouteHelper {
         : Get.find<LocationController>().getUserAddress() != null ? navigateTo
         : AccessLocationScreen(fromSignUp: false, fromHome: false, route: Get.currentRoute);
   }
-  }
+}

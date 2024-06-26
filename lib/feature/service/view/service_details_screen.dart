@@ -361,7 +361,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                                               Text("with in ${service.providers![index].distance!.toInt()} miles"),
 
                                                                               ElevatedButton(
+
                                                                                 onPressed: () async {
+                                                                                  print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+                                                                                  print("categoryId${categoryId}");
                                                                                categoryId = service.providers![index].categoryId;
                                                                                subCategoryId = service.providers![index].subCategoryId;
                                                                                   serviceProviderIDss = [serviceID];

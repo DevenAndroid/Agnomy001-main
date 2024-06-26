@@ -9,7 +9,8 @@ import 'package:path/path.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
+ String? pageState;
+ String? addressId;
 class ProceedToCheckoutButtonWidget extends StatefulWidget {
   final String pageState;
   final String addressId;
@@ -38,6 +39,7 @@ class _ProceedToCheckoutButtonWidgetState
           'https://admin.agnomy.com/api/v1/customer/checkout-summery');
 
       var request = http.MultipartRequest('POST', url)
+
         ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
         ..fields['question_input'] = questionController.text
         ..fields['service_description'] = messageController.text
@@ -61,38 +63,6 @@ class _ProceedToCheckoutButtonWidgetState
     }
   }
 
-
-  // Future<void> sendBookingRequest() async {
-  //   print("token=> ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
-  //   print("quote_id${quote_id}");
-  //   print("zoneId${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
-  //   const url = 'https://admin.agnomy.com/api/v1/customer/booking/request/send';
-  //   const serviceAddressId = '22';
-  //   const serviceSchedule = '2024-06-20 22:11:41';
-  //   const serviceAddress = 'sdafdsfds';
-  //
-  //   try {
-  //     var request = http.MultipartRequest('POST', Uri.parse(url))
-  //       ..headers['Accept'] = 'application/json'
-  //       ..headers['Authorization'] = 'Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}'
-  //       ..fields['payment_method'] = 'offline_payment'
-  //       ..fields['zone_id'] = Get.find<LocationController>().getUserAddress()!.zoneId.toString()
-  //       ..fields['quote_id'] = quote_id
-  //       ..fields['service_address_id'] = serviceAddressId
-  //       ..fields['service_schedule'] = serviceSchedule
-  //       ..fields['service_address'] = serviceAddress;
-  //
-  //     var response = await request.send();
-  //
-  //     if (response.statusCode == 200) {
-  //       print('Request sent successfully');
-  //     } else {
-  //       print('Failed to send request: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error occurred: $e');
-  //   }
-  // }
 
 
 
@@ -150,58 +120,35 @@ class _ProceedToCheckoutButtonWidgetState
                   AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
 
                   if (Get.find<CartController>().cartList.isEmpty) {
+                    //Get.offAllNamed(RouteHelper.getMainRoute('home'));
 
                     print('if 1');
 
-                    if (questionController.text != null &&
-                        messageController.text != null &&
-                        questionController.text.isNotEmpty &&
-                        messageController.text.isNotEmpty)
-
-                    {
-                      checkoutController.updateState(PageState.payment);
-                      if (GetPlatform.isWeb ) {
-                        print("placeBookingRequest");
-                        // checkoutController.placeBookingRequest(
-                        //   paymentMethod: "offline_payment",
-                        //   schedule: schedule,
-                        //   isPartial: isPartialPayment &&
-                        //       cartController.walletPaymentStatus
-                        //       ? 1
-                        //       : 0,
-                        //   address: addressModel!,
-                        // );
-                        checkoutController.placeBookingRequest(
-                          paymentMethod: "offline_payment",
-                          schedule: schedule,
-                          isPartial: isPartialPayment &&
-                              cartController.walletPaymentStatus
-                              ? 1
-                              : 0,
-                          address: addressModel!,
-                          offlinePaymentId:
-                          checkoutController.selectedOfflineMethod?.id,
-                          customerInformation: base64Url.encode(utf8.encode(
-                              jsonEncode(checkoutController
-                                  .offlinePaymentInputFieldValues))),
-                        );
-
-                      }
+                    // if (questionController.text != null &&
+                    //     messageController.text != null &&
+                    //     questionController.text.isNotEmpty &&
+                    //     messageController.text.isNotEmpty)
+                    //
+                    // {
+                    _makeDigitalPayment(
+                        addressModel,
+                        checkoutController.selectedDigitalPaymentMethod,
+                        isPartialPayment);
 
 
+                  //    checkoutSummeryApiCall();
 
-                      checkoutSummeryApiCall();
-
-                    }
-
-                    else {
-                      print("error in textfrom feild");
-                      customSnackBar("please enter the field it is required",duration:2);
-
-                    }
+                    // }
+                    //
+                    // else {
+                    //   print("error in textfrom feild");
+                    //   customSnackBar("please enter the field it is required",duration:2);
+                    //
+                    // }
 
                    // Get.offAllNamed(RouteHelper.getMainRoute('home'));
-                  } else if (cartController.cartList.isNotEmpty &&
+                  }
+                  else if (cartController.cartList.isNotEmpty &&
                       cartController.preSelectedProvider &&
                       cartController.cartList[0].provider != null &&
                       (cartController
@@ -278,14 +225,16 @@ class _ProceedToCheckoutButtonWidgetState
                       else {
                         print('if 9');
 
-                        if (questionController.text != null &&
-                            messageController.text != null &&
-                            questionController.text.isNotEmpty &&
-                            messageController.text.isNotEmpty)
-
-                        {
+                        // if (questionController.text != null &&
+                        //     messageController.text != null &&
+                        //     questionController.text.isNotEmpty &&
+                        //     messageController.text.isNotEmpty)
+                        //
+                        // {
                           //checkoutController.updateState(PageState.payment); // payment vali screen pe navigation in use for
                           if (GetPlatform.isWeb) {
+
+                            ///
                             // Get.toNamed(RouteHelper.getCheckoutRoute(
                             //   'cart',
                             //   Get.find<CheckOutController>()
@@ -295,7 +244,7 @@ class _ProceedToCheckoutButtonWidgetState
                             //       : addressModel.id.toString(),
                             //   reload: false,
                             // ));
-
+///
                             checkoutController.placeBookingRequest(
                               paymentMethod: "offline_payment",
                               schedule: schedule,
@@ -318,13 +267,13 @@ class _ProceedToCheckoutButtonWidgetState
                           questionController.clear();
                           messageController.clear();
 
-                        }
+                        //}
 
-                        else {
-                          print("error in textfrom feild");
-                          customSnackBar("please enter the field it is required",duration:2);
-
-                        }
+                        // else {
+                        //   print("error in textfrom feild");
+                        //   customSnackBar("please enter the field it is required",duration:2);
+                        //
+                        // }
 
 
                       }
@@ -401,9 +350,7 @@ class _ProceedToCheckoutButtonWidgetState
                       print('if 19');
 
                       if (checkoutController.selectedDigitalPaymentMethod !=
-                              null &&
-                          checkoutController
-                                  .selectedDigitalPaymentMethod?.gateway !=
+                              null && checkoutController.selectedDigitalPaymentMethod?.gateway !=
                               "offline") {
                         print('if 20');
 
