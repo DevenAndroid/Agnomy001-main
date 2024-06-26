@@ -773,8 +773,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
   }
 
   /// show in api in provider list
-  Rx<ServicewiseProviderModel> servicewiseProviderModel =
-      ServicewiseProviderModel().obs;
+  Rx<ServicewiseProviderModel> servicewiseProviderModel = ServicewiseProviderModel().obs;
   RxBool success = false.obs;
 
 

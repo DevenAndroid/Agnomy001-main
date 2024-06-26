@@ -4,6 +4,7 @@ import 'package:demandium/feature/booking/controller/invoice_controller.dart';
 import 'package:demandium/feature/booking/view/web_booking_details_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:path/path.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
@@ -11,6 +12,10 @@ import '../../../core/helper/checkout_helper.dart';
 import '../../checkout/view/payment_screen.dart';
 
 import 'package:universal_html/html.dart' as html;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import '../model/approved_model.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
   final String bookingID;
@@ -82,11 +87,14 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> with Single
       ),
     );
   }
+
+
+
 }
 
 class BookingTabBar extends StatelessWidget {
   final TabController? tabController;
-  const BookingTabBar({Key? key, this.tabController}) : super(key: key);
+   BookingTabBar({Key? key, this.tabController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +225,7 @@ class BookingTabBar extends StatelessWidget {
                   bookingDetailsContent.bookingStatus == "Accepted" ?
                   InkWell(
                     onTap: (){
-
+                      fetchOfferApproved();
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(6.0),
@@ -375,7 +383,19 @@ class BookingTabBar extends StatelessWidget {
         ),
       );
     });
+
+
+
+
+
+
   }
+
+
+
+
+
+
 
   //payment screen methods=>ankur
   _makeDigitalPayment(AddressModel? address,
@@ -413,13 +433,77 @@ class BookingTabBar extends StatelessWidget {
       printLog("url_with_digital_payment 2:$url");
       html.window.open(url, "_self");
     } else {
-      printLog("url_with_digital_payment_mobile:$url");
+      printLog("url_with_digital_payment_mobile m2:$url");
       Get.to(() => PaymentScreen(
         url: url,
         fromPage: "checkout",
       ));
     }
   }
+
+
+
+
+
+
+
+  // Future<void> fetchOfferApproved() async {
+  //   print("details in id :${Get.parameters['bookingID']!}");
+  //   var headers = {
+  //     'Authorization': 'Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}'
+  //   };
+  //
+  //   var request = http.Request(
+  //       'GET',
+  //       Uri.parse('https://admin.agnomy.com/api/v1/customer/booking/offer-approved/5625d510-b8b1-41ac-bd28-fcd5ea27a4a8')
+  //   );
+  //
+  //   request.headers.addAll(headers);
+  //
+  //   http.StreamedResponse response = await request.send();
+  //
+  //   if (response.statusCode == 200) {
+  //     print(response.body)
+  //     String responseBody = await response.stream.bytesToString();
+  //     print(responseBody);
+  //     // return ApprovedModel.fromJson()
+  //   } else {
+  //     print('Request failed with status: ${response.statusCode}. ${response.reasonPhrase}');
+  //   }
+  // }
+
+  //api hit function Approved
+  Future<void> fetchOfferApproved() async {
+    print("details in id :${Get.parameters['bookingID']!}");
+    String ? bookingid= Get.parameters['bookingID'];
+    var headers = {
+      'Authorization':'Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}'
+    };
+
+    var request = http.Request(
+        'GET',
+        Uri.parse('https://admin.agnomy.com/api/v1/customer/booking/offer-approved/${bookingid}')
+    );
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String responseBody = await response.stream.bytesToString();
+      print(responseBody);
+      Map<String, dynamic> jsonResponse = json.decode(responseBody);
+      String messagepa = jsonResponse['message'];
+      print(messagepa);
+       customSnackBar(messagepa.toString(),
+       backgroundColor: Colors.green);
+    } else {
+      print('Request failed with status: ${response.statusCode}. ${response.reasonPhrase}');
+    }
+  }
+
+
 }
+
 
 

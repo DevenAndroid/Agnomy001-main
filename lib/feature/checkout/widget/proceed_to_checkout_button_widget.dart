@@ -436,7 +436,7 @@ class _ProceedToCheckoutButtonWidgetState
       printLog("url_with_digital_payment:$url");
       html.window.open(url, "_self");
     } else {
-      printLog("url_with_digital_payment_mobile:$url");
+      printLog("url_with_digital_payment_mobile m1:$url");
       Get.to(() => PaymentScreen(
             url: url,
             fromPage: "checkout",
