@@ -318,8 +318,12 @@ class BookingTabBar extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             if(bookingDetailsContent.bookingStatus == "completed"){
+                              print("if");
                               serviceBookingController.checkCartSubcategory(bookingDetailsController.bookingDetailsContent!.id!, bookingDetailsController.bookingDetailsContent!.subCategoryId!);
                             }else{
+                              print("else");
+                               // TextFormField();
+
                               Get.dialog(
                                   ConfirmationDialog(
                                     icon: Images.deleteProfile,

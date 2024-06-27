@@ -6,7 +6,7 @@ import  'package:demandium/feature/provider/model/provider_model.dart';
 import '../../../components/service_center_dialog.dart';
 
 
-
+String? cartPriceTotal;
 class CartController extends GetxController implements GetxService {
   final CartRepo cartRepo;
   final int? providerId;
@@ -96,21 +96,27 @@ class CartController extends GetxController implements GetxService {
 
 
   Future<void> getCartListFromServer({bool shouldUpdate = true})async{
+    print('cartPriceTotal=>${cartPriceTotal}');
     _isLoading = true;
     Response response = await cartRepo.getCartListFromServer();
     if(response.statusCode == 200){
       _cartList = [];
-      response.body['content']['cart']['data'].forEach((cart){
-        _cartList.add(CartModel.fromJson(cart));
+      response.body['content']['cart']['data'].forEach((cart){_cartList.add(CartModel.fromJson(cart));
+
+      cartPriceTotal = response.body['content']['total_cost'];
+
 
       });
 
       if(response.body['content']['wallet_balance']!=null){
         _walletBalance = double.tryParse(response.body['content']['wallet_balance'].toString())!;
       }
-      if(response.body['content']['total_cost']!=null){
-        _totalPrice = double.tryParse(response.body['content']['total_cost'].toString())!;
-      }
+      _totalPrice = response.body['content']['total_cost'] != null
+          ? double.tryParse(response.body['content']['total_cost'].toString())!
+          : 0.0;
+      // if(response.body['content']['total_cost']!=null){
+      //   _totalPrice = double.tryParse(response.body['content']['total_cost'].toString())!;
+      // }
 
       if(_cartList.isNotEmpty){
         if(_cartList[0].provider!=null){

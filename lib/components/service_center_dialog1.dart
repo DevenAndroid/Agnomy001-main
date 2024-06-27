@@ -447,9 +447,11 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
                                                                                           ),
                                                                                         )
                                                                                       : SizedBox(),
-                                                                                  servicewiseProviderModel.value.content![index].value == 0 ? Text(
-                                                                                    "", // '${servicewiseProviderModel.value.content![index].value}',
-                                                                                  ): Text("1"),
+                                                                                  servicewiseProviderModel.value.content![index].value == 0
+                                                                                      ? Text(
+                                                                                          "", // '${servicewiseProviderModel.value.content![index].value}',
+                                                                                        )
+                                                                                      : Text("1"),
                                                                                   InkWell(
                                                                                       onTap: () {
                                                                                         if (servicewiseProviderModel.value.content![index].value < 1) {
@@ -546,7 +548,9 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
                                         //   token: Get.parameters["token"],
                                         // ));
                                       } else {
-                                        customSnackBar("please any one add to provider",duration:2);
+                                        customSnackBar(
+                                            "please any one add to provider",
+                                            duration: 2);
                                         //snackbar
                                       }
                                     },
@@ -773,9 +777,9 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
   }
 
   /// show in api in provider list
-  Rx<ServicewiseProviderModel> servicewiseProviderModel = ServicewiseProviderModel().obs;
+  Rx<ServicewiseProviderModel> servicewiseProviderModel =
+      ServicewiseProviderModel().obs;
   RxBool success = false.obs;
-
 
   Future<ServicewiseProviderModel> fetchServiceProviders() async {
     final String url =
@@ -789,7 +793,8 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
       uri,
       headers: {
         'zoneId': zoneId.toString(),
-        'Authorization':"Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
+        'Authorization':
+            "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
       },
     );
 
@@ -810,14 +815,17 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
     final String categoryID = widget.service!.categoryId.toString();
     final String subCategoryID = widget.service!.subCategoryId.toString();
 
-    final url = Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
-    print("token 3${ Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
-    print("getGuestId${ Get.find<SplashController>().getGuestId()}");
+    final url =
+        Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
+    print(
+        "token 3${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+    print("getGuestId${Get.find<SplashController>().getGuestId()}");
 
     final request = http.MultipartRequest('POST', url)
       ..headers['Accept'] = 'application/json'
-      ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
-       // ..headers['Authorization']= Get.find<SplashController>().splashRepo.apiClient.token.toString() //
+      ..headers['Authorization'] =
+          "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
+      // ..headers['Authorization']= Get.find<SplashController>().splashRepo.apiClient.token.toString() //
       //'Bearer YOUR_ACCESS_TOKEN_HERE'//  HttpHeaders.authorizationHeader: "Bearer ${user.user!.token}"
 
       ..fields['service_id'] =

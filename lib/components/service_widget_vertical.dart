@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:demandium/components/service_center_dialog1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/ripple_button.dart';
@@ -516,16 +517,31 @@ class ServiceWidgetVertical extends StatelessWidget {
                       size: Dimensions.paddingSizeExtraLarge),
                 ),
                 Positioned.fill(child: RippleButton(onTap: () {
-                  if (fromType != "provider_details") {
-                    Get.find<CartController>().resetPreselectedProviderInfo();
+                  if (Get.find<AuthController>().isLoggedIn()) {
+                    Get.find<CartController>()
+                        .resetPreselectedProviderInfo();
+                    showModalBottomSheet(
+                        context: context,
+                        useRootNavigator: true,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => ServiceCenterDialog1(
+                          service: service,
+                          isFromDetails: true,
+                        ));
+                  } else {
+                    customSnackBar("please login First",duration:2);
+                    Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
                   }
-                  showModalBottomSheet(
-                      useRootNavigator: true,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (context) =>
-                          ServiceCenterDialog(service: service,));
+                  // if (fromType != "provider_details") {
+                  //   Get.find<CartController>().resetPreselectedProviderInfo();
+                  // }
+                  // showModalBottomSheet(
+                  //     useRootNavigator: true,
+                  //     isScrollControlled: true,
+                  //     backgroundColor: Colors.transparent,
+                  //     context: context,
+                  //     builder: (context) => ServiceCenterDialog(service: service,));
                 }))
               ],
             ),

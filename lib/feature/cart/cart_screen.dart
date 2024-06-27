@@ -219,7 +219,9 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                           Directionality(
                                             textDirection: TextDirection.ltr,
-                                            child: Text(PriceConverter.convertPrice(Get.find<CartController>().totalPrice),
+                                            child:
+
+                                      Text(PriceConverter.convertPrice(Get.find<CartController>().totalPrice),
                                               style: ubuntuBold.copyWith(
                                                 color: Theme.of(context).colorScheme.error,
                                                 fontSize: Dimensions.fontSizeLarge,
