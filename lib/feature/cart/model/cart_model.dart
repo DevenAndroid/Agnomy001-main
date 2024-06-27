@@ -6,6 +6,7 @@ class CartModel {
   String? _serviceId;
   String? _categoryId;
   String? _subCategoryId;
+  String? offerPrice;
   String? _variantKey;
   num? _serviceCost;
   int? _quantity;
@@ -23,6 +24,8 @@ class CartModel {
       String serviceId,
       String categoryId,
       String subCategoryId,
+    // String? offerPrice,
+
       String variantKey,
       num serviceCost,
       int quantity,
@@ -41,6 +44,7 @@ class CartModel {
   _serviceId = serviceId;
   _categoryId = categoryId;
   _subCategoryId = subCategoryId;
+  // _offerPrice = offerPrice;
   _variantKey = variantKey;
   _serviceCost = serviceCost;
   _quantity = quantity;
@@ -59,6 +63,7 @@ class CartModel {
   ProviderData? get provider => _provider;
 
   String get serviceId => _serviceId!;
+  // String get offerPrice => _offerPrice! ;
   String get categoryId => _categoryId!;
   String get variantKey => _variantKey!;
   String get subCategoryId => _subCategoryId!;
@@ -92,6 +97,7 @@ class CartModel {
     _id = json['id'];
     _serviceId = json['service_id'];
     _categoryId = json['category_id'];
+    offerPrice = json['offer_price'];
     _subCategoryId = json['sub_category_id'];
     _variantKey = json['variant_key'];
     _serviceCost = json['service_cost'];
@@ -113,6 +119,7 @@ class CartModel {
     data['service_id'] = _serviceId;
     data['category_id'] = _categoryId;
     data['sub_category_id'] = _subCategoryId;
+    data['offer_price'] = offerPrice;
     data['variant_key'] = _variantKey;
     data['service_cost'] = _serviceCost;
     data['quantity'] = _quantity;

@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/cart/widget/cart_product_widget.dart';
 
+import '../../core/helper/checkout_helper.dart';
+
 
 class CartScreen extends StatefulWidget {
   final bool fromNav;
@@ -20,6 +22,8 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
+    AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+
     Get.find<CartController>().getCartListFromServer().then((value) {
      Get.find<CartController>().cartList.forEach((cart) async {
        if (cart.service == null) {
@@ -221,13 +225,16 @@ class _CartScreenState extends State<CartScreen> {
                                             textDirection: TextDirection.ltr,
                                             child:
 
-                                      Text(PriceConverter.convertPrice(Get.find<CartController>().totalPrice),
+                                      Text(
+                         cartListTotalPrice.toString() !=null?  cartListTotalPrice.toString():"0.00",
+                                        //PriceConverter.convertPrice(Get.find<CartController>().totalPrice),
                                               style: ubuntuBold.copyWith(
                                                 color: Theme.of(context).colorScheme.error,
                                                 fontSize: Dimensions.fontSizeLarge,
                                               ),
                                             ),
-                                          )]),
+                                          )
+                                        ]),
                                       ),
                                     ),
                                     Row(
@@ -260,29 +267,62 @@ class _CartScreenState extends State<CartScreen> {
                                         if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
                                         const SizedBox(width: Dimensions.paddingSizeSmall),
                                         Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: Dimensions.paddingSizeSmall,
-                                            ),
-                                            child: CustomButton(
-                                              height: 50,
-                                              width: Get.width,
-                                              radius: Dimensions.radiusDefault,
-                                              buttonText: 'proceed_to_checkout'.tr,
-                                              onPressed: Get.find<CartController>().cartList.isNotEmpty && Get.find<CartController>().preSelectedProvider
-                                                  && Get.find<CartController>().cartList[0].provider !=null && (Get.find<CartController>().cartList[0].provider?.serviceAvailability == 0 || Get.find<CartController>().cartList[0].provider?.isActive== 0) ? (){
-                                                customSnackBar("your_selected_provider_is_unavailable_right_now".tr);
-                                              }: Get.find<SplashController>().configModel.content!.minBookingAmount! >  cartController.totalPrice ? (){
-                                                cartController.showMinimumAndMaximumOrderValueToaster();
-                                              } :() {
-                                                if (Get.find<SplashController>().configModel.content?.guestCheckout== 0 && !Get.find<AuthController>().isLoggedIn()) {
-                                                  Get.toNamed(RouteHelper.getNotLoggedScreen(RouteHelper.cart,"cart"));
-                                                } else {
-                                                  Get.find<CheckOutController>().updateState(PageState.orderDetails);
-                                                  Get.toNamed(RouteHelper.getCheckoutRoute('cart','orderDetails','null'));
-                                                }
-                                              },
-                                            ),
+                                          child: GetBuilder<CheckOutController>(builder: (checkoutController) {
+
+                                            AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+
+                                            return
+                                              GetBuilder<CartController>(builder: (cartController) {
+
+                                                bool isPartialPayment = CheckoutHelper.checkPartialPayment(
+                                                    walletBalance: cartController.walletBalance,
+                                                    bookingAmount: cartController.totalPrice);
+                                                return
+                                                  InkWell(
+                                                    onTap: (){
+                                                      print("addressModel=>${addressModel}");
+                                                      print("addressModel=>${addressId.toString()}");
+                                                      print("addressModel=>${addressModel!.id.toString()}");
+                                                      print(" checkoutController.selectedDigitalPaymentMethod=>${ checkoutController.selectedDigitalPaymentMethod}");
+                                                      print(" isPartialPayment=>${isPartialPayment}");
+
+
+                                                      checkoutController.updateState(PageState.payment);
+                                                      if(GetPlatform.isWeb) {
+                                                        Get.toNamed(RouteHelper.getCheckoutRoute(
+                                                          'cart',
+                                                          Get.find<CheckOutController>().currentPageState.name,
+                                                          pageState == 'payment' ?
+                                                          addressId.toString()
+                                                              : addressModel!.id.toString(),
+                                                          reload: false,
+                                                        ));
+                                                      }
+
+                                                      print("payment");
+                                                    },
+                                                    child:
+
+                                                    Container(
+                                                      height: 50,
+                                                      width: Get.width,
+                                                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeEight),
+                                                      decoration: BoxDecoration(
+                                                        color:  Theme.of(context).colorScheme.primary,
+                                                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                                        border:Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
+                                                      ),
+                                                      child:Center(child:
+                                                      Text("Proceed to Payment".tr,
+                                                          style:ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault,
+                                                color: Colors.white
+                                                )),
+                                                    ),
+
+
+                                                )
+                                                  );
+                                              });}
                                           ),
                                         ),
                                       ],

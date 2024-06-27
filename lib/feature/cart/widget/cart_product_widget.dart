@@ -85,8 +85,7 @@ class CartServiceWidget extends StatelessWidget {
                                           SizedBox(
                                             width: Get.width * 0.4,
                                             child: Text(
-                                              "",
-                                             // cart.provider!.companyName.toString(),
+                                              cart.provider!.companyName ??"",
                                               // "",
                                               // cart.variantKey,
                                               style: ubuntuMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6), fontSize: Dimensions.fontSizeDefault),
@@ -141,14 +140,14 @@ class CartServiceWidget extends StatelessWidget {
                                     margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
                                     child: Image.asset(Images.cartDeleteVariation)),
                               ),
-                            Text(cart.quantity.toString(), style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
-                            QuantityButton(
-                              onTap: () {
-                                Get.find<CartController>().updateCartQuantityToApi(cart.id,cart.quantity + 1);
-                                Get.find<CartController>().showMinimumAndMaximumOrderValueToaster();
-                              },
-                              isIncrement: true,
-                            ),
+                             Text(cart.quantity.toString(), style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
+                            // QuantityButton(
+                            //   onTap: () {
+                            //     Get.find<CartController>().updateCartQuantityToApi(cart.id,cart.quantity + 1);
+                            //     Get.find<CartController>().showMinimumAndMaximumOrderValueToaster();
+                            //   },
+                            //   isIncrement: true,
+                            // ),
                           ]),
                         ),
                       ]),

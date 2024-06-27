@@ -130,11 +130,13 @@ class _ProceedToCheckoutButtonWidgetState
                     //     messageController.text.isNotEmpty)
                     //
                     // {
-                    _makeDigitalPayment(
-                        addressModel,
-                        checkoutController.selectedDigitalPaymentMethod,
-                        isPartialPayment);
-
+                    if(Get.find<CartController>().cartList.isNotEmpty) {
+                      print("if payment");
+                      _makeDigitalPayment(
+                          addressModel,
+                          checkoutController.selectedDigitalPaymentMethod,
+                          isPartialPayment);
+                    }
 
                   //    checkoutSummeryApiCall();
 
@@ -151,9 +153,7 @@ class _ProceedToCheckoutButtonWidgetState
                   else if (cartController.cartList.isNotEmpty &&
                       cartController.preSelectedProvider &&
                       cartController.cartList[0].provider != null &&
-                      (cartController
-                                  .cartList[0].provider?.serviceAvailability ==
-                              0 ||
+                      (cartController.cartList[0].provider?.serviceAvailability == 0 ||
                           cartController.cartList[0].provider?.isActive == 0)) {
                     print('if 2');
 
@@ -176,9 +176,7 @@ class _ProceedToCheckoutButtonWidgetState
                         );
                       });
 
-                      customSnackBar(
-                          "your_selected_provider_is_unavailable_right_now".tr,
-                          duration: 3);
+                      customSnackBar("your_selected_provider_is_unavailable_right_now".tr, duration: 3);
                     });
                   } else if (checkoutController.currentPageState ==
                           PageState.orderDetails &&
@@ -235,6 +233,7 @@ class _ProceedToCheckoutButtonWidgetState
                           if (GetPlatform.isWeb) {
 
                             ///
+
                             // Get.toNamed(RouteHelper.getCheckoutRoute(
                             //   'cart',
                             //   Get.find<CheckOutController>()
@@ -365,8 +364,10 @@ class _ProceedToCheckoutButtonWidgetState
                       }
                     }
                   }
-                } else {
+                }
+                else {
                   print('if 22');
+
 
                   customSnackBar('please_agree_with_terms_conditions');
                 }

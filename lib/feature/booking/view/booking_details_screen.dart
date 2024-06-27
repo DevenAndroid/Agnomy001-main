@@ -181,20 +181,6 @@ class BookingTabBar extends StatelessWidget {
                           ));
                         }
 
-
-                        // if(checkoutController.selectedDigitalPaymentMethod !=
-                        //     null && checkoutController.selectedDigitalPaymentMethod?.gateway !=
-                        //     "offline"){
-                        //   checkoutController.updateState(PageState.payment);
-                        //   _makeDigitalPayment(addressModel,
-                        //     checkoutController.selectedDigitalPaymentMethod,
-                        //     isPartialPayment);
-                        // } else {
-                        //   print('if 21');
-                        //
-                        //   customSnackBar("select_any_payment_method".tr);
-                        // }
-
                         print(bookingDetailsContent.bookingStatus.toString());
                         print("payment");
                       },

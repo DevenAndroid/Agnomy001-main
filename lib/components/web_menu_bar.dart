@@ -1,9 +1,82 @@
 import 'package:get/get.dart';
 import 'package:demandium/components/web_search_widget.dart';
 import 'package:demandium/components/core_export.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+dynamic cartListTotalPrice ;
 
 class WebMenuBar extends StatelessWidget implements PreferredSizeWidget {
   const WebMenuBar({super.key});
+
+  Future<void> fetchCartList() async {
+    print("mycartlist");
+    print("guest_id:-${Get.find<SplashController>().getGuestId()}");
+
+    var headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}'
+    };
+
+    var request = http.Request(
+        'GET',
+        Uri.parse('https://admin.agnomy.com/api/v1/customer/cart/list?limit=10&offset=1&guest_id=${Get.find<SplashController>().getGuestId()}')
+    );
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String responseBody = await response.stream.bytesToString();
+      Map<String, dynamic> jsonResponse = json.decode(responseBody);
+
+      // Assuming the structure of your JSON response
+      if (jsonResponse.containsKey('content')) {
+        Map<String, dynamic> content = jsonResponse['content'];
+        if (content.containsKey('total_cost')) {
+          cartListTotalPrice = content['total_cost'];
+          cartListTotalPrice= double.parse(cartListTotalPrice.toString());
+          print('Total Cost: $cartListTotalPrice');
+        } else {
+          print('total_cost not found in content');
+        }
+      } else {
+        print('content not found in response');
+      }
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  // Future<void> fetchCartList() async {
+  //   print("mycartlist");
+  //   print("guest_id:-${Get.find<SplashController>().getGuestId()}");
+  //
+  //   var headers = {
+  //     'Accept': 'application/json',
+  //     'Authorization':  'Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}'
+  //   };
+  //
+  //   var request = http.Request(
+  //       'GET',
+  //       Uri.parse('https://admin.agnomy.com/api/v1/customer/cart/list?limit=10&offset=1&guest_id=${Get.find<SplashController>().getGuestId()}')
+  //   );
+  //
+  //   request.headers.addAll(headers);
+  //
+  //   http.StreamedResponse response = await request.send();
+  //
+  //   if (response.statusCode == 200) {
+  //     String responseBody = await response.stream.bytesToString();
+  //     print(responseBody);
+  //
+  //     Map<String, dynamic> jsonResponse = json.decode(responseBody);
+  //      cartListTotalPrice = jsonResponse['content']['total_cost'];
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +145,13 @@ class WebMenuBar extends StatelessWidget implements PreferredSizeWidget {
         MenuButtonWebIcon( icon: Images.offerMenu, isCart: false, onTap: () => Get.toNamed(RouteHelper.getOffersRoute('offer'))),
 
         const SizedBox(width: Dimensions.paddingSizeSmall),
-        MenuButtonWebIcon( icon: Images.webCartIcon, isCart: true, onTap: () => Get.toNamed(RouteHelper.getCartRoute())),
+        MenuButtonWebIcon( icon: Images.webCartIcon, isCart: true, onTap: () {
+          Get.toNamed(RouteHelper.getCartRoute());
+
+        print("kfhejwrhf");
+          fetchCartList();
+
+        }    ),
 
         const SizedBox(width: Dimensions.paddingSizeSmall),
         MenuButtonWebIcon(icon: Images.webHomeIcon, onTap: () => Scaffold.of(context).openEndDrawer()),
@@ -100,6 +179,10 @@ class WebMenuBar extends StatelessWidget implements PreferredSizeWidget {
   }
   @override
   Size get preferredSize => const Size(Dimensions.webMaxWidth, 70);
+
+
+
+
 }
 
 class MenuButtonWebIcon extends StatelessWidget {

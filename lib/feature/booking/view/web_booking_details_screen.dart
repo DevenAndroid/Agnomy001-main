@@ -531,7 +531,7 @@ class WebBookingDetailsSection extends StatelessWidget {
                 ],
               ),
             ),
-          ])
+          ]),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -545,9 +545,9 @@ class WebBookingDetailsSection extends StatelessWidget {
                       const Expanded(child: SizedBox()),
                       Padding(
                         padding: const EdgeInsets.only(
-                          bottom: Dimensions.paddingSizeDefault,
+                         // bottom: Dimensions.paddingSizeDefault,
                           left: Dimensions.paddingSizeDefault,
-                          right: Dimensions.paddingSizeDefault,
+                         // right: Dimensions.paddingSizeDefault,
                         ),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
