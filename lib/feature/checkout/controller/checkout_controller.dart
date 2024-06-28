@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/core/helper/checkout_helper.dart';
@@ -139,13 +140,15 @@ class CheckOutController extends GetxController implements GetxService{
        customerInformation: customerInformation ?? ""
      );
      if(response.statusCode == 200 && response.body["response_code"] == "booking_place_success_200"){
-       print("booking200=>${response.body}");
+       print("booking200123payment=>${response.body}");
        _isPlacedOrderSuccessfully = true;
        _bookingReadableId = response.body['content']['readable_id'].toString();
        updateState(PageState.complete);
        if(ResponsiveHelper.isWeb()) {
+
          String token = base64Encode(utf8.encode("&&attribute_id=$_bookingReadableId"));
          Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null", token: token));
+         print('token---->>>${token.toString()}');
        }else{
          print("booking else=>${response.body}");
        }
@@ -271,9 +274,14 @@ class CheckOutController extends GetxController implements GetxService{
 
     try{
       _bookingReadableId = StringParser.parseString(utf8.decode(base64Url.decode(token)), "attribute_id");
+
+      log("id67:::::::::::::::::SS  $_bookingReadableId");
+      log("token===>>>>>>>>>>${token}");
+
     }catch(e){
       if (kDebugMode) {
         print(e);
+
       }
     }
 

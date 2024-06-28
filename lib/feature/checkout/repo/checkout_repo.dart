@@ -9,6 +9,7 @@ class CheckoutRepo extends GetxService {
   CheckoutRepo({required this.apiClient});
 
   Future<Response> getPostDetails(String postId) async {
+    print('post IDDDDDDDDDDDDDDDDDDDDD=>${postId.toString()}');
     return await apiClient.getData('${AppConstants.getPostDetails}/$postId');
   }
 
