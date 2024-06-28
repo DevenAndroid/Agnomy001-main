@@ -66,7 +66,9 @@ class _AllProviderViewState extends State<AllProviderView> {
                         backgroundColor: Colors.transparent,
                         context: context, builder: (context) => ProviderFilterView(
                         onUpdate: (){
-                          setState(() {});
+                          setState(() {
+
+                          });
                         },
                       ),
                       );
