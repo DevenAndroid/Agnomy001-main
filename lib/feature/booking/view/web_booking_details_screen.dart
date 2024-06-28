@@ -50,6 +50,122 @@ class WebBookingDetailsScreen extends StatelessWidget {
           }
         }),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Get.find<AuthController>().isLoggedIn()
+          ? GetBuilder<BookingDetailsController>(
+          builder: (bookingDetailsController) {
+            if (bookingDetailsController.bookingDetailsContent != null) {
+              return Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Expanded(child: SizedBox()),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                         bottom: Dimensions.paddingSizeDefault,
+                        left: Dimensions.paddingSizeDefault,
+                         right: Dimensions.paddingSizeDefault,
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FloatingActionButton(
+                                hoverColor: Colors.transparent,
+                                elevation: 0.0,
+                                backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                                onPressed: () {
+                                  BookingDetailsContent bookingDetailsContent =
+                                  bookingDetailsController
+                                      .bookingDetailsContent!;
+                                  if (bookingDetailsContent.provider != null) {
+                                    showModalBottomSheet(
+                                      useRootNavigator: true,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (context) => CreateChannelDialog(
+                                        customerID:
+                                        bookingDetailsContent.customerId,
+                                        providerId: bookingDetailsContent
+                                            .provider?.userId,
+                                        serviceManId: bookingDetailsContent
+                                            .serviceman?.userId,
+                                        referenceId: bookingDetailsContent
+                                            .readableId
+                                            .toString(),
+                                      ),
+                                    );
+                                  } else {
+                                    customSnackBar(
+                                        'provider_or_service_man_assigned'.tr);
+                                  }
+                                },
+                                child:Image.asset("assets/images/messageicon.png",height:26,color: Theme.of(context).primaryColorLight)
+                              //Icon(Icons., color: Theme.of(context).primaryColorLight),
+                            ),
+                          ]),
+                    ),
+                    !ResponsiveHelper.isDesktop(context) &&
+                        bookingDetailsController
+                            .bookingDetailsContent!.bookingStatus ==
+                            'completed'
+                        ? Row(
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            radius: 0,
+                            buttonText: 'review'.tr,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                useRootNavigator: true,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) =>
+                                    ReviewRecommendationDialog(
+                                      id: bookingDetailsController
+                                          .bookingDetailsContent!.id!,
+                                    ),
+                              );
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 3,
+                          height: 50,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                        GetBuilder<ServiceBookingController>(
+                            builder: (serviceBookingController) {
+                              return Expanded(
+                                child: serviceBookingController.isLoading
+                                    ? const Center(
+                                    child: CircularProgressIndicator())
+                                    : CustomButton(
+                                  radius: 0,
+                                  buttonText: 'rebook'.tr,
+                                  onPressed: () {
+                                    serviceBookingController
+                                        .checkCartSubcategory(
+                                        bookingDetailsController
+                                            .bookingDetailsContent!
+                                            .id!,
+                                        bookingDetailsController
+                                            .bookingDetailsContent!
+                                            .subCategoryId!);
+                                  },
+                                ),
+                              );
+                            }),
+                      ],
+                    )
+                        : const SizedBox()
+                  ]);
+            } else {
+              return const SizedBox();
+            }
+          })
+          : null,
     );
   }
 }
@@ -172,6 +288,9 @@ class BookingDetailsTopCard extends StatelessWidget {
             ),
           ),
           Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
+
+
+
         ],
       ),
     );
@@ -534,122 +653,122 @@ class WebBookingDetailsSection extends StatelessWidget {
           ]),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Get.find<AuthController>().isLoggedIn()
-          ? GetBuilder<BookingDetailsController>(
-              builder: (bookingDetailsController) {
-              if (bookingDetailsController.bookingDetailsContent != null) {
-                return Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Expanded(child: SizedBox()),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                         // bottom: Dimensions.paddingSizeDefault,
-                          left: Dimensions.paddingSizeDefault,
-                         // right: Dimensions.paddingSizeDefault,
-                        ),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              FloatingActionButton(
-                                hoverColor: Colors.transparent,
-                                elevation: 0.0,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                onPressed: () {
-                                  BookingDetailsContent bookingDetailsContent =
-                                      bookingDetailsController
-                                          .bookingDetailsContent!;
-                                  if (bookingDetailsContent.provider != null) {
-                                    showModalBottomSheet(
-                                      useRootNavigator: true,
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      context: context,
-                                      builder: (context) => CreateChannelDialog(
-                                        customerID:
-                                            bookingDetailsContent.customerId,
-                                        providerId: bookingDetailsContent
-                                            .provider?.userId,
-                                        serviceManId: bookingDetailsContent
-                                            .serviceman?.userId,
-                                        referenceId: bookingDetailsContent
-                                            .readableId
-                                            .toString(),
-                                      ),
-                                    );
-                                  } else {
-                                    customSnackBar(
-                                        'provider_or_service_man_assigned'.tr);
-                                  }
-                                },
-                                child: Icon(Icons.message_rounded,
-                                    color: Theme.of(context).primaryColorLight),
-                              ),
-                            ]),
-                      ),
-                      !ResponsiveHelper.isDesktop(context) &&
-                              bookingDetailsController
-                                      .bookingDetailsContent!.bookingStatus ==
-                                  'completed'
-                          ? Row(
-                              children: [
-                                Expanded(
-                                  child: CustomButton(
-                                    radius: 0,
-                                    buttonText: 'review'.tr,
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        useRootNavigator: true,
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        builder: (context) =>
-                                            ReviewRecommendationDialog(
-                                          id: bookingDetailsController
-                                              .bookingDetailsContent!.id!,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                Container(
-                                  width: 3,
-                                  height: 50,
-                                  color: Theme.of(context).disabledColor,
-                                ),
-                                GetBuilder<ServiceBookingController>(
-                                    builder: (serviceBookingController) {
-                                  return Expanded(
-                                    child: serviceBookingController.isLoading
-                                        ? const Center(
-                                            child: CircularProgressIndicator())
-                                        : CustomButton(
-                                            radius: 0,
-                                            buttonText: 'rebook'.tr,
-                                            onPressed: () {
-                                              serviceBookingController
-                                                  .checkCartSubcategory(
-                                                      bookingDetailsController
-                                                          .bookingDetailsContent!
-                                                          .id!,
-                                                      bookingDetailsController
-                                                          .bookingDetailsContent!
-                                                          .subCategoryId!);
-                                            },
-                                          ),
-                                  );
-                                }),
-                              ],
-                            )
-                          : const SizedBox()
-                    ]);
-              } else {
-                return const SizedBox();
-              }
-            })
-          : null,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Get.find<AuthController>().isLoggedIn()
+      //     ? GetBuilder<BookingDetailsController>(
+      //         builder: (bookingDetailsController) {
+      //         if (bookingDetailsController.bookingDetailsContent != null) {
+      //           return Column(
+      //               crossAxisAlignment: CrossAxisAlignment.end,
+      //               children: [
+      //                 const Expanded(child: SizedBox()),
+      //                 Padding(
+      //                   padding: const EdgeInsets.only(
+      //                    // bottom: Dimensions.paddingSizeDefault,
+      //                     left: Dimensions.paddingSizeDefault,
+      //                    // right: Dimensions.paddingSizeDefault,
+      //                   ),
+      //                   child: Row(
+      //                       mainAxisAlignment: MainAxisAlignment.end,
+      //                       children: [
+      //                         FloatingActionButton(
+      //                           hoverColor: Colors.transparent,
+      //                           elevation: 0.0,
+      //                           backgroundColor:
+      //                               Theme.of(context).colorScheme.primary,
+      //                           onPressed: () {
+      //                             BookingDetailsContent bookingDetailsContent =
+      //                                 bookingDetailsController
+      //                                     .bookingDetailsContent!;
+      //                             if (bookingDetailsContent.provider != null) {
+      //                               showModalBottomSheet(
+      //                                 useRootNavigator: true,
+      //                                 isScrollControlled: true,
+      //                                 backgroundColor: Colors.transparent,
+      //                                 context: context,
+      //                                 builder: (context) => CreateChannelDialog(
+      //                                   customerID:
+      //                                       bookingDetailsContent.customerId,
+      //                                   providerId: bookingDetailsContent
+      //                                       .provider?.userId,
+      //                                   serviceManId: bookingDetailsContent
+      //                                       .serviceman?.userId,
+      //                                   referenceId: bookingDetailsContent
+      //                                       .readableId
+      //                                       .toString(),
+      //                                 ),
+      //                               );
+      //                             } else {
+      //                               customSnackBar(
+      //                                   'provider_or_service_man_assigned'.tr);
+      //                             }
+      //                           },
+      //                           child:Image.asset("assets/images/messageicon.png",height:26,color: Theme.of(context).primaryColorLight)
+      //                           //Icon(Icons., color: Theme.of(context).primaryColorLight),
+      //                         ),
+      //                       ]),
+      //                 ),
+      //                 !ResponsiveHelper.isDesktop(context) &&
+      //                         bookingDetailsController
+      //                                 .bookingDetailsContent!.bookingStatus ==
+      //                             'completed'
+      //                     ? Row(
+      //                         children: [
+      //                           Expanded(
+      //                             child: CustomButton(
+      //                               radius: 0,
+      //                               buttonText: 'review'.tr,
+      //                               onPressed: () {
+      //                                 showModalBottomSheet(
+      //                                   context: context,
+      //                                   useRootNavigator: true,
+      //                                   isScrollControlled: true,
+      //                                   backgroundColor: Colors.transparent,
+      //                                   builder: (context) =>
+      //                                       ReviewRecommendationDialog(
+      //                                     id: bookingDetailsController
+      //                                         .bookingDetailsContent!.id!,
+      //                                   ),
+      //                                 );
+      //                               },
+      //                             ),
+      //                           ),
+      //                           Container(
+      //                             width: 3,
+      //                             height: 50,
+      //                             color: Theme.of(context).disabledColor,
+      //                           ),
+      //                           GetBuilder<ServiceBookingController>(
+      //                               builder: (serviceBookingController) {
+      //                             return Expanded(
+      //                               child: serviceBookingController.isLoading
+      //                                   ? const Center(
+      //                                       child: CircularProgressIndicator())
+      //                                   : CustomButton(
+      //                                       radius: 0,
+      //                                       buttonText: 'rebook'.tr,
+      //                                       onPressed: () {
+      //                                         serviceBookingController
+      //                                             .checkCartSubcategory(
+      //                                                 bookingDetailsController
+      //                                                     .bookingDetailsContent!
+      //                                                     .id!,
+      //                                                 bookingDetailsController
+      //                                                     .bookingDetailsContent!
+      //                                                     .subCategoryId!);
+      //                                       },
+      //                                     ),
+      //                             );
+      //                           }),
+      //                         ],
+      //                       )
+      //                     : const SizedBox()
+      //               ]);
+      //         } else {
+      //           return const SizedBox();
+      //         }
+      //       })
+      //     : null,
     );
   }
 }
