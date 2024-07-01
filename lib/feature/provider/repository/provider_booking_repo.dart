@@ -13,7 +13,7 @@ class ProviderBookingRepo {
 
   Future<Response> getProviderList({required int offset, int? distance , String? placeID,required  Map<String,dynamic> body}) async {
 
-    return await apiClient.postData("${AppConstants.getProviderList}$offset&placeid$placeID&distance$distance",body);
+    return await apiClient.postData("${AppConstants.getProviderList}$offset&placeid=$placeID&distance=$distance",body);
   }
 
   Future<Response> getProviderDetails(String providerId) async {

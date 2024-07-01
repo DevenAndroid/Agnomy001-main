@@ -180,7 +180,7 @@ class RouteHelper {
   static String getAddressRoute(String fromPage) => '$address?fromProfileScreen=$fromPage';
   static String getOrderSuccessRoute( String status) => '$orderSuccess?flag=$status';
   static String getCheckoutRoute(String page,String currentPage,String addressId, {bool? reload, String? token} ) {
-    return '$checkout?currentPage=$currentPage&addressID=$addressId&reload=$reload&token=$token';
+    return '$checkout?currentPage=$currentPage&addressID=$addressId&reload=$reload&token=${Get.parameters["token"]}';
   }
 
   static String getCustomPostCheckoutRoute(String postId,String providerId,String amount) {

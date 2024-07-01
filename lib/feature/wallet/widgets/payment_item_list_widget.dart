@@ -226,7 +226,7 @@ class _PaymentMethodListWidgetState extends State<PaymentMethodListWidget> {
         '&callback=$callbackUrl&amount=$amount&payment_platform=$platform&is_add_fund=1';
 
     if (GetPlatform.isWeb) {
-      printLog("url_with_digital_payment:$url");
+      printLog("url_with_digital_payment:1$url");
       html.window.open(url, "_self");
     } else {
       printLog("url_with_digital_payment_mobile:$url");

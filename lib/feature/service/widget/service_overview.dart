@@ -45,6 +45,7 @@ class ServiceOverview extends StatelessWidget {
                       : Colors.transparent,
                   child: HtmlWidget(description)),
             ),
+            
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Dimensions.paddingSizeDefault,
@@ -121,7 +122,7 @@ class ServiceOverview extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                           Text("within${providers[index].distance!.toInt()}miles"),
+                           Text("within ${providers[index].distance!.toInt()} miles"),
 
                           ElevatedButton(
                             onPressed: () {

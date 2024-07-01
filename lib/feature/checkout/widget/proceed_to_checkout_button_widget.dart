@@ -213,7 +213,7 @@ class _ProceedToCheckoutButtonWidgetState extends State<ProceedToCheckoutButtonW
         '&service_schedule=$schedule&service_address_id=$addressId&callback=$callbackUrl&service_address=$encodedAddress&is_partial=$isPartial&payment_platform=$platform';
 
     if (GetPlatform.isWeb) {
-      printLog("url_with_digital_payment:$url");
+      printLog("url_with_digital_payment:3$url");
       html.window.open(url, "_self");
     } else {
       printLog("url_with_digital_payment_mobile:$url");

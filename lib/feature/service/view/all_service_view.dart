@@ -105,7 +105,7 @@ class _AllServiceViewState extends State<AllServiceView> {
                     offset: serviceController.popularBasedServiceContent?.currentPage ,
                     onPaginate: (int offset) async {
 
-                      return await serviceController.getPopularServiceList( offset:  offset, reload:  false ,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
+                      return await serviceController.getPopularServiceList( offset:  offset, reload:  false ,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue.replaceAll("150+", "150")));
 
 
                     },
