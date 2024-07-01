@@ -3,6 +3,7 @@ import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/booking/widget/booking_item_card.dart';
 import 'package:demandium/feature/booking/widget/booking_status_tabs.dart';
 
+
 class BookingListScreen extends StatefulWidget {
   final bool isFromMenu;
   const BookingListScreen({Key? key, this.isFromMenu = false}) : super(key: key);
@@ -14,10 +15,16 @@ class BookingListScreen extends StatefulWidget {
 class _BookingListScreenState extends State<BookingListScreen> {
   @override
   void initState() {
+
     Get.find<ServiceBookingController>().getAllBookingService(offset: 1,bookingStatus: "all",isFromPagination:false);
     Get.find<ServiceBookingController>().updateBookingStatusTabs(BookingStatusTabs.all, firstTimeCall: false);
     super.initState();
   }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     final ScrollController bookingScreenScrollController = ScrollController();
@@ -32,7 +39,6 @@ class _BookingListScreenState extends State<BookingListScreen> {
         builder: (serviceBookingController){
           List<BookingModel>? bookingList = serviceBookingController.bookingList;
           return CustomScrollView(  controller: bookingScreenScrollController, slivers : [
-
             SliverPersistentHeader(delegate: ServiceRequestSectionMenu(), pinned: true, floating: true,),
 
             SliverToBoxAdapter(child: SizedBox( height : ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeDefault : 0),),
@@ -84,6 +90,11 @@ class _BookingListScreenState extends State<BookingListScreen> {
             ): const SliverToBoxAdapter(
               child: Center(child: SizedBox(width: Dimensions.webMaxWidth,child: BookingListItemShimmer())),
             ),
+
+
+
+
+
 
             SliverToBoxAdapter(child: ResponsiveHelper.isDesktop(context) ? const FooterView() : const SizedBox(),)
 
@@ -177,3 +188,6 @@ class BookingListItemShimmer extends StatelessWidget {
     },);
   }
 }
+
+
+

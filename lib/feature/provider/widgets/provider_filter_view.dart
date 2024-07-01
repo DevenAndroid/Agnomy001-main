@@ -19,16 +19,16 @@ class ProviderFilterView extends StatefulWidget {
 class _ProductBottomSheetState extends State<ProviderFilterView> {
 
   final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
-  String milesdropdownvalue = '100';
-
-  // List of items in our dropdown menu
-  var miles = [
-    '100',
-    '125',
-    '150',
-    '175',
-    '200',
-  ];
+  // String milesdropdownvalue = '100';
+  //
+  // // List of items in our dropdown menu
+  // var miles = [
+  //   '100',
+  //   '125',
+  //   '150',
+  //   '175',
+  //   '200',
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -80,12 +80,12 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                                 boxShadow: Get.isDarkMode
                                     ? null
                                     : [
-                                        BoxShadow(
-                                          color: Colors.grey[300]!,
-                                          blurRadius: 2,
-                                          spreadRadius: 1,
-                                        )
-                                      ]),
+                                  BoxShadow(
+                                    color: Colors.grey[300]!,
+                                    blurRadius: 2,
+                                    spreadRadius: 1,
+                                  )
+                                ]),
                             child: InkWell(
                                 onTap: () => Get.back(),
                                 child: const Icon(
@@ -126,9 +126,9 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                                   ),
                                   child: Center(
                                       child: Text(
-                                    providerBookingController.sortBy[index].tr,
-                                    style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
-                                  )),
+                                        providerBookingController.sortBy[index].tr,
+                                        style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
+                                      )),
                                 ),
                               );
                             },
@@ -190,12 +190,12 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                       ),
                       Center(
                           child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
-                        child: Text(
-                          'ratings'.tr,
-                          style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeLarge),
-                        ),
-                      )),
+                            padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
+                            child: Text(
+                              'ratings'.tr,
+                              style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                            ),
+                          )),
                       const Center(child: FilterRatingWidgets()),
                       const SizedBox(
                         height: Dimensions.paddingSizeDefault,
@@ -210,7 +210,7 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                             barrierDismissible: false,
                           );
                           await providerBookingController.getProviderList(
-                              offset: 1, reload: true, placeId: placedIdGloabal.value, distance: int.parse(milesdropdownvalue.replaceAll("150+", "151")));
+                              offset: 1, reload: true, placeId: placedIdGloabal.value, distance: int.parse(serviceController.milesdropdownvalue.replaceAll("150+", "150")));
                           widget.onUpdate();
                           Get.back();
                         },
