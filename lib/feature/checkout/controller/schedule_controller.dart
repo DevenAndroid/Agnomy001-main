@@ -90,4 +90,10 @@ class ScheduleController extends GetxController{
   void setPostId(String postId){
     _postId = postId;
   }
+
+
+
+
+
+
 }

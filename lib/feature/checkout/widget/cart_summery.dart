@@ -22,9 +22,10 @@ class CartSummery extends StatefulWidget {
 
 class _CartSummeryState extends State<CartSummery> {
   RxInt refereshInt = 0.obs;
+
+
   @override
   void initState() {
-
     getQuoteList();
     super.initState();
   }
@@ -408,8 +409,7 @@ class _CartSummeryState extends State<CartSummery> {
     } else {
       print('Failed to load quotes. Status code: 2${response.statusCode}');
       refereshInt.value = DateTime.now().microsecondsSinceEpoch;
-      quotesListModel.value =
-          QuotesListModel.fromJson(json.decode(response.body));
+      quotesListModel.value = QuotesListModel.fromJson(json.decode(response.body));
       Get.find<CartController>().update();
     }
   }

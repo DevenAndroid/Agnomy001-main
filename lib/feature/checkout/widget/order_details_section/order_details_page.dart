@@ -14,7 +14,7 @@ class OrderDetailsPage extends StatelessWidget {
         && configModel.content?.walletStatus == 1 && configModel.content?.partialPayment == 1;
     return SingleChildScrollView( child: Column(children: [
 
-      const ServiceSchedule(),
+       ServiceSchedule(),
       const Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
         child: AddressInformation(),
       ),

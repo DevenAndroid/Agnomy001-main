@@ -44,19 +44,19 @@ class SubCategoryWidget extends GetView<ServiceController> {
                     maxLines: desktop ? 1 : 1, overflow: TextOverflow.ellipsis,
                   )),
                 ]),
-                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+              //  const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                 Text(
                   categoryModel!.description ?? '', maxLines: 2, overflow: TextOverflow.ellipsis,
                   style: ubuntuRegular.copyWith(
                       fontSize: Dimensions.fontSizeSmall,
                       color: Theme.of(context).textTheme.bodyLarge!.color),
                 ),
-                const SizedBox(height: Dimensions.paddingSizeSmall,),
+                //const SizedBox(height: Dimensions.paddingSizeSmall,),
                 Text(
                   "${categoryModel!.serviceCount} ${'services'.tr} ",
                   style: ubuntuRegular.copyWith(
                     decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w200,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 )

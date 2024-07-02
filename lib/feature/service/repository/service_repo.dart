@@ -1,5 +1,6 @@
 import 'package:demandium/data/provider/client_api.dart';
 import 'package:demandium/feature/review/model/review_body.dart';
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/utils/app_constants.dart';
 
@@ -8,7 +9,7 @@ class ServiceRepo extends GetxService {
   ServiceRepo({required this.apiClient});
 
   Future<Response> getAllServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants.allServiceUri}?limit=100&offset=$offset&limit=10&placeid=$placeID&distance=$distance');
+    return await apiClient.getData('${AppConstants.allServiceUri}?limit=100&offset=$offset&placeid=$placeID&distance=$distance');
   }
   Future<Response> getPopularServiceList({required int offset, int? distance , String? placeID}) async {
     return await apiClient.getData('${AppConstants. popularServiceUri}?limit=100&offset=$offset&limit=10&placeid=$placeID&distance=$distance');
@@ -40,7 +41,8 @@ class ServiceRepo extends GetxService {
   }
 
   Future<Response> getServiceListBasedOnSubCategory({required String subCategoryID, required int offset}) async {
-    return await apiClient.getData('${AppConstants.serviceBasedOnSubcategory}$subCategoryID?limit=30&offset=$offset');
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA${subCategoryID}");
+    return await apiClient.getData('${AppConstants.serviceBasedOnSubcategory}$subCategoryID?limit=30&offset=$offset&placeid=$placedIdGloabal');
   }
   Future<Response> getItemsBasedOnCampaignId({required String campaignID}) async {
     return await apiClient.getData('${AppConstants.itemsBasedOnCampaignId}$campaignID&limit=100&offset=1');

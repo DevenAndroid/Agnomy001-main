@@ -70,6 +70,8 @@ dependencies:
   custom_info_window: ^1.0.1
   custom_marker: ^1.0.0
   firebase_crashlytics: ^3.4.8
+  flutter_calendar_carousel: ^2.4.3
+
 
 dev_dependencies:
   flutter_test:

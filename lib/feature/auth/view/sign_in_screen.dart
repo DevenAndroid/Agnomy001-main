@@ -215,30 +215,30 @@ class _SignInScreenState extends State<SignInScreen> {
                           ],
                         ),
                         const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'continue_as'.tr,
-                              style: ubuntuMedium.copyWith(color:Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.6)),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: const Size(50,30),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              onPressed: (){
-                              Get.find<CartController>().getCartData();
-                              Get.offNamed(RouteHelper.getMainRoute('home'));
-                            }, child:  Text(
-                              'guest'.tr,
-                              style: ubuntuMedium.copyWith(color: Theme.of(context).colorScheme.primary),
-                            ),)
-
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       'continue_as'.tr,
+                        //       style: ubuntuMedium.copyWith(color:Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.6)),
+                        //     ),
+                        //     TextButton(
+                        //       style: TextButton.styleFrom(
+                        //         padding: EdgeInsets.zero,
+                        //         minimumSize: const Size(50,30),
+                        //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //       ),
+                        //       onPressed: (){
+                        //       Get.find<CartController>().getCartData();
+                        //       Get.offNamed(RouteHelper.getMainRoute('home'));
+                        //     }, child:  Text(
+                        //       'guest'.tr,
+                        //       style: ubuntuMedium.copyWith(color: Theme.of(context).colorScheme.primary),
+                        //     ),)
+                        //
+                        //   ],
+                        // ),
                         const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge,),
 
                       ]),

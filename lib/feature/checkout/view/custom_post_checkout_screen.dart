@@ -80,7 +80,7 @@ class _CustomPostCheckoutScreenState extends State<CustomPostCheckoutScreen> {
                         additionalInstruction: checkoutController.postDetails!.additionInstructions,
                       ) : const SizedBox() ,
 
-                      const ServiceSchedule(),
+                       ServiceSchedule(),
                       const Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
                         child: AddressInformation(),
                       ),

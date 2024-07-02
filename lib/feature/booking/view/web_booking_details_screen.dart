@@ -566,7 +566,7 @@ class WebBookingDetailsSection extends StatelessWidget {
                   ),
 
                   const SizedBox(height: Dimensions.paddingSizeDefault),
-                  bookingDetailsContent.posts!.latestbid != null
+                  bookingDetailsContent.posts!= null
                       ? Container(
                           decoration: BoxDecoration(
                               color: Theme.of(context).cardColor,

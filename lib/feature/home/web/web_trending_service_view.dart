@@ -9,57 +9,69 @@ class WebTrendingServiceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ServiceController>(
-        builder: (serviceController){
+        builder: (serviceController) {
+         return
+        //  serviceController.trendingServiceList!.length  == 0 ?
+           Column(
+           children: [
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 serviceController.trendingServiceList!.length >= 1?
+                 Text('trending_services'.tr, style: ubuntuMedium.copyWith(
+                     fontSize: Dimensions.fontSizeExtraLarge)):
+                 SizedBox(height: 0,width: 0,),
+                 serviceController.trendingServiceList!.length >= 4 ?
+                 InkWell(
+                   onTap: () => Get.toNamed(RouteHelper.allServiceScreenRoute("trending_services")),
+                   child: Text('see_all'.tr, style: ubuntuRegular.copyWith(
+                     fontSize: Dimensions.fontSizeDefault,
+                     decoration: TextDecoration.underline,
+                     color: Get.isDarkMode ? Theme
+                         .of(context)
+                         .textTheme
+                         .bodyLarge!
+                         .color!
+                         .withOpacity(.6) : Theme
+                         .of(context)
+                         .colorScheme
+                         .primary,
+                   )),
+                 ):
+                 const SizedBox(width: 0,height: 0,),
+               ],
+             ),
+             const SizedBox(height: Dimensions.paddingSizeLarge,),
 
-          if(serviceController.trendingServiceList != null && serviceController.trendingServiceList!.isEmpty){
-            return const SizedBox();
-          }else{
-            if(serviceController.trendingServiceList != null){
-              List<Service>? serviceList = serviceController.trendingServiceList!.where((element) => element.providerCount!.toInt() !=0 ).toList();
-              return  Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('trending_services'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
-                      InkWell(
-                        onTap: () => Get.toNamed(RouteHelper.allServiceScreenRoute("trending_services")),
-                        child: Text('see_all'.tr, style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
-                          decoration: TextDecoration.underline,
-                          color:Get.isDarkMode ?Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6) : Theme.of(context).colorScheme.primary,
-                        )),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: Dimensions.paddingSizeLarge,),
-                  GestureDetector(
-                    onTap: (){
-                      print("object::::::::::${serviceList}");
-                    },
-                    child: GridView.builder(
-                      key: UniqueKey(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisSpacing: Dimensions.paddingSizeDefault,
-                        mainAxisSpacing:  Dimensions.paddingSizeDefault,
-                        childAspectRatio: ResponsiveHelper.isDesktop(context) || ResponsiveHelper.isTab(context)  ? 0.92 : .70,
-                        crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : ResponsiveHelper.isTab(context) ? 3 : 5,
-                      ),
-                      physics:const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: serviceList.length,
-                      itemBuilder: (context, index) {
-                        return
-                          serviceController.trendingServiceList![index].providerCount!.toInt() ==0 ? null:
-                          ServiceWidgetVertical(service: serviceController.trendingServiceList![index],  isAvailable: true,fromType: '',);
-                      },
-                    ),
-                  )
-                ],
-              );
-            }else{
-              return const SizedBox();
-            }
-          }
-    });
+             GridView.builder(
+               key: UniqueKey(),
+               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                 crossAxisSpacing: Dimensions.paddingSizeDefault,
+                 mainAxisSpacing: Dimensions.paddingSizeDefault,
+                 childAspectRatio: ResponsiveHelper.isDesktop(context) ||
+                     ResponsiveHelper.isTab(context) ? 0.92 : .70,
+                 crossAxisCount: ResponsiveHelper.isMobile(context)
+                     ? 2
+                     : ResponsiveHelper.isTab(context) ? 3 : 5,
+               ),
+               physics: const NeverScrollableScrollPhysics(),
+               shrinkWrap: true,
+               itemCount: serviceController.trendingServiceList!.length,
+               //serviceList.length,
+               itemBuilder: (context, index) {
+                 return ServiceWidgetVertical(service: serviceController
+                       .trendingServiceList![index],
+                     isAvailable: true,
+                     fromType: '',);
+               },
+             )
+
+           ],
+         )
+        // :const SizedBox(height: 0,width: 0,)
+         ;
+        }     )
+    ;
+
   }
 }

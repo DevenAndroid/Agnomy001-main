@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
       Get.find<CategoryController>().getCategoryList(1,reload);
       Get.find<ServiceController>().getPopularServiceList( offset: 1,reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue) );
       Get.find<ServiceController>().getTrendingServiceList(offset: 1,reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
-      Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: reload);
+      Get.find<ProviderBookingController>().getProviderList(offset: 1,reload: reload  );
       Get.find<CampaignController>().getCampaignList(reload);
       Get.find<ServiceController>().getRecommendedServiceList(offset: 1, reload: reload,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue));
       Get.find<SplashController>().getOfflinePaymentMethod(false);

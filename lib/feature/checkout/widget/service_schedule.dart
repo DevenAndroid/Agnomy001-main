@@ -1,13 +1,28 @@
+import 'dart:developer';
+
+import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 
+import '../../../components/service_center_dialog1.dart';
+import '../../../data/model/quotelist-model.dart';
+import '../../service/widget/service_overview.dart';
+
+
 class ServiceSchedule extends GetView<ScheduleController> {
-  const ServiceSchedule({Key? key}) : super(key: key);
+   ServiceSchedule({Key? key}) : super(key: key);
+   RxInt refereshInt = 0.obs;
+   void initState() {
+
+
+   }
+
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ScheduleController>( init: controller, builder: (scheduleController){
-      return  Column( children: [
+      return
+        Column( children: [
 
         Padding(padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
           child: Text("service_schedule".tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault)),
@@ -50,7 +65,14 @@ class ServiceSchedule extends GetView<ScheduleController> {
               ]),
             ])),
 
-            InkWell( onTap: () => scheduleController.selectDate(), child: Image.asset(Images.editButton,width: 20.0,height: 20.0,)),
+            InkWell( onTap: () {
+              scheduleController.selectDate();
+             // _selectDate(context);
+
+              },
+
+
+                child: Image.asset(Images.editButton,width: 20.0,height: 20.0,)),
 
           ])),
         ),
@@ -59,5 +81,136 @@ class ServiceSchedule extends GetView<ScheduleController> {
 
       ]);},
     );
+
+
+
   }
+
+  // DateTime selectedDate = DateTime.saturday.ma
+  // bool _predicate(DateTime day) {
+  //   if ((day.isAfter(DateTime(2020, 1, 5)) &&
+  //       day.isBefore(DateTime(2020, 1, 9)))) {
+  //     return true;
+  //   }
+  //
+  //   if ((day.isAfter(DateTime(2020, 1, 10)) &&
+  //       day.isBefore(DateTime(2020, 1, 15)))) {
+  //     return true;
+  //   }
+  //   if ((day.isAfter(DateTime(2020, 2, 5)) &&
+  //       day.isBefore(DateTime(2020, 2, 17)))) {
+  //     return true;
+  //   }
+  //
+  //   return false;
+  // }
+  //
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: selectedDate,
+  //     selectableDayPredicate: _predicate,
+  //     firstDate: DateTime(2019),
+  //     lastDate: DateTime(2036),
+  //     // builder: (context, child) {
+  //     //
+  //     //   return Theme(
+  //     //     data: ThemeData(
+  //     //         primaryColor: Colors.orangeAccent,
+  //     //         disabledColor: Colors.brown,
+  //     //         textTheme:
+  //     //         TextTheme(bodyLarge: TextStyle(color: Colors.blueAccent)),
+  //     //         indicatorColor: Colors.yellow),
+  //     //     child:child ,
+  //     //   );
+  //     //}
+  //   );
+  //   if (picked != null && picked != selectedDate)
+  //     selectedDate = picked;
+  //
+  // }
+
+   DateTime? selectedDate;
+   TimeOfDay? selectedStartTime;
+
+   final List<String> weekends = ["saturday", "sunday"];
+   Map<String, String> timeSchedule = {
+     "start_time": "14:44",
+     "end_time": "",
+   };
+   int getDayValue(String day) {
+     switch (day.toLowerCase()) {
+       case "monday":
+         return DateTime.monday;
+       case "tuesday":
+         return DateTime.tuesday;
+       case "wednesday":
+         return DateTime.wednesday;
+       case "thursday":
+         return DateTime.thursday;
+       case "friday":
+         return DateTime.friday;
+       case "saturday":
+         return DateTime.saturday;
+       case "sunday":
+         return DateTime.sunday;
+       default:
+         return -1; // Invalid day name
+     }
+   }
+
+//date
+   Future<void> _selectDate(BuildContext context) async {
+     final DateTime? picked = await showDatePicker(
+       context: context,
+       initialDate: selectedDate ?? DateTime.now(),
+       firstDate: DateTime(2000),
+       lastDate: DateTime(2101),
+       selectableDayPredicate: (DateTime date) {
+
+
+
+        for(var element in weekends){
+
+          log("ddddddd");
+           if(date.weekday==getDayValue(element)){
+             return false;
+           }
+        }
+
+        return true;
+       },
+     );
+     if (picked != null && picked != selectedDate) {
+      print("Date:=> ${selectedDate}");
+      // setState(() {
+         selectedDate = picked;
+      _selectStartTime(context);
+       //});
+     }
+   }
+// timestart
+  Future<void> _selectStartTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedStartTime ?? TimeOfDay.now(),
+    );
+    if (picked != null && picked != selectedStartTime) {
+     //setState(() { // Ensure the state is updated
+        selectedStartTime = picked;
+        timeSchedule["start_time"] = picked.format(context);
+        print("Start Time: ${timeSchedule["start_time"]}");
+      //});
+    }
+  }
+
+
+
+
+
+
+
+
+
 }
+
