@@ -114,40 +114,40 @@ class _CartScreenState extends State<CartScreen> {
 
                               Column(
                                 children: [
-                                  (cartController.preSelectedProvider) ?
-                                  Container(
-                                    width: ResponsiveHelper.isDesktop(context) ? 600 : Dimensions.webMaxWidth,
-                                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withOpacity(0.05)),
-                                    padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                                    child: Container(
-                                      decoration : BoxDecoration(
-                                        color: Theme.of(context).cardColor,
-                                        borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-                                      ),
-                                      padding: const EdgeInsets.all(Dimensions.paddingSizeDefault,),
-                                      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Text('provider_info'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault)),
-                                        const SizedBox(height: Dimensions.paddingSizeDefault),
-                                        Row(children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                                            child: CustomImage(
-                                              height: 50, width: 50,
-                                              image: "${Get.find<SplashController>().configModel.content?.imageBaseUrl}/provider/logo/${cartController.cartList[0].provider?.logo}",
-                                            ),
-                                          ),
-                                          const SizedBox(width: Dimensions.paddingSizeDefault),
-                                          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            Text(cartController.cartList[0].provider?.companyName ?? "" , style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
-                                            const SizedBox(height : Dimensions.paddingSizeDefault),
-                                            Text(cartController.maskNumberWithoutCountryCode(cartController.cartList[0].provider?.contactPersonPhone ?? ''), style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
-
-                                          ],)
-                                        ]),
-                                      ],
-                                      ),
-                                    ),
-                                  ) : const SizedBox(),
+                                  // (cartController.preSelectedProvider) ?
+                                  // Container(
+                                  //   width: ResponsiveHelper.isDesktop(context) ? 600 : Dimensions.webMaxWidth,
+                                  //   decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withOpacity(0.05)),
+                                  //   padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                                  //   child: Container(
+                                  //     decoration : BoxDecoration(
+                                  //       color: Theme.of(context).cardColor,
+                                  //       borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+                                  //     ),
+                                  //     padding: const EdgeInsets.all(Dimensions.paddingSizeDefault,),
+                                  //     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  //       Text('provider_info'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                                  //       const SizedBox(height: Dimensions.paddingSizeDefault),
+                                  //       Row(children: [
+                                  //         ClipRRect(
+                                  //           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                  //           child: CustomImage(
+                                  //             height: 50, width: 50,
+                                  //             image: "${Get.find<SplashController>().configModel.content?.imageBaseUrl}/provider/logo/${cartController.cartList[0].provider?.logo}",
+                                  //           ),
+                                  //         ),
+                                  //         const SizedBox(width: Dimensions.paddingSizeDefault),
+                                  //         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                  //           Text(cartController.cartList[0].provider?.companyName ?? "" , style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                                  //           const SizedBox(height : Dimensions.paddingSizeDefault),
+                                  //           Text(cartController.maskNumberWithoutCountryCode(cartController.cartList[0].provider?.contactPersonPhone ?? ''), style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                                  //
+                                  //         ],)
+                                  //       ]),
+                                  //     ],
+                                  //     ),
+                                  //   ),
+                                  // ) : const SizedBox(),
 
 
                                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -226,7 +226,7 @@ class _CartScreenState extends State<CartScreen> {
                                             child:
 
                                       Text(
-                         cartListTotalPrice.toString() !=null?  cartListTotalPrice.toString():"0.00",
+                                          cartListTotalPrice.toString() !=null?  cartListTotalPrice.toString():"0.00",
                                         //PriceConverter.convertPrice(Get.find<CartController>().totalPrice),
                                               style: ubuntuBold.copyWith(
                                                 color: Theme.of(context).colorScheme.error,
@@ -240,30 +240,30 @@ class _CartScreenState extends State<CartScreen> {
                                     Row(
                                       children: [
                                         if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
-                                        cartController.preSelectedProvider?
-                                        GestureDetector(
-                                          onTap: (){
-                                            showModalBottomSheet(
-                                              useRootNavigator: true,
-                                              isScrollControlled: true,
-                                              backgroundColor: Colors.transparent,
-                                              context: context, builder: (context) =>  AvailableProviderWidget(
-                                              subcategoryId: cartController.cartList.first.subCategoryId,
-                                            ),);
-                                          },
-                                          child: const SelectedProductWidget(),
-                                        ): GestureDetector(
-                                          onTap: (){
-                                            showModalBottomSheet(
-                                              useRootNavigator: true,
-                                              isScrollControlled: true,
-                                              backgroundColor: Colors.transparent,
-                                              context: context, builder: (context) => AvailableProviderWidget(
-                                              subcategoryId: cartController.cartList.first.subCategoryId,
-                                            ),);
-                                          },
-                                          child: const UnselectedProductWidget(),
-                                        ),
+                                        // cartController.preSelectedProvider?
+                                        // GestureDetector(
+                                        //   onTap: (){
+                                        //     // showModalBottomSheet(
+                                        //     //   useRootNavigator: true,
+                                        //     //   isScrollControlled: true,
+                                        //     //   backgroundColor: Colors.transparent,
+                                        //     //   context: context, builder: (context) =>  AvailableProviderWidget(
+                                        //     //   subcategoryId: cartController.cartList.first.subCategoryId,
+                                        //     // ),);
+                                        //   },
+                                        //   child: const SelectedProductWidget(),
+                                        // ): GestureDetector(
+                                        //   onTap: (){
+                                        //     showModalBottomSheet(
+                                        //       useRootNavigator: true,
+                                        //       isScrollControlled: true,
+                                        //       backgroundColor: Colors.transparent,
+                                        //       context: context, builder: (context) => AvailableProviderWidget(
+                                        //       subcategoryId: cartController.cartList.first.subCategoryId,
+                                        //     ),);
+                                        //   },
+                                        //   child: const UnselectedProductWidget(),
+                                        // ),
                                         if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
                                         const SizedBox(width: Dimensions.paddingSizeSmall),
                                         Expanded(

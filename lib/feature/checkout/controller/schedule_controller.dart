@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 class ScheduleController extends GetxController{
 
@@ -9,6 +10,9 @@ class ScheduleController extends GetxController{
   ///Selected date of day
   DateTime _selectedDate = DateTime.now().add(const Duration(hours: AppConstants.scheduleTime));
   DateTime get selectedData => _selectedDate;
+ // DateTime get selectedEndDate => _selectedEndDate;
+
+
 
 
   ///Selected time of day
@@ -17,6 +21,15 @@ class ScheduleController extends GetxController{
 
   String _schedule = '';
   String get schedule => _schedule;
+
+  RxInt refreshIt = 0.obs;
+
+  DateTime sselectedEndDate=DateTime.now();
+ // DateTime get selectedEndDate => sselectedEndDate;
+
+
+  // String _scheduleend = '';
+  // String get scheduleend => _scheduleend;
 
   String? _postId;
 
@@ -29,20 +42,52 @@ class ScheduleController extends GetxController{
 
 
 
-  Future<void> selectDate() async {
-    final DateTime? picked = await showDatePicker(
-        context: Get.context!,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now().subtract(const Duration(days: 0)),
-        lastDate: DateTime(2101),
+  // Future<void> selectDate() async {
+  //   final DateTime? picked = await showDatePicker(
+  //       context: Get.context!,
+  //       initialDate: DateTime.now(),
+  //       firstDate: DateTime.now().subtract(const Duration(days: 0)),
+  //       lastDate: DateTime(2101),
+  //   );
+  //
+  //   if (picked != null) {
+  //     _selectedDate = picked;
+  //     update();
+  //     selectTimeOfDay();
+  //   }
+  // }
+ // DateTime? _selectedStartDate;
+
+
+  Future<void> selectDateRange() async {
+    final DateTimeRange? picked = await showDateRangePicker(
+      context: Get.context!,
+      initialDateRange: DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(days: 1)),
+      ),
+      firstDate: DateTime(2019),
+      lastDate: DateTime(2101),
     );
 
     if (picked != null) {
-      _selectedDate = picked;
-      update();
-      selectTimeOfDay();
+      // setState(() {
+      _selectedDate = picked.start;
+      sselectedEndDate = picked.end;
+      refreshIt.value=DateTime.now().microsecondsSinceEpoch.toInt();
+        // Call a method to handle the selected date range if needed
+        handleDateRangePicked();
+          update();
+          selectTimeOfDay();
+      // });
     }
   }
+  void handleDateRangePicked() {
+    // Handle the selected date range
+   // print('Start Date: $_selectedStartDate');
+    print('End Date: $sselectedEndDate');
+  }
+
 
   Future<void> selectTimeOfDay() async {
     final TimeOfDay? pickedTime = await showTimePicker(
@@ -90,10 +135,5 @@ class ScheduleController extends GetxController{
   void setPostId(String postId){
     _postId = postId;
   }
-
-
-
-
-
 
 }

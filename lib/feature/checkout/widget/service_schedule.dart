@@ -66,7 +66,7 @@ class ServiceSchedule extends GetView<ScheduleController> {
             ])),
 
             InkWell( onTap: () {
-              scheduleController.selectDate();
+              scheduleController.selectDateRange();
              // _selectDate(context);
 
               },

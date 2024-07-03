@@ -39,53 +39,53 @@ class BookingSummeryWidget extends StatelessWidget{
               ),//boxShadow: shadow),
               child: Column( crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-                Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
-                Padding(padding: ResponsiveHelper.isDesktop(context) ? const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge) : const EdgeInsets.symmetric(horizontal:Dimensions.paddingSizeDefault),
-                  child: Text( 'booking_summery'.tr,
-                    style:ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color))
-                ),
-                Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
-
-                Container(
-                  padding: ResponsiveHelper.isDesktop(context) ? const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge) : const EdgeInsets.symmetric(horizontal:Dimensions.paddingSizeDefault),
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.07),
-                  child: SizedBox(
-                    height: 40,
-                    child:  Row( mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text('service_info'.tr, style:ubuntuBold.copyWith(
-                        fontSize: Dimensions.fontSizeSmall,
-                        color: Theme.of(context).textTheme.bodyLarge!.color!,decoration: TextDecoration.none,
-                      )),
-                      Text('price'.tr,style:ubuntuBold.copyWith(
-                        fontSize: Dimensions.fontSizeSmall,
-                        color: Theme.of(context).textTheme.bodyLarge!.color!,decoration: TextDecoration.none,
-                      )),
-                    ]),
-                  ),
-                ),
+                // Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
+                // Padding(padding: ResponsiveHelper.isDesktop(context) ? const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge) : const EdgeInsets.symmetric(horizontal:Dimensions.paddingSizeDefault),
+                //   child: Text( 'booking_summery'.tr,
+                //     style:ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color))
+                // ),
+                // Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
+                //
+                // Container(
+                //   padding: ResponsiveHelper.isDesktop(context) ? const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge) : const EdgeInsets.symmetric(horizontal:Dimensions.paddingSizeDefault),
+                //   color: Theme.of(context).colorScheme.primary.withOpacity(0.07),
+                //   child: SizedBox(
+                //     height: 40,
+                //     child:  Row( mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                //       Text('service_info'.tr, style:ubuntuBold.copyWith(
+                //         fontSize: Dimensions.fontSizeSmall,
+                //         color: Theme.of(context).textTheme.bodyLarge!.color!,decoration: TextDecoration.none,
+                //       )),
+                //       Text('price'.tr,style:ubuntuBold.copyWith(
+                //         fontSize: Dimensions.fontSizeSmall,
+                //         color: Theme.of(context).textTheme.bodyLarge!.color!,decoration: TextDecoration.none,
+                //       )),
+                //     ]),
+                //   ),
+                // ),
 
                 Padding(
                   padding:  ResponsiveHelper.isDesktop(context) ?  const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall) :  EdgeInsets.zero,
                   child: Column(
                     children: [
-                      ListView.builder(itemBuilder: (context, index){
-                        return ServiceInfoItem(
-                          bookingDetailsContent: bookingDetailsContent,
-                          bookingService : bookingDetailsController.bookingDetailsContent!.detail![index],
-                          bookingDetailsController: bookingDetailsController,
-                          index: index,
-                        );
-                      },
-                        itemCount: bookingDetailsController.bookingDetailsContent!.detail?.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                      ),
+                      // ListView.builder(itemBuilder: (context, index){
+                      //   return ServiceInfoItem(
+                      //     bookingDetailsContent: bookingDetailsContent,
+                      //     bookingService : bookingDetailsController.bookingDetailsContent!.detail![index],
+                      //     bookingDetailsController: bookingDetailsController,
+                      //     index: index,
+                      //   );
+                      // },
+                      //   itemCount: bookingDetailsController.bookingDetailsContent!.detail?.length,
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   shrinkWrap: true,
+                      // ),
 
                       Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                        child: Divider(height: 2, color: Colors.grey,),
-                      ),
+                      // const Padding(
+                      //   padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                      //   child: Divider(height: 2, color: Colors.grey,),
+                      // ),
                       Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
 
                       Padding(padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),

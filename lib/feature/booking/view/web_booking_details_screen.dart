@@ -306,352 +306,344 @@ class WebBookingDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(height: Dimensions.paddingSizeDefault),
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-                child: SizedBox(
-              height: 630,
-              child: SingleChildScrollView(
-                child: BookingSummeryWidget(
-                    bookingDetailsContent: bookingDetailsContent),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: Dimensions.paddingSizeDefault),
+            bookingDetailsContent.provider != null
+                ? SizedBox(
+              height: 165,
+              width: 285,
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.radiusDefault),
+                    border: Border.all(
+                        color: Theme.of(context)
+                            .hintColor
+                            .withOpacity(0.3)),
+                    boxShadow:
+                    searchBoxShadow), //boxShadow: shadow),
+                child: Column(
+                  children: [
+                    Gaps.verticalGapOf(
+                        Dimensions.paddingSizeDefault),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal:
+                            Dimensions.paddingSizeDefault),
+                        child: Text("provider_info".tr,
+                            style: ubuntuMedium.copyWith(
+                                fontSize:
+                                Dimensions.fontSizeSmall,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .color!))),
+                    Gaps.verticalGapOf(
+                        Dimensions.paddingSizeSmall),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(Dimensions
+                              .paddingSizeExtraLarge)),
+                      child: SizedBox(
+                        width: Dimensions.imageSize,
+                        height: Dimensions.imageSize,
+                        child: CustomImage(
+                            image:
+                            "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${bookingDetailsContent.provider?.logo}"),
+                      ),
+                    ),
+                    Gaps.verticalGapOf(
+                        Dimensions.paddingSizeExtraSmall),
+                    Text(
+                        "${bookingDetailsContent.provider?.companyName}",
+                        style: ubuntuBold.copyWith(
+                            fontSize:
+                            Dimensions.fontSizeExtraSmall)),
+                    Gaps.verticalGapOf(
+                        Dimensions.paddingSizeExtraSmall),
+                    Text(
+                        "${bookingDetailsContent.provider?.companyPhone}",
+                        style: ubuntuRegular.copyWith(
+                            fontSize:
+                            Dimensions.fontSizeExtraSmall)),
+                    Gaps.verticalGapOf(
+                        Dimensions.paddingSizeDefault),
+                  ],
+                ),
               ),
-            )),
-            const SizedBox(width: Dimensions.paddingSizeDefault),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+            )
+                : const SizedBox(),
+            const SizedBox(height: Dimensions.paddingSizeDefault),
+           // const SizedBox(width: Dimensions.paddingSizeDefault),
+            BookingSummeryWidget(bookingDetailsContent: bookingDetailsContent),
+            (Get.find<SplashController>()
+                        .configModel
+                        .content!
+                        .confirmationOtpStatus! &&
+                    (bookingDetailsContent.bookingStatus == "accepted" ||
+                        bookingDetailsContent.bookingStatus == "ongoing"))
+                ? BookingOtpWidget(
+                    bookingDetailsContent: bookingDetailsContent)
+                : const SizedBox(),
+        
+            (Get.find<SplashController>()
+                        .configModel
+                        .content!
+                        .confirmationOtpStatus! &&
+                    (bookingDetailsContent.bookingStatus == "accepted" ||
+                        bookingDetailsContent.bookingStatus == "ongoing"))
+                ? const SizedBox()
+                : const SizedBox(height: Dimensions.paddingSizeEight),
+        
+            Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.radiusDefault),
+                  border: Border.all(
+                      color:
+                          Theme.of(context).hintColor.withOpacity(0.3)),
+                  boxShadow: searchBoxShadow), //boxShadow: shadow),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.paddingSizeDefault,
+                  vertical: Dimensions.paddingSizeSmall),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  (Get.find<SplashController>()
-                              .configModel
-                              .content!
-                              .confirmationOtpStatus! &&
-                          (bookingDetailsContent.bookingStatus == "accepted" ||
-                              bookingDetailsContent.bookingStatus == "ongoing"))
-                      ? BookingOtpWidget(
-                          bookingDetailsContent: bookingDetailsContent)
-                      : const SizedBox(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('payment_method'.tr,
+                          style: ubuntuBold.copyWith(
+                            fontSize: Dimensions.fontSizeSmall,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .color!,
+                            decoration: TextDecoration.none,
+                          )),
+                      const SizedBox(height: Dimensions.radiusDefault),
+                      Text(bookingDetailsContent.paymentMethod!.tr,
+                          style: ubuntuRegular.copyWith(
+                              fontSize: Dimensions.fontSizeExtraSmall,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .color!
+                                  .withOpacity(0.6)),
+                          overflow: TextOverflow.ellipsis),
+                      const SizedBox(height: Dimensions.radiusDefault),
+                      Text(
+                          '${'transaction_id'.tr} : ${bookingDetailsContent.transactionId?.tr ?? ''}',
+                          style: ubuntuRegular.copyWith(
+                              fontSize: Dimensions.fontSizeExtraSmall,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .color!
+                                  .withOpacity(0.6)),
+                          overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                          '${bookingDetailsContent.isPaid == 0 ? 'unpaid'.tr : 'paid'.tr} ',
+                          style: ubuntuMedium.copyWith(
+                              fontSize: Dimensions.fontSizeDefault,
+                              color: bookingDetailsContent.isPaid == 0
+                                  ? Theme.of(context).colorScheme.error
+                                  : Colors.green,
+                              decoration: TextDecoration.none)),
+                      const SizedBox(
+                          height: Dimensions.paddingSizeExtraLarge),
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Text(
+                            PriceConverter.convertPrice(
+                                bookingDetailsContent.quoteOfferedPrice!
+                                    .toDouble(),
+                                isShowLongPrice: true),
+                            style: ubuntuBold.copyWith(
+                              fontSize: Dimensions.fontSizeDefault,
+                              color:
+                                  Theme.of(context).colorScheme.primary,
+                            )),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: Dimensions.paddingSizeDefault),
+        
+            //const BookingCancelButton(),
+        
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
 
-                  (Get.find<SplashController>()
-                              .configModel
-                              .content!
-                              .confirmationOtpStatus! &&
-                          (bookingDetailsContent.bookingStatus == "accepted" ||
-                              bookingDetailsContent.bookingStatus == "ongoing"))
-                      ? const SizedBox()
-                      : const SizedBox(height: Dimensions.paddingSizeEight),
+                bookingDetailsContent.serviceman != null
+                    ? SizedBox(
+                        height: 165,
+                        width: 285,
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(
+                                    Dimensions.paddingSizeExtraSmall)),
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.05),
+                          ),
+                          child: Column(
+                            children: [
+                              Gaps.verticalGapOf(
+                                  Dimensions.paddingSizeDefault),
+                              Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal:
+                                          Dimensions.paddingSizeDefault),
+                                  child: Text("service_man_info".tr,
+                                      style: ubuntuMedium.copyWith(
+                                          fontSize:
+                                              Dimensions.fontSizeSmall,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .color!))),
+                              Gaps.verticalGapOf(
+                                  Dimensions.paddingSizeSmall),
+                              ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(Dimensions
+                                        .paddingSizeExtraLarge)),
+                                child: SizedBox(
+                                  width: Dimensions.imageSize,
+                                  height: Dimensions.imageSize,
+                                  child: CustomImage(
+                                      image:
+                                          "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/serviceman/profile/${bookingDetailsContent.serviceman?.user!.profileImage!}"),
+                                ),
+                              ),
+                              Gaps.verticalGapOf(
+                                  Dimensions.paddingSizeExtraSmall),
+                              Text(
+                                  "${bookingDetailsContent.serviceman!.user?.firstName} ${bookingDetailsContent.serviceman!.user?.lastName}",
+                                  style: ubuntuBold.copyWith(
+                                      fontSize:
+                                          Dimensions.fontSizeExtraSmall)),
+                              Gaps.verticalGapOf(
+                                  Dimensions.paddingSizeExtraSmall),
+                              Text(
+                                  "${bookingDetailsContent.serviceman!.user!.phone}",
+                                  style: ubuntuRegular.copyWith(
+                                      fontSize:
+                                          Dimensions.fontSizeExtraSmall)),
+                              Gaps.verticalGapOf(
+                                  Dimensions.paddingSizeDefault),
+                            ],
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            ),
 
-                  Container(
+            // const SizedBox(height: Dimensions.paddingSizeDefault),
+            bookingDetailsContent.posts!.latestbid!= null
+                ? Container(
                     decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.radiusDefault),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.radiusDefault),
                         border: Border.all(
-                            color:
-                                Theme.of(context).hintColor.withOpacity(0.3)),
+                            color: Theme.of(context)
+                                .hintColor
+                                .withOpacity(0.3)),
                         boxShadow: searchBoxShadow), //boxShadow: shadow),
                     padding: const EdgeInsets.symmetric(
                         horizontal: Dimensions.paddingSizeDefault,
                         vertical: Dimensions.paddingSizeSmall),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      Text("Service Provider Offer Info",
+                          style:ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall)),
+                        Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('payment_method'.tr,
-                                style: ubuntuBold.copyWith(
-                                  fontSize: Dimensions.fontSizeSmall,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .color!,
-                                  decoration: TextDecoration.none,
-                                )),
-                            const SizedBox(height: Dimensions.radiusDefault),
-                            Text(bookingDetailsContent.paymentMethod!.tr,
-                                style: ubuntuRegular.copyWith(
-                                    fontSize: Dimensions.fontSizeExtraSmall,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .color!
-                                        .withOpacity(0.6)),
-                                overflow: TextOverflow.ellipsis),
-                            const SizedBox(height: Dimensions.radiusDefault),
-                            Text(
-                                '${'transaction_id'.tr} : ${bookingDetailsContent.transactionId?.tr ?? ''}',
-                                style: ubuntuRegular.copyWith(
-                                    fontSize: Dimensions.fontSizeExtraSmall,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .color!
-                                        .withOpacity(0.6)),
-                                overflow: TextOverflow.ellipsis),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                                '${bookingDetailsContent.isPaid == 0 ? 'unpaid'.tr : 'paid'.tr} ',
-                                style: ubuntuMedium.copyWith(
-                                    fontSize: Dimensions.fontSizeDefault,
-                                    color: bookingDetailsContent.isPaid == 0
-                                        ? Theme.of(context).colorScheme.error
-                                        : Colors.green,
-                                    decoration: TextDecoration.none)),
-                            const SizedBox(
-                                height: Dimensions.paddingSizeExtraLarge),
-                            Directionality(
-                              textDirection: TextDirection.ltr,
-                              child: Text(
-                                  PriceConverter.convertPrice(
-                                      bookingDetailsContent.quoteOfferedPrice!
-                                          .toDouble(),
-                                      isShowLongPrice: true),
-                                  style: ubuntuBold.copyWith(
-                                    fontSize: Dimensions.fontSizeDefault,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  )),
-                            ),
+        
+                            Text("Provider Notes :-",
+                                style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
+                                    color: Theme.of(context).textTheme.bodyLarge!.color!)),
+                            Text(bookingDetailsContent.posts!.latestbid!.providerNote ?? "",
+                                style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color!)),
+        
                           ],
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: Dimensions.paddingSizeDefault),
+                  )
+                // Row(
+                //
+                //  //mainAxisAlignment: MainAxisAlignment.start,
+                //   //crossAxisAlignment: CrossAxisAlignment.start,
+                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     SizedBox(
+                //       height: 200, width:540,
+                //       child: Container(
+                //         width:double.infinity,
+                //         decoration: BoxDecoration(color: Theme.of(context).cardColor , borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                //             border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.3)), boxShadow: searchBoxShadow
+                //         ),
+                //         child: Padding(
+                //           padding: const EdgeInsets.symmetric(horizontal: 8),
+                //           child: Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             mainAxisAlignment:MainAxisAlignment.start,
+                //             children: [
+                //               Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
+                //               Padding(
+                //                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                //                   child: Text("Service Provider Offer Info",
+                //                       style:ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall))
+                //               ),
+                //               Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
+                //               Row(
+                //                 children: [
+                //                   Text("Provider Notes :-",
+                //                       style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
+                //                           color: Theme.of(context).textTheme.bodyLarge!.color!)),
+                //
+                //                   Text(bookingDetailsContent.posts!.latestbid!.providerNote ?? "",
+                //                       style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color!)),
+                //
+                //                 ],
+                //               )
+                //
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(height: 0,width: 0,)
+                //   ],
+                // )
+                : SizedBox(),
 
-                  //const BookingCancelButton(),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      bookingDetailsContent.provider != null
-                          ? SizedBox(
-                              height: 165,
-                              width: 285,
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).cardColor,
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.radiusDefault),
-                                    border: Border.all(
-                                        color: Theme.of(context)
-                                            .hintColor
-                                            .withOpacity(0.3)),
-                                    boxShadow:
-                                        searchBoxShadow), //boxShadow: shadow),
-                                child: Column(
-                                  children: [
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeDefault),
-                                    Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal:
-                                                Dimensions.paddingSizeDefault),
-                                        child: Text("provider_info".tr,
-                                            style: ubuntuMedium.copyWith(
-                                                fontSize:
-                                                    Dimensions.fontSizeSmall,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!
-                                                    .color!))),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeSmall),
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(Dimensions
-                                              .paddingSizeExtraLarge)),
-                                      child: SizedBox(
-                                        width: Dimensions.imageSize,
-                                        height: Dimensions.imageSize,
-                                        child: CustomImage(
-                                            image:
-                                                "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${bookingDetailsContent.provider?.logo}"),
-                                      ),
-                                    ),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeExtraSmall),
-                                    Text(
-                                        "${bookingDetailsContent.provider?.companyName}",
-                                        style: ubuntuBold.copyWith(
-                                            fontSize:
-                                                Dimensions.fontSizeExtraSmall)),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeExtraSmall),
-                                    Text(
-                                        "${bookingDetailsContent.provider?.companyPhone}",
-                                        style: ubuntuRegular.copyWith(
-                                            fontSize:
-                                                Dimensions.fontSizeExtraSmall)),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeDefault),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                      bookingDetailsContent.serviceman != null
-                          ? SizedBox(
-                              height: 165,
-                              width: 285,
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(
-                                          Dimensions.paddingSizeExtraSmall)),
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.05),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeDefault),
-                                    Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal:
-                                                Dimensions.paddingSizeDefault),
-                                        child: Text("service_man_info".tr,
-                                            style: ubuntuMedium.copyWith(
-                                                fontSize:
-                                                    Dimensions.fontSizeSmall,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!
-                                                    .color!))),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeSmall),
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(Dimensions
-                                              .paddingSizeExtraLarge)),
-                                      child: SizedBox(
-                                        width: Dimensions.imageSize,
-                                        height: Dimensions.imageSize,
-                                        child: CustomImage(
-                                            image:
-                                                "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/serviceman/profile/${bookingDetailsContent.serviceman?.user!.profileImage!}"),
-                                      ),
-                                    ),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeExtraSmall),
-                                    Text(
-                                        "${bookingDetailsContent.serviceman!.user?.firstName} ${bookingDetailsContent.serviceman!.user?.lastName}",
-                                        style: ubuntuBold.copyWith(
-                                            fontSize:
-                                                Dimensions.fontSizeExtraSmall)),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeExtraSmall),
-                                    Text(
-                                        "${bookingDetailsContent.serviceman!.user!.phone}",
-                                        style: ubuntuRegular.copyWith(
-                                            fontSize:
-                                                Dimensions.fontSizeExtraSmall)),
-                                    Gaps.verticalGapOf(
-                                        Dimensions.paddingSizeDefault),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
-
-                  const SizedBox(height: Dimensions.paddingSizeDefault),
-                  bookingDetailsContent.posts!= null
-                      ? Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radiusDefault),
-                              border: Border.all(
-                                  color: Theme.of(context)
-                                      .hintColor
-                                      .withOpacity(0.3)),
-                              boxShadow: searchBoxShadow), //boxShadow: shadow),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: Dimensions.paddingSizeDefault,
-                              vertical: Dimensions.paddingSizeSmall),
-                          child: Column(
-                            children: [
-                            Text("Service Provider Offer Info",
-                                style:ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall)),
-                              Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-
-                                  Text("Provider Notes :-",
-                                      style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
-                                          color: Theme.of(context).textTheme.bodyLarge!.color!)),
-                                  Text(bookingDetailsContent.posts!.latestbid!.providerNote ?? "",
-                                      style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color!)),
-
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                      // Row(
-                      //
-                      //  //mainAxisAlignment: MainAxisAlignment.start,
-                      //   //crossAxisAlignment: CrossAxisAlignment.start,
-                      //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     SizedBox(
-                      //       height: 200, width:540,
-                      //       child: Container(
-                      //         width:double.infinity,
-                      //         decoration: BoxDecoration(color: Theme.of(context).cardColor , borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                      //             border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.3)), boxShadow: searchBoxShadow
-                      //         ),
-                      //         child: Padding(
-                      //           padding: const EdgeInsets.symmetric(horizontal: 8),
-                      //           child: Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             mainAxisAlignment:MainAxisAlignment.start,
-                      //             children: [
-                      //               Gaps.verticalGapOf(Dimensions.paddingSizeDefault),
-                      //               Padding(
-                      //                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                      //                   child: Text("Service Provider Offer Info",
-                      //                       style:ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall))
-                      //               ),
-                      //               Gaps.verticalGapOf(Dimensions.paddingSizeSmall),
-                      //               Row(
-                      //                 children: [
-                      //                   Text("Provider Notes :-",
-                      //                       style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
-                      //                           color: Theme.of(context).textTheme.bodyLarge!.color!)),
-                      //
-                      //                   Text(bookingDetailsContent.posts!.latestbid!.providerNote ?? "",
-                      //                       style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color!)),
-                      //
-                      //                 ],
-                      //               )
-                      //
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     SizedBox(height: 0,width: 0,)
-                      //   ],
-                      // )
-                      : SizedBox(),
-                ],
-              ),
-            ),
-          ]),
-        ],
+            SizedBox(height: 20,)
+          ],
+        ),
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // floatingActionButton: Get.find<AuthController>().isLoggedIn()

@@ -199,6 +199,7 @@ class CreatePostController extends GetxController implements GetxService{
 
     String zoneId = Get.find<LocationController>().getUserAddress()!.zoneId.toString();
     String schedule = DateConverter.dateToDateAndTime(Get.find<ScheduleController>().selectedData);
+
     AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
 
     Response response = await createPostRepo.makePayment(

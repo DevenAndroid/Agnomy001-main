@@ -127,25 +127,27 @@ class CheckOutController extends GetxController implements GetxService{
 
    _isLoading = true;
    update();
-
    if(Get.find<CartController>().cartList.isNotEmpty){
+     print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
      Response response = await checkoutRepo.placeBookingRequest(
+
        paymentMethod : "",  //paymentMethod,
        zoneId : zoneId,
-       schedule : schedule,
+       schedule : "",
        serviceAddressID : address.id == "null" ? "" : address.id,
        serviceAddress: address,
        isPartial: isPartial,
        offlinePaymentId: offlinePaymentId ?? "",
        customerInformation: customerInformation ?? ""
      );
+     log("booking200123payment=>${response.body}");
      if(response.statusCode == 200 && response.body["response_code"] == "booking_place_success_200"){
-       print("booking200123payment=>${response.body}");
+       log("booking200123payment=>${response.body}");
        _isPlacedOrderSuccessfully = true;
        _bookingReadableId = response.body['content']['readable_id'].toString();
        updateState(PageState.complete);
        if(ResponsiveHelper.isWeb()) {
-
+         print("WEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
          String token = base64Encode(utf8.encode("&&attribute_id=$_bookingReadableId"));
          Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null", token: token));
          print('token---->>>${token.toString()}');
@@ -164,6 +166,7 @@ class CheckOutController extends GetxController implements GetxService{
        if(ResponsiveHelper.isWeb()) {
          Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null"));
        }else{
+         print("ANKURRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
 
        }
      }
@@ -175,6 +178,62 @@ class CheckOutController extends GetxController implements GetxService{
    _isLoading  = false;
    update();
  }
+ // Future<void> placeBookingRequest({
+ //   required String paymentMethod,required String schedule, int isPartial = 0, required AddressModel address,
+ //   String? offlinePaymentId, String? customerInformation
+ // })async{
+ //   String zoneId = Get.find<LocationController>().getUserAddress()!.zoneId.toString();
+ //
+ //   _isLoading = true;
+ //   update();
+ //
+ //   if(Get.find<CartController>().cartList.isNotEmpty){
+ //     Response response = await checkoutRepo.placeBookingRequest(
+ //         paymentMethod : "",  //paymentMethod,
+ //         zoneId : zoneId,
+ //         schedule : schedule,
+ //         serviceAddressID : address.id == "null" ? "" : address.id,
+ //         serviceAddress: address,
+ //         isPartial: isPartial,
+ //         offlinePaymentId: offlinePaymentId ?? "",
+ //         customerInformation: customerInformation ?? ""
+ //     );
+ //     if(response.statusCode == 200 && response.body["response_code"] == "booking_place_success_200"){
+ //       print("booking200123payment=>${response.body}");
+ //       _isPlacedOrderSuccessfully = true;
+ //       _bookingReadableId = response.body['content']['readable_id'].toString();
+ //       updateState(PageState.complete);
+ //       if(ResponsiveHelper.isWeb()) {
+ //         print("WEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+ //         String token = base64Encode(utf8.encode("&&attribute_id=$_bookingReadableId"));
+ //         Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null", token: token));
+ //         print('token---->>>${token.toString()}');
+ //       }else{
+ //         print("booking else=>${response.body}");
+ //       }
+ //       Get.find<CartController>().getCartListFromServer();
+ //       Get.find<CartController>().clearCartList();
+ //       customSnackBar('${response.body['message']}'.tr,isError: false,margin: 55);
+ //
+ //     }else{
+ //       print("booking else2=>${response.body}");
+ //       _isPlacedOrderSuccessfully = false;
+ //       _bookingReadableId = "";
+ //       updateState(PageState.complete);
+ //       if(ResponsiveHelper.isWeb()) {
+ //         Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null"));
+ //       }else{
+ //
+ //       }
+ //     }
+ //   }
+ //   else{
+ //     Get.offNamed(RouteHelper.getOrderSuccessRoute('fail'));
+ //   }
+ //
+ //   _isLoading  = false;
+ //   update();
+ // }
 
 
   Future<void> getPostDetails(String postID) async {

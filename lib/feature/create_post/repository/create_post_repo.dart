@@ -50,7 +50,13 @@ class CreatePostRepo{
   Future<Response>  makePayment({String? paymentMethod,String? postId, String? providerId, String? address,
     String? serviceAddressID,String? schedule,String? zoneId, int? isPartial, String? offlinePaymentId, String? customerInformation
   }) async {
+    print(" that is api in call 2::: $schedule");
     print(" that is api in call 2 ");
+    print(" that is api in call 2 ");
+    print(" that is api in call 2 ");
+
+
+
     return await apiClient.postData(AppConstants.placeRequest, {
       "payment_method": "offline_payment", //paymentMethod,
       "zone_id": zoneId,
@@ -63,6 +69,8 @@ class CreatePostRepo{
       "offline_payment_id" : offlinePaymentId,
       "customer_information" : customerInformation,
       "quote_id":quote_id,
+      "start_date":schedule,
+      "end_date":2024-06-30,
     });
   }
 }

@@ -24,8 +24,8 @@ class _OrderDetailsPageWebState extends State<OrderDetailsPageWeb> {
   @override
   @override
   void initState() {
-    getQuoteList();
-    fetchProviderAvailability();
+     getQuoteList();
+     fetchProviderAvailability();
     super.initState();
   }
   @override
@@ -37,7 +37,9 @@ class _OrderDetailsPageWebState extends State<OrderDetailsPageWeb> {
         configModel.content?.partialPayment == 1;
 
     return Center(
-        child: SizedBox(
+        child:
+        quotesListModel.value.content!= null ?
+        SizedBox(
       width: Dimensions.webMaxWidth,
       child: GetBuilder<CartController>(builder: (cartController) {
         return Row(
@@ -98,7 +100,7 @@ class _OrderDetailsPageWebState extends State<OrderDetailsPageWeb> {
                                   ])),
 
                                   InkWell( onTap: () {
-                                    scheduleController.selectDate();
+                                    scheduleController.selectDateRange();
                                     //_selectDate(context);
 
                                   },
@@ -149,7 +151,12 @@ class _OrderDetailsPageWebState extends State<OrderDetailsPageWeb> {
               ),
             ]);
       }),
-    ));
+    )
+            :Center(
+          child: CircularProgressIndicator(),
+        )
+
+    );
   }
 
 

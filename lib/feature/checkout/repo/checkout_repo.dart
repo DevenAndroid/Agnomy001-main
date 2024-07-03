@@ -8,6 +8,10 @@ class CheckoutRepo extends GetxService {
   final ApiClient apiClient;
   CheckoutRepo({required this.apiClient});
 
+
+
+     RxInt referesh =  Get.find<ScheduleController>().refreshIt;
+
   Future<Response> getPostDetails(String postId) async {
     print('post IDDDDDDDDDDDDDDDDDDDDD=>${postId.toString()}');
     return await apiClient.getData('${AppConstants.getPostDetails}/$postId');
@@ -28,10 +32,14 @@ class CheckoutRepo extends GetxService {
     print("offlinePaymentId${offlinePaymentId}");
     print("customerInformation${customerInformation}");
     print("quote_id${quote_id}");
+
+    DateTime selectedEndTime =  Get.find<ScheduleController>().sselectedEndDate;
+    DateTime selectedStartTime =  Get.find<ScheduleController>().selectedData;
+    print("enddate::::${selectedEndTime}");
     return await apiClient.postData(AppConstants.placeRequest, {
       "payment_method": "offline_payment",
       "zone_id" : zoneId,
-      "service_schedule" : schedule,
+      "service_schedule" : selectedStartTime,
       "service_address_id" : serviceAddressID,
       // "guest_id" : Get.find<SplashController>().getGuestId(),
        "service_address" : address,
@@ -39,6 +47,9 @@ class CheckoutRepo extends GetxService {
       // "offline_payment_id" : offlinePaymentId,
       // "customer_information" : customerInformation,
       "quote_id":quote_id,
+      "start_date":selectedStartTime,//schedule,
+      "end_date":selectedEndTime
+
     },headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',

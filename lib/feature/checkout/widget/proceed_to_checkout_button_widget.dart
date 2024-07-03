@@ -87,6 +87,7 @@ class _ProceedToCheckoutButtonWidgetState
       String schedule = DateConverter.dateToDateAndTime(
           Get.find<ScheduleController>().selectedData);
 
+
       return GetBuilder<CheckOutController>(builder: (checkoutController) {
         return Padding(
           padding: const EdgeInsets.symmetric(
@@ -190,7 +191,8 @@ class _ProceedToCheckoutButtonWidgetState
 
                       customSnackBar(
                           "${"schedule_time_should_be".tr} ${AppConstants.scheduleTime} ${"later_from_now".tr}");
-                    } else if (addressModel == null) {
+                    }
+                  else if (addressModel == null) {
                       print('if 5');
 
                       customSnackBar("add_address_first".tr);
@@ -246,7 +248,7 @@ class _ProceedToCheckoutButtonWidgetState
 ///
                             checkoutController.placeBookingRequest(
                               paymentMethod: "offline_payment",
-                              schedule: schedule,
+                              schedule: "",
                               isPartial: isPartialPayment &&
                                   cartController.walletPaymentStatus
                                   ? 1
@@ -258,10 +260,11 @@ class _ProceedToCheckoutButtonWidgetState
                                   jsonEncode(checkoutController
                                       .offlinePaymentInputFieldValues))),
                             );
+
                           }
 
 
-
+                      //  Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null"));
                           checkoutSummeryApiCall();
                           questionController.clear();
                           messageController.clear();
