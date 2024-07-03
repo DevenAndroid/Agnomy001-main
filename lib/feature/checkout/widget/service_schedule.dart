@@ -190,20 +190,39 @@ class ServiceSchedule extends GetView<ScheduleController> {
      }
    }
 // timestart
+//   Future<void> _selectStartTime(BuildContext context) async {
+// //     final TimeOfDay? picked = await showTimePicker(
+// //       context: context,
+// //       initialTime: selectedStartTime ?? TimeOfDay.now(),
+// //     );
+// //     if (picked != null && picked != selectedStartTime) {
+// //      //setState(() { // Ensure the state is updated
+// //         selectedStartTime = picked;
+// //         timeSchedule["start_time"] = picked.format(context);
+// //         print("Start Time: ${timeSchedule["start_time"]}");
+// //       //});
+// //     }
+// //   }
   Future<void> _selectStartTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedStartTime ?? TimeOfDay.now(),
     );
+
     if (picked != null && picked != selectedStartTime) {
-     //setState(() { // Ensure the state is updated
+      // Check if the selected time is between 1 AM and 5 AM
+      if ((picked.hour >= 1 && picked.hour < 5)) {
+        // Show an error message or perform any desired action
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please select a time outside the range of 1 AM to 5 AM')),
+        );
+      } else {
         selectedStartTime = picked;
         timeSchedule["start_time"] = picked.format(context);
         print("Start Time: ${timeSchedule["start_time"]}");
-      //});
+      }
     }
   }
-
 
 
 
