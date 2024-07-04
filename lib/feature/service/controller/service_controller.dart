@@ -139,7 +139,7 @@ class ServiceController extends GetxController implements GetxService {
       if(reload){
         _allService = null;
       }
-      Response response = await serviceRepo.getAllServiceList( offset: offset,placeID: placeId,distance: distance);
+      Response response = await serviceRepo.getAllServiceList( offset: offset,placeID: placeId,distance: distance );
       if (response.statusCode == 200) {
         if(reload){
           _allService = [];

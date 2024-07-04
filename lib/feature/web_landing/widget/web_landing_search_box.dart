@@ -17,6 +17,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 
 RxString placedIdGloabal = "".obs;
+RxString placedIdGloaballat = "".obs;
+RxString placedIdGloaballong = "".obs;
 class WebLandingSearchSection extends StatefulWidget {
   final String baseUrl;
   final  Map<String?, String?>? textContent;
@@ -276,8 +278,11 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                       onSuggestionSelected: (PredictionModel suggestion) async {
                                         _controller.text = suggestion.description!;
                                         _address = await Get.find<LocationController>().setLocation(suggestion.placeId!, suggestion.description!, null) ;
+        // _address = await Get.find<LocationController>().setLocation(suggestion.placeId!,suggestion.description!,suggestion.geometry!.locations!.lat!,suggestion.geometry!.locations!.lng!,suggestion.description!) ;
 
                                         placedIdGloabal.value = suggestion.placeId!;
+                                        placedIdGloaballat.value = suggestion.geometry!.locations!.lat!;
+                                        placedIdGloaballong.value = suggestion.geometry!.locations!.lng!;
                                       },
                                     ),),
                                     InkWell(

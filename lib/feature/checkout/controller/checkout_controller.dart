@@ -7,6 +7,7 @@ import 'package:demandium/core/helper/string_parser.dart';
 import 'package:demandium/feature/checkout/model/offline_payment_method_model.dart';
 import 'package:demandium/feature/checkout/widget/payment_section/payment_method_button.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 
 enum PageState {orderDetails, payment, complete}
@@ -129,11 +130,24 @@ class CheckOutController extends GetxController implements GetxService{
    update();
    if(Get.find<CartController>().cartList.isNotEmpty){
      print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+     DateTime selectedEndTime = Get.find<ScheduleController>().sselectedEndDate;
+     DateTime selectedStartTime =  Get.find<ScheduleController>().selectedData;
+
+     // Define your date format
+     DateFormat dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+
+// Convert DateTime to String
+     String formattedEndTime = dateFormat.format(selectedEndTime);
+     String formattedStartTime = dateFormat.format(selectedStartTime);
+
+     print('Formatted End Time: $formattedEndTime');
+     print('Formatted Start Time: $formattedStartTime');
+
      Response response = await checkoutRepo.placeBookingRequest(
 
        paymentMethod : "",  //paymentMethod,
        zoneId : zoneId,
-       schedule : "",
+       schedule : formattedStartTime,
        serviceAddressID : address.id == "null" ? "" : address.id,
        serviceAddress: address,
        isPartial: isPartial,

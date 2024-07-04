@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/components/service_center_dialog1.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 
 class CheckoutRepo extends GetxService {
@@ -35,21 +36,29 @@ class CheckoutRepo extends GetxService {
 
     DateTime selectedEndTime =  Get.find<ScheduleController>().sselectedEndDate;
     DateTime selectedStartTime =  Get.find<ScheduleController>().selectedData;
+    // Define your date format
+    DateFormat dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+
+// Convert DateTime to String
+    String formattedEndTime = dateFormat.format(selectedEndTime);
+    String formattedStartTime = dateFormat.format(selectedStartTime);
+
+    print('Formatted End Time: $formattedEndTime');
+    print('Formatted Start Time: $formattedStartTime');
     print("enddate::::${selectedEndTime}");
     return await apiClient.postData(AppConstants.placeRequest, {
       "payment_method": "offline_payment",
+      "quote_id":quote_id,
       "zone_id" : zoneId,
-      "service_schedule" : selectedStartTime,
       "service_address_id" : serviceAddressID,
+      "service_schedule" : formattedStartTime,
+      "service_address" : address,
+      "start_date":formattedStartTime,//schedule,
+      "end_date":formattedEndTime
       // "guest_id" : Get.find<SplashController>().getGuestId(),
-       "service_address" : address,
       // "is_partial" : isPartial,
       // "offline_payment_id" : offlinePaymentId,
       // "customer_information" : customerInformation,
-      "quote_id":quote_id,
-      "start_date":selectedStartTime,//schedule,
-      "end_date":selectedEndTime
-
     },headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',

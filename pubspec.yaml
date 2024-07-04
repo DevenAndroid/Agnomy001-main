@@ -71,6 +71,7 @@ dependencies:
   custom_marker: ^1.0.0
   firebase_crashlytics: ^3.4.8
   flutter_calendar_carousel: ^2.4.3
+  time_range_picker: ^2.3.0
 
 
 dev_dependencies:

@@ -78,8 +78,7 @@ class MyApp extends StatelessWidget {
   void _route() async {
     Get.find<SplashController>().getConfigData().then((bool isSuccess) async {
       if (Get.find<LocationController>().getUserAddress() != null) {
-        AddressModel addressModel =
-            Get.find<LocationController>().getUserAddress()!;
+        AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
         ZoneResponseModel responseModel = await Get.find<LocationController>()
             .getZone(addressModel.latitude.toString(),
                 addressModel.longitude.toString(), false);

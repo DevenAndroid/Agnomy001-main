@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -25,7 +26,8 @@ class ApiClient extends GetxService {
       printLog( addressModel.toJson());
     }catch(e) {
       if (kDebugMode) {
-        print('');
+        print('error');
+
       }
     }
 
@@ -53,47 +55,51 @@ class ApiClient extends GetxService {
         Uri.parse(appBaseUrl! + uri),
         headers: headers ?? _mainHeaders,
       ).timeout(Duration(seconds: timeoutInSeconds));
-
       return handleResponse(response, uri);
     } catch (e) {
       return Response(statusCode: 1, statusText: noInternetMessage);
+
     }
   }
 
   Future<Response> postData(String? uri, dynamic body, {Map<String, String>? headers}) async {
     printLog('====> API Call: $uri\nHeader: $_mainHeaders');
-    printLog('====> body : ${body.toString()}');
+    printLog('====> body00 : ${body.toString()}');
+    print("HHHHHHHHHHHHHHH${headers}");
 
 
-    http.Response response = await http.post(
+  http.Response response = await http.post(
       Uri.parse(appBaseUrl! + uri!),
       body: jsonEncode(body),
       headers: headers ?? _mainHeaders,
     ).timeout(Duration(seconds: timeoutInSeconds));
+    printLog('====>response ;;; body : ${response.body}');
     try {
+
       return handleResponse(response, uri);
     } catch (e) {
       return Response(statusCode: 1, statusText: noInternetMessage);
     }
+
   }
 
 
-  Future<Response> postDatato(String? uri, dynamic body, {Map<String, String>? headers}) async {
-    printLog('====> API Call post: $uri\nHeader: $headers');
-    printLog('====> body : ${body.toString()}');
-
-
-    http.Response response = await http.post(
-      Uri.parse(appBaseUrl! + uri!),
-      body: jsonEncode(body),
-      headers:  headers,
-    ).timeout(Duration(seconds: timeoutInSeconds));
-    try {
-      return handleResponse(response, uri);
-    } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
+  // Future<Response> postDatato(String? uri, dynamic body, {Map<String, String>? headers}) async {
+  //   printLog('====> API Call post: $uri\nHeader: $headers');
+  //   printLog('====> body : ${body.toString()}');
+  //
+  //
+  //   http.Response response = await http.post(
+  //     Uri.parse(appBaseUrl! + uri!),
+  //     body: jsonEncode(body),
+  //     headers:  headers,
+  //   ).timeout(Duration(seconds: timeoutInSeconds));
+  //   try {
+  //     return handleResponse(response, uri);
+  //   } catch (e) {
+  //     return Response(statusCode: 1, statusText: noInternetMessage);
+  //   }
+  // }
 
   Future<Response> postMultipartDataConversation(
       String? uri,

@@ -73,16 +73,23 @@ class LocationController extends GetxController implements GetxService {
       if(defaultLatLng !=null){
 
 
+
+
+
         myPosition =  Position(
           latitude:defaultLatLng.latitude,
           longitude:defaultLatLng.longitude,
           timestamp: DateTime.now(), accuracy: 1, altitude: 1, heading: 1, speed: 1, speedAccuracy: 1,
             altitudeAccuracy: 1, headingAccuracy: 1
         );
+        print("addressAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA${myPosition}AAAAAA");
       }else{
+
         myPosition = newLocalData;
+        print("addressAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA${myPosition}BBBBBB");
       }
     }catch(e) {
+
       if(defaultLatLng != null){
         myPosition = Position(
           latitude:defaultLatLng.latitude,
@@ -395,6 +402,7 @@ class LocationController extends GetxController implements GetxService {
 
         addressModel.latitude = latLng.latitude.toString();
         addressModel.longitude = latLng.longitude.toString();
+        print("LONGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG${latLng.toString()}");
 
         placeDetails.content?.result?.addressComponents?.forEach((element) {
           if(element.types !=null){
@@ -563,7 +571,7 @@ class LocationController extends GetxController implements GetxService {
       Response response = await locationRepo.searchLocation(text);
       if (response.body['response_code'] == "default_200" && response.body['content']['status'] == 'OK') {
         _predictionList = [];
-        response.body['content']['predictions'].forEach((prediction) => _predictionList.add(PredictionModel.fromJson(prediction)));
+        response.body['content']['results'].forEach((prediction) => _predictionList.add(PredictionModel.fromJson(prediction)));
       } else {
         // customSnackBar(response.body['message'] ?? response.bodyString.toString().tr,isError:false);
       }

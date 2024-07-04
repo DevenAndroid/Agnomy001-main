@@ -1,4 +1,5 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:demandium/feature/home/widget/cookies_view.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/common_model/errrors_model.dart';
 import 'package:demandium/components/core_export.dart';
@@ -294,6 +295,9 @@ class AuthController extends GetxController implements GetxService {
       String responseText = "";
       if(response.statusCode == 500){
         responseText = "Internal Server Error";
+        //
+        // Get.offAll(const CookiesView());
+        //
       }else{
         responseText = response.body["message"] ?? response.statusText ;
       }

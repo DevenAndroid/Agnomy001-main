@@ -72,6 +72,8 @@ class _ProceedToCheckoutButtonWidgetState
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartController>(builder: (cartController) {
+      DateTime selectedStartTime =  Get.find<ScheduleController>().selectedData;
+
       List<CartModel> cartList = cartController.cartList;
       bool walletPaymentStatus = cartController.walletPaymentStatus;
       double totalAmount = cartController.totalPrice;
@@ -209,7 +211,6 @@ class _ProceedToCheckoutButtonWidgetState
                               .tr);
                     } else {
                       print('if 7');
-
                       if (!isPartialPayment &&
                           cartController.walletPaymentStatus) {
                         print('if 8');
@@ -246,11 +247,12 @@ class _ProceedToCheckoutButtonWidgetState
                             //   reload: false,
                             // ));
 ///
+                            DateTime selectedStartTime =  Get.find<ScheduleController>().selectedData;
+
                             checkoutController.placeBookingRequest(
                               paymentMethod: "offline_payment",
-                              schedule: "",
-                              isPartial: isPartialPayment &&
-                                  cartController.walletPaymentStatus
+                              schedule: selectedStartTime.toString(),
+                              isPartial: isPartialPayment && cartController.walletPaymentStatus
                                   ? 1
                                   : 0,
                               address: addressModel!,
@@ -417,10 +419,8 @@ class _ProceedToCheckoutButtonWidgetState
         Get.find<ScheduleController>().selectedData);
     String userId = Get.find<UserController>().userInfoModel?.id ??
         Get.find<SplashController>().getGuestId();
-    String encodedAddress =
-        base64Encode(utf8.encode(jsonEncode(address?.toJson())));
-    String addressId =
-        (address?.id == "null" || address?.id == null) ? "" : address?.id ?? "";
+    String encodedAddress = base64Encode(utf8.encode(jsonEncode(address?.toJson())));
+    String addressId = (address?.id == "null" || address?.id == null) ? "" : address?.id ?? "";
     String zoneId =
         Get.find<LocationController>().getUserAddress()?.zoneId ?? "";
     String callbackUrl = GetPlatform.isWeb
@@ -447,4 +447,11 @@ class _ProceedToCheckoutButtonWidgetState
           ));
     }
   }
+
+
+
+
+
+
+
 }

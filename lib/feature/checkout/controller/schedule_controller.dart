@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:path/path.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
 class ScheduleController extends GetxController{
 
@@ -77,8 +79,10 @@ class ScheduleController extends GetxController{
       refreshIt.value=DateTime.now().microsecondsSinceEpoch.toInt();
         // Call a method to handle the selected date range if needed
         handleDateRangePicked();
+
           update();
-          selectTimeOfDay();
+          selectTimeOfDay();// frst time
+      selectTimeOfDayEndTime();//sendtime
       // });
     }
   }
@@ -87,6 +91,10 @@ class ScheduleController extends GetxController{
    // print('Start Date: $_selectedStartDate');
     print('End Date: $sselectedEndDate');
   }
+
+
+
+
 
 
   Future<void> selectTimeOfDay() async {
@@ -102,9 +110,32 @@ class ScheduleController extends GetxController{
     }
   }
 
+  Future<void> selectTimeOfDayEndTime() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+        context: Get.context!,
+        initialTime: TimeOfDay(hour: DateTime.now().hour + AppConstants.scheduleTime, minute: DateTime.now().minute));
+
+    if (pickedTime != null) {
+      sselectedEndDate = DateTime(sselectedEndDate.year, sselectedEndDate.month, sselectedEndDate.day, pickedTime.hour, pickedTime.minute);
+      update();
+
+      _buildScheduleSend();
+    }
+  }
+
 
   Future<void> _buildSchedule() async {
     _schedule = DateConverter.dateToDateAndTime(_selectedDate);
+
+    if(_postId!=null && _schedule.isNotEmpty){
+      updatePostInformation(_postId!,_schedule);
+    }
+    //_schedule = "${DateConverter.dateTimeStringToDateOnly(_selectedDate.toString())} ${_selectedDate.hour.toString().padLeft(2,'0')}:${_selectedDate.minute.toString().padLeft(2,'0')}:00";
+    update();
+  }
+
+  Future<void> _buildScheduleSend() async {
+    _schedule = DateConverter.dateToDateAndTime(sselectedEndDate);
 
     if(_postId!=null && _schedule.isNotEmpty){
       updatePostInformation(_postId!,_schedule);

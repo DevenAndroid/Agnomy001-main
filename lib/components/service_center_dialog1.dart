@@ -815,8 +815,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
     final String categoryID = widget.service!.categoryId.toString();
     final String subCategoryID = widget.service!.subCategoryId.toString();
 
-    final url =
-        Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
+    final url = Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
     print(
         "token 3${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
     print("getGuestId${Get.find<SplashController>().getGuestId()}");
