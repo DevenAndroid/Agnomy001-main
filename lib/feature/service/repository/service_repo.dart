@@ -9,14 +9,14 @@ class ServiceRepo extends GetxService {
   ServiceRepo({required this.apiClient});
 
   Future<Response> getAllServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants.allServiceUri}?limit=100&offset=$offset&placeid=$placeID&distance=$distance');
+    return await apiClient.getData('${AppConstants.allServiceUri}?limit=100&offset=$offset&placeid=$placeID&distance=$distance&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
   }
   Future<Response> getPopularServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants. popularServiceUri}?limit=100&offset=$offset&limit=10&placeid=$placeID&distance=$distance');
+    return await apiClient.getData('${AppConstants. popularServiceUri}?limit=100&offset=$offset&limit=10&placeid=$placeID&distance=$distance&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
   }
 
   Future<Response> getTrendingServiceList({required int offset, int? distance , String? placeID}) async {
-    return await apiClient.getData('${AppConstants.trendingServiceUri}?limit=100&offset=$offset&limit=10&placeid=$placeID&distance=$distance');
+    return await apiClient.getData('${AppConstants.trendingServiceUri}?limit=100&offset=$offset&limit=10&placeid=$placeID&distance=$distance&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
   }
 
   Future<Response> getRecentlyViewedServiceList(int offset) async {
@@ -25,11 +25,11 @@ class ServiceRepo extends GetxService {
 
   Future<Response> getFeatheredCategoryServiceList(
       {required String placeID, required int distance}) async {
-    return await apiClient.getData('${AppConstants.getFeaturedCategoryService}&placeid=$placeID&distance=$distance');
+    return await apiClient.getData('${AppConstants.getFeaturedCategoryService}&placeid=$placeID&distance=$distance&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value} ');
   }
 
   Future<Response> getRecommendedServiceList({required int offset, int? distance, String? placeID}) async {
-    return await apiClient.getData('${AppConstants.recommendedServiceUri}?limit=100&offset=$offset&placeid=$placeID&distance=$distance');
+    return await apiClient.getData('${AppConstants.recommendedServiceUri}?limit=100&offset=$offset&placeid=$placeID&distance=$distance&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
   }
 
   Future<Response> getRecommendedSearchList() async {
@@ -42,7 +42,7 @@ class ServiceRepo extends GetxService {
 
   Future<Response> getServiceListBasedOnSubCategory({required String subCategoryID, required int offset}) async {
     print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA${subCategoryID}");
-    return await apiClient.getData('${AppConstants.serviceBasedOnSubcategory}$subCategoryID?limit=30&offset=$offset&placeid=$placedIdGloabal');
+    return await apiClient.getData('${AppConstants.serviceBasedOnSubcategory}$subCategoryID?limit=30&offset=$offset&placeid=$placedIdGloabal&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
   }
   Future<Response> getItemsBasedOnCampaignId({required String campaignID}) async {
     return await apiClient.getData('${AppConstants.itemsBasedOnCampaignId}$campaignID&limit=100&offset=1');

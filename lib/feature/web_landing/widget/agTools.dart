@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
-class twoSectionWidget extends StatelessWidget {
+class agToolsWidget extends StatelessWidget {
   final WebLandingController webLandingController;
   final Map<String?,String?>? textContent;
   final String baseUrl;
   final PageController _pageController = PageController();
 
-  twoSectionWidget({
-  Key? key,
-  required this.webLandingController,
-  required this.textContent,
-  required this.baseUrl,
+  agToolsWidget({
+    Key? key,
+    required this.webLandingController,
+    required this.textContent,
+    required this.baseUrl,
   }) : super(key: key);
 
   @override
@@ -40,32 +40,35 @@ class twoSectionWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
-              const SizedBox(width: Dimensions.paddingSizeDefault,),
+              CustomImage(
+                height: 364,
+                width: 450,
+                image:"$baseUrl/landing-page/web/ag-service-tools.jpeg",
+                fit: BoxFit.fitHeight,
+              ),
+
+              const SizedBox(width: Dimensions.paddingSizeExtraMoreLarge,),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Service Dashboard",
+                    Text("Automated Tools",
                       style: ubuntuBold.copyWith(fontSize: 36, color: Colors.black, ), textAlign: TextAlign.start,
                     ),
                     const SizedBox(height: Dimensions.paddingSizeDefault),
-                    Text("The complete solution for agribusiness",
+
+                    Text("Built-in business tools to get work done",
                       style: ubuntuTitleMD.copyWith(fontSize: 20, color: Theme.of(context).colorScheme.onPrimary,), textAlign: TextAlign.start,
                     ),
                     const SizedBox(height: Dimensions.paddingSizeDefault),
-                    Text("Agnomy's robust dashboard empowers agricultural service providers to streamline their business operations. Focus on delivering results while Agnomy handles the backend, ensuring efficient service for your customers. ",
+                    Text("Empowering individual service professionals and agribusinesses with advanced, automated tools to deliver exceptional results. Let Agnomy be your sidekick, dynamically managing bookings, schedules, invoices, payments, and reports so you can focus on what you do best.",
                       style: ubuntuRegular.copyWith(fontSize: 18, color: Theme.of(context).colorScheme.onPrimary, ), textAlign: TextAlign.start,
                     ),
                   ],
                 ),
               ),
 
-              CustomImage(
-                height: 245,
-                width: 400,
-                image:"$baseUrl/landing-page/web/prov-dashboard.png",
-                fit: BoxFit.fitHeight,
-              ),
+
 
             ],
           ),

@@ -25,7 +25,7 @@ class TestimonialWidget extends StatelessWidget {
     bool isLtr = Get.find<LocalizationController>().isLtr;
 
     return Container(
-      color: Theme.of(context).colorScheme.onPrimary,
+      color: Color(0xff1d1d1d),
       height: Dimensions.webLandingTestimonialHeight, width: Get.width,
       child: Align( alignment: Alignment.center, child: SizedBox(width: Dimensions.webMaxWidth, child: Row( mainAxisAlignment: MainAxisAlignment.center, children: [
 
@@ -36,9 +36,9 @@ class TestimonialWidget extends StatelessWidget {
               height: Dimensions.webLandingIconContainerHeight, width: Dimensions.webLandingIconContainerHeight, alignment: Alignment.center,
               decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey.withOpacity(0.15)),
               child: Padding(padding:  EdgeInsets.only(
-                  left: isLtr ?  Dimensions.paddingSizeSmall : 0.0,
-                  right: !isLtr ?  Dimensions.paddingSizeSmall : 0.0,
-                ),
+                left: isLtr ?  Dimensions.paddingSizeSmall : 0.0,
+                right: !isLtr ?  Dimensions.paddingSizeSmall : 0.0,
+              ),
                 child: Icon(Icons.arrow_back_ios, size: Dimensions.webArrowSize,
                     color:webLandingController.currentPage! > 0? Theme.of(context).colorScheme.primary :Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.8)
                 ),
@@ -57,29 +57,29 @@ class TestimonialWidget extends StatelessWidget {
 
                 Row( mainAxisAlignment: MainAxisAlignment.center, children: [
 
-                    Column( mainAxisSize: MainAxisSize.max,  crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  Column( mainAxisSize: MainAxisSize.max,  crossAxisAlignment: CrossAxisAlignment.center, children: [
 
-                      Text(textContent?['testimonial_title']??"",
-                        style: ubuntuTitle.copyWith(fontSize: 36, color: Colors.white), textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 40,),
+                    Text(textContent?['testimonial_title']??"",
+                      style: ubuntuTitle.copyWith(fontSize: 36, color: Colors.white), textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 40,),
 
-                      SizedBox( width: Get.width / 3,
+                    SizedBox( width: Get.width / 3,
                         child: Text(testimonial.review!, style: ubuntuRegular.copyWith(fontSize: 20, color: Colors.white),textAlign: TextAlign.center,)
-                      ),
-                      const SizedBox(height: 25,),
+                    ),
+                    const SizedBox(height: 25,),
 
-                      Text("- ${testimonial.name!}",
-                        style: ubuntuTitleSM.copyWith(fontSize: 18, color: Colors.white), textAlign: TextAlign.center,
-                      ),
-                      Text("${testimonial.designation!}",
-                        style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.grey), textAlign: TextAlign.center,
-                      ),
-                    ]),
+                    Text("- ${testimonial.name!}",
+                      style: ubuntuTitleSM.copyWith(fontSize: 18, color: Colors.white), textAlign: TextAlign.center,
+                    ),
+                    Text("${testimonial.designation!}",
+                      style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.grey), textAlign: TextAlign.center,
+                    ),
+                  ]),
                 ]),
 
                 Text("${index+1}/${webLandingController.webLandingContent!.testimonial!.length}",
-                    style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.grey),)
+                  style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.grey),)
               ]),
             );
           },

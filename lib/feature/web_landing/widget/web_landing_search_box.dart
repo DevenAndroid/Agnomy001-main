@@ -36,7 +36,15 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
 
   AddressModel? _address;
   bool _isActiveCurrentLocation = false;
+  // Rx<PredictionModel> allCategoryModel = PredictionModel().obs;
 
+@override
+@override
+  void initState() {
+  // placedIdGloaballat.value = allCategoryModel.value.geometry!.locations!.lat.toString();
+    super.initState();
+    print( 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'+placedIdGloaballat.value);
+  }
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WebLandingController>(
@@ -171,15 +179,15 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     if(widget.textContent?['web_top_title'] != null && widget.textContent?['web_top_title'] != '')
-                    Text(widget.textContent?['web_top_title']??"",style: ubuntuTitleSM.copyWith(fontSize: Dimensions.fontSizeOverLarge,color: Colors.black),),
-                    const SizedBox(height: 20.0,),
+                      Text(widget.textContent?['web_top_title']??"",style: ubuntuBold.copyWith(fontSize: 38,color: Colors.black),),
+                    const SizedBox(height: 12.0,),
                     if(widget.textContent?['web_top_description'] != null && widget.textContent?['web_top_description'] != '')
                       Text(widget.textContent?['web_top_description']??"",
-                      style: ubuntuRegular.copyWith(
-                        fontSize: Dimensions.fontSizeDefault,
-                        color: Theme.of(context).disabledColor,
+                        style: ubuntuRegular.copyWith(
+                          fontSize: 22,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
                       ),
-                    ),
                     const SizedBox(height: Dimensions.paddingSizeLarge,),
                     Container(
                       height: 85,
@@ -256,6 +264,10 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                       },
                                       itemBuilder: (context, PredictionModel suggestion) {
                                         if(suggestion.description != null) {
+                                          placedIdGloaballat.value = suggestion.geometry!.locations!.lat!.toString();
+                                          placedIdGloaballong.value =suggestion.geometry!.locations!.lng!.toString();
+                                          print("fffffffffffffffffffffffffffffffffffffffffffffffffffffff${placedIdGloaballat.value.toString()}");
+                                          print("fffffffffffffffffffffffffffffffffffffffffffffffffffffff${placedIdGloaballong.value.toString()}");
                                           return Padding(
                                             padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                                             child: Row(
@@ -283,6 +295,7 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                         placedIdGloabal.value = suggestion.placeId!;
                                         placedIdGloaballat.value = suggestion.geometry!.locations!.lat!;
                                         placedIdGloaballong.value = suggestion.geometry!.locations!.lng!;
+                                        print( 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'+placedIdGloaballat.value);
                                       },
                                     ),),
                                     InkWell(

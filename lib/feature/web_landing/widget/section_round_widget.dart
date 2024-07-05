@@ -30,7 +30,7 @@ class SectionRoundWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Dimensions.radiusExtraMoreLarge),
 
-        color: Get.isDarkMode?Theme.of(context).primaryColorDark:Theme.of(context).colorScheme.onPrimary,
+        color: Color(0xff1d1d1d),
       ),
       child: Align( alignment: Alignment.center, child: SizedBox(width: Dimensions.webMaxWidth, child: Row( mainAxisAlignment: MainAxisAlignment.center, children: [
 

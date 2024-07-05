@@ -2,6 +2,8 @@ import 'package:demandium/data/provider/client_api.dart';
 import 'package:get/get.dart';
 import 'package:demandium/utils/app_constants.dart';
 
+import '../../web_landing/widget/web_landing_search_box.dart';
+
 class ServiceDetailsRepo {
   final ApiClient apiClient;
   ServiceDetailsRepo({required this.apiClient});
@@ -11,9 +13,9 @@ class ServiceDetailsRepo {
 
 
     if(fromPage=="search_page"){
-      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID?placeid=$placeID');
+      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID?placeid=$placeID&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
     }else{
-      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID?placeid=$placeID');
+      return await apiClient.getData('${AppConstants.serviceDetailsUri}/$serviceID?placeid=$placeID&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
     }
 
   }

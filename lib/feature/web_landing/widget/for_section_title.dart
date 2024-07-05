@@ -7,18 +7,17 @@ import 'package:demandium/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-class twoSectionWidget extends StatelessWidget {
+class forSectionTitle extends StatelessWidget {
   final WebLandingController webLandingController;
   final Map<String?,String?>? textContent;
   final String baseUrl;
   final PageController _pageController = PageController();
 
-  twoSectionWidget({
-  Key? key,
-  required this.webLandingController,
-  required this.textContent,
-  required this.baseUrl,
+  forSectionTitle({
+    Key? key,
+    required this.webLandingController,
+    required this.textContent,
+    required this.baseUrl,
   }) : super(key: key);
 
   @override
@@ -40,32 +39,27 @@ class twoSectionWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
-              const SizedBox(width: Dimensions.paddingSizeDefault,),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Service Dashboard",
-                      style: ubuntuBold.copyWith(fontSize: 36, color: Colors.black, ), textAlign: TextAlign.start,
+                    Text("We've streamlined getting work done.",
+                      style: ubuntuBold.copyWith(fontSize: 44, color: Colors.black, ), textAlign: TextAlign.center,
                     ),
+                    /*const SizedBox(height: Dimensions.paddingSizeDefault),
+                    Text("Agnomy ",
+                      style: ubuntuTitleMD.copyWith(fontSize: 20, color: Theme.of(context).colorScheme.onPrimary,), textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeEight),
+                    Text("containg text",
+                      style: ubuntuRegular.copyWith(fontSize: 18, color: Theme.of(context).colorScheme.onPrimary, ), textAlign: TextAlign.center,
+                    ),*/
                     const SizedBox(height: Dimensions.paddingSizeDefault),
-                    Text("The complete solution for agribusiness",
-                      style: ubuntuTitleMD.copyWith(fontSize: 20, color: Theme.of(context).colorScheme.onPrimary,), textAlign: TextAlign.start,
-                    ),
                     const SizedBox(height: Dimensions.paddingSizeDefault),
-                    Text("Agnomy's robust dashboard empowers agricultural service providers to streamline their business operations. Focus on delivering results while Agnomy handles the backend, ensuring efficient service for your customers. ",
-                      style: ubuntuRegular.copyWith(fontSize: 18, color: Theme.of(context).colorScheme.onPrimary, ), textAlign: TextAlign.start,
-                    ),
                   ],
                 ),
               ),
 
-              CustomImage(
-                height: 245,
-                width: 400,
-                image:"$baseUrl/landing-page/web/prov-dashboard.png",
-                fit: BoxFit.fitHeight,
-              ),
 
             ],
           ),

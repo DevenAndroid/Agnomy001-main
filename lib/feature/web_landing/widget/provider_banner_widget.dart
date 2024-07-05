@@ -25,47 +25,47 @@ class providerBannerWidget extends StatelessWidget {
     bool isLtr = Get.find<LocalizationController>().isLtr;
 
     return Container(
-      color: Theme.of(context).colorScheme.secondary,
-       width: Get.width,
+      color: Color(0xffd9ead3),
+      width: Get.width,
 
       child: Align( alignment: Alignment.center,
           child: SizedBox(width: Dimensions.webMaxWidth,
               child: Row( mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox( width: Dimensions.webLandingSectionWidth,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(padding: EdgeInsets.only(left:20, bottom: 10, right: 10, top:60),
-                            child: Text("Build & Grow With Us",
-                              style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeBanner, color: Colors.white ), textAlign: TextAlign.start,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(padding: EdgeInsets.only(left:20, bottom: 10, right: 10, top:60),
+                              child: Text("Grow With Us",
+                                style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeBanner, color: Colors.black ), textAlign: TextAlign.start,
+                              ),
                             ),
-                          ),
-                          Padding(padding: EdgeInsets.only(left:20, bottom: 10, right: 10, top:10),
-                            child: Text("Make a meaningful impact while earning",
-                              style: ubuntuTitleMD.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Colors.white ), textAlign: TextAlign.start,
+                            Padding(padding: EdgeInsets.only(left:20, bottom: 10, right: 10, top:10),
+                              child: Text("Make a meaningful impact",
+                                style: ubuntuTitleMD.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black ), textAlign: TextAlign.start,
+                              ),
                             ),
-                          ),
-                          Padding(padding: EdgeInsets.only(left:20, bottom: 60, right: 10, top:5),
-                            child: Text("Agnomy paves the path, benefiting both businesses and individuals. Harness your knowledge, skills, and equipment to offer valuable services, generate income on your time, and lend a helping hand to neighboring farmers.",
-                              style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.white ), textAlign: TextAlign.start,
+                            Padding(padding: EdgeInsets.only(left:20, bottom: 60, right: 10, top:5),
+                              child: Text("Agnomy paves the path, benefiting both businesses and individuals. Harness your knowledge, skills, and equipment to offer valuable services, generate income on your time, and lend a helping hand to neighboring farmers.",
+                                style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black ), textAlign: TextAlign.start,
+                              ),
                             ),
-                          ),
-                        ]
+                          ]
+                      ),
                     ),
-                  ),
 
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge),
-                    child: CustomImage(
-                      height: 245,
-                      width: 400,
-                      image:"$baseUrl/landing-page/web/agnomy-helps-farmers-earn-money.jpg",
-                      fit: BoxFit.fitHeight,
+                    Padding(padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge),
+                      child: CustomImage(
+                        height: 306,
+                        width: 500,
+                        image:"$baseUrl/landing-page/web/agnomy-helps-farmers-earn-money.jpg",
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
-                  ),
 
-                ]
+                  ]
               )
           )
       ),

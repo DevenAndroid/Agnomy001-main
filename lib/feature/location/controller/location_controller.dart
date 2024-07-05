@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'package:demandium/core/helper/map_bound_helper.dart';
 import 'package:demandium/feature/address/model/address_format.dart';
+import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/location/model/place_details_model.dart';
+
+
+String latNumber= '';
 
 enum Address {service, billing }
 enum AddressLabel {home, office, others }
@@ -567,11 +571,16 @@ class LocationController extends GetxController implements GetxService {
   }
 
   Future<List<PredictionModel>> searchLocation(BuildContext context, String text) async {
+    Rx<PredictionModel> allCategoryModel = PredictionModel().obs;
     if(text.isNotEmpty) {
       Response response = await locationRepo.searchLocation(text);
       if (response.body['response_code'] == "default_200" && response.body['content']['status'] == 'OK') {
         _predictionList = [];
         response.body['content']['results'].forEach((prediction) => _predictionList.add(PredictionModel.fromJson(prediction)));
+
+        Iterable<String> latNumbers = _predictionList.map((e) => e.geometry!.locations!.lat.toString());
+        print("Latitudes: $latNumbers");
+
       } else {
         // customSnackBar(response.body['message'] ?? response.bodyString.toString().tr,isError:false);
       }

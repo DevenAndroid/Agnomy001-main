@@ -787,7 +787,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
     final String serviceId = widget.service!.id.toString();
     final String placeId = placedIdGloabal.value;
     final String? zoneId = addressModel?.zoneId.toString(); //
-    final Uri uri = Uri.parse('$url?service_id=$serviceId&placeid=$placeId');
+    final Uri uri = Uri.parse('$url?service_id=$serviceId&placeid=$placeId&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
     print("zoneId${zoneId.toString()}");
     final response = await http.get(
       uri,

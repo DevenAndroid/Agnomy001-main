@@ -6,7 +6,11 @@ import 'package:demandium/data/model/response/config_model.dart';
 import 'package:demandium/feature/splash/controller/splash_controller.dart';
 import 'package:demandium/feature/web_landing/controller/web_landing_controller.dart';
 import 'package:demandium/feature/web_landing/repository/web_landing_repo.dart';
+import 'package:demandium/feature/web_landing/widget/agTools.dart';
+import 'package:demandium/feature/web_landing/widget/for_section.dart';
+import 'package:demandium/feature/web_landing/widget/for_section_title.dart';
 import 'package:demandium/feature/web_landing/widget/live_chat_button.dart';
+import 'package:demandium/feature/web_landing/widget/market_place.dart';
 import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:demandium/feature/web_landing/widget/web_landing_shimmer.dart';
 import 'package:demandium/feature/web_landing/widget/web_mid_section.dart';
@@ -82,10 +86,27 @@ class _WebLandingPageState extends State<WebLandingPage> {
                     baseUrl: baseUrl,
                   ),
                   const SizedBox(height: Dimensions.paddingSizeMid),
-                  WebMidSection(
-                    baseUrl: baseUrl,
-                    imageContent: imageContent,
+                  forSectionTitle(
+                    webLandingController: webLandingController,
                     textContent: textContent,
+                    baseUrl: baseUrl,
+                  ),
+                  forSectionWidget(
+                    webLandingController: webLandingController,
+                    textContent: textContent,
+                    baseUrl: baseUrl,
+                  ),
+                  const SizedBox(height: Dimensions.paddingSizeDouble),
+                  marketplaceOneWidget(
+                    webLandingController: webLandingController,
+                    textContent: textContent,
+                    baseUrl: baseUrl,
+                  ),
+                  const SizedBox(height: Dimensions.paddingSizeDouble),
+                  agToolsWidget(
+                    webLandingController: webLandingController,
+                    textContent: textContent,
+                    baseUrl: baseUrl,
                   ),
                   const SizedBox(height: Dimensions.paddingSizeDouble),
                   BannerWidget(
@@ -93,18 +114,30 @@ class _WebLandingPageState extends State<WebLandingPage> {
                     textContent: textContent,
                     baseUrl: baseUrl,
                   ),
-                  const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
-                  textSectionWidget(
-                    webLandingController: webLandingController,
-                    textContent: textContent,
+                  const SizedBox(height: Dimensions.paddingSizeMid),
+                  WebMidSection(
                     baseUrl: baseUrl,
-                  ),
-                  const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
-                  threeSectionWidget(
-                    webLandingController: webLandingController,
+                    imageContent: imageContent,
                     textContent: textContent,
-                    baseUrl: baseUrl,
                   ),
+                  // const SizedBox(height: Dimensions.paddingSizeDouble),
+                  // BannerWidget(
+                  //   webLandingController: webLandingController,
+                  //   textContent: textContent,
+                  //   baseUrl: baseUrl,
+                  // ),
+                  // const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
+                  // textSectionWidget(
+                  //   webLandingController: webLandingController,
+                  //   textContent: textContent,
+                  //   baseUrl: baseUrl,
+                  // ),
+                  // const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
+                  // threeSectionWidget(
+                  //   webLandingController: webLandingController,
+                  //   textContent: textContent,
+                  //   baseUrl: baseUrl,
+                  // ),
                   const SizedBox(height: Dimensions.paddingSizeDouble),
                   providerBannerWidget(
                     webLandingController: webLandingController,

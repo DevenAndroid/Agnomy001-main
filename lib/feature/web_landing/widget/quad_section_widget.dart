@@ -33,30 +33,30 @@ class quadSectionWidget extends StatelessWidget {
 
           const SizedBox(height: Dimensions.paddingSizeDefault, ),
 
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Powerful Features",
-                  style: ubuntuTitle.copyWith(fontSize: 36, color: Colors.black, ), textAlign: TextAlign.center,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Powerful Features",
+                      style: ubuntuBold.copyWith(fontSize: 36, color: Colors.black, ), textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeDefault),
+                    Text("Comprehensive tools for Agribusiness success ",
+                      style: ubuntuTitleMD.copyWith(fontSize: 20, color: Theme.of(context).colorScheme.onPrimary,), textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                  ],
                 ),
-                const SizedBox(height: Dimensions.paddingSizeDefault),
-                Text("Comprehensive tools for Agribusiness success ",
-                  style: ubuntuTitleMD.copyWith(fontSize: 20, color: Theme.of(context).colorScheme.onPrimary,), textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: Dimensions.paddingSizeLarge),
-              ],
-            ),
+              ),
+
+
+            ],
           ),
-
-
-        ],
-      ),
 
           const SizedBox(height: Dimensions.paddingSizeDefault, ),
 
@@ -78,27 +78,27 @@ class quadSectionWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(padding: EdgeInsets.only(left:5, bottom: 5, right: 5, top:5),
-                            child: SizedBox(
-                               width: Dimensions.quadSectionPadding,
-                                child:  CustomImage(
-                                height: Dimensions.quadIconSize,
-                                width: Dimensions.quadIconSize,
-                                image:"$baseUrl/landing-page/icons/marketplace.png",
-                                fit: BoxFit.fitHeight,
-                                ),
-                              ),
+                          child: SizedBox(
+                            width: Dimensions.quadSectionPadding,
+                            child:  CustomImage(
+                              height: Dimensions.quadIconSize,
+                              width: Dimensions.quadIconSize,
+                              image:"$baseUrl/landing-page/icons/marketplace.png",
+                              fit: BoxFit.fitHeight,
+                            ),
                           ),
-                         SizedBox(
-                         child: Column(
-                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                             crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        SizedBox(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(padding: EdgeInsets.only(left:5, bottom: 0, right: 10, top:5),
                                   child: Text("Marketplace ",
                                     style: ubuntuTitleMD.copyWith(fontSize: Dimensions.fontSizeDefaultQuad, color: Colors.black, ), textAlign: TextAlign.start,
                                   ),
                                 ),
-                                 Padding(padding: EdgeInsets.only(left:5, bottom: 5, right: 10, top:0),
+                                Padding(padding: EdgeInsets.only(left:5, bottom: 5, right: 10, top:0),
                                   child: Text("Growing list of services",
                                     style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmallQuad, color: Colors.black, ), textAlign: TextAlign.start,
                                   ),

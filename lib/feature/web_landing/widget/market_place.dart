@@ -5,20 +5,19 @@ import 'package:demandium/feature/web_landing/model/web_landing_model.dart';
 import 'package:demandium/utils/dimensions.dart';
 import 'package:demandium/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 
-class twoSectionWidget extends StatelessWidget {
+class marketplaceOneWidget extends StatelessWidget {
   final WebLandingController webLandingController;
   final Map<String?,String?>? textContent;
   final String baseUrl;
   final PageController _pageController = PageController();
 
-  twoSectionWidget({
-  Key? key,
-  required this.webLandingController,
-  required this.textContent,
-  required this.baseUrl,
+  marketplaceOneWidget({
+    Key? key,
+    required this.webLandingController,
+    required this.textContent,
+    required this.baseUrl,
   }) : super(key: key);
 
   @override
@@ -45,15 +44,15 @@ class twoSectionWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Service Dashboard",
+                    Text("Dedicated Marketplace",
                       style: ubuntuBold.copyWith(fontSize: 36, color: Colors.black, ), textAlign: TextAlign.start,
                     ),
                     const SizedBox(height: Dimensions.paddingSizeDefault),
-                    Text("The complete solution for agribusiness",
+                    Text("The first all-encompassing Ag service marketplace",
                       style: ubuntuTitleMD.copyWith(fontSize: 20, color: Theme.of(context).colorScheme.onPrimary,), textAlign: TextAlign.start,
                     ),
                     const SizedBox(height: Dimensions.paddingSizeDefault),
-                    Text("Agnomy's robust dashboard empowers agricultural service providers to streamline their business operations. Focus on delivering results while Agnomy handles the backend, ensuring efficient service for your customers. ",
+                    Text("Designed to help discover and book crucial ag services on-demand. Effortlessly find exceptional labor and service providers available on your schedule, with data-driven insights to identify the best fit for your needs.",
                       style: ubuntuRegular.copyWith(fontSize: 18, color: Theme.of(context).colorScheme.onPrimary, ), textAlign: TextAlign.start,
                     ),
                   ],
@@ -61,9 +60,9 @@ class twoSectionWidget extends StatelessWidget {
               ),
 
               CustomImage(
-                height: 245,
-                width: 400,
-                image:"$baseUrl/landing-page/web/prov-dashboard.png",
+                height: 333,
+                width: 500,
+                image:'$baseUrl/landing-page/web/ag-marketplace-ex.jpg',
                 fit: BoxFit.fitHeight,
               ),
 
