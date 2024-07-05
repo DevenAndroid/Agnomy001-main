@@ -7,6 +7,7 @@ import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/location/model/place_details_model.dart';
 
 
+
 String latNumber= '';
 
 enum Address {service, billing }
@@ -575,11 +576,14 @@ class LocationController extends GetxController implements GetxService {
     if(text.isNotEmpty) {
       Response response = await locationRepo.searchLocation(text);
       if (response.body['response_code'] == "default_200" && response.body['content']['status'] == 'OK') {
-        _predictionList = [];
-        response.body['content']['results'].forEach((prediction) => _predictionList.add(PredictionModel.fromJson(prediction)));
 
-        Iterable<String> latNumbers = _predictionList.map((e) => e.geometry!.locations!.lat.toString());
-        print("Latitudes: $latNumbers");
+        _predictionList = [];
+        response.body['content']['predictions'].forEach((prediction) => _predictionList.add(PredictionModel.fromJson(prediction)));
+
+
+
+        // Iterable<String> latNumbers = _predictionList.map((e) => e.geometry!.locations!.lat.toString());
+        // print("Latitudes: $latNumbers");
 
       } else {
         // customSnackBar(response.body['message'] ?? response.bodyString.toString().tr,isError:false);
@@ -656,4 +660,7 @@ class LocationController extends GetxController implements GetxService {
   }
 
 
+
 }
+
+

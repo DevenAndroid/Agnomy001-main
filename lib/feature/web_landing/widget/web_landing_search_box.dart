@@ -15,6 +15,8 @@ import 'package:demandium/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 RxString placedIdGloabal = "".obs;
 RxString placedIdGloaballat = "".obs;
@@ -38,12 +40,43 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
   bool _isActiveCurrentLocation = false;
   // Rx<PredictionModel> allCategoryModel = PredictionModel().obs;
 
-@override
+  // location in lat and long
+  Future<void> fetchPlaceApiLocation(String searchText) async {
+    final String baseUrl = 'https://admin.agnomy.com/api/v1/customer/config/place-api-location';
+    final String queryParams = '?search_text=$searchText';
+    final String url = '$baseUrl$queryParams';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+
+        final data = json.decode(response.body);
+
+        final lat = data['content']['location']['lat'];
+        final lng = data['content']['location']['lng'];
+
+        print('Latitude 1: $lat, Longitude2: $lng');
+            placedIdGloaballong.value =lng.toString();
+            placedIdGloaballat.value = lat.toString();
+
+            print("lat===>>>>>>>>${placedIdGloaballong.value}");
+            print("lat===>>>>>>>>${placedIdGloaballat.value}");
+      } else {
+        // Handle the error.
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+
 @override
   void initState() {
   // placedIdGloaballat.value = allCategoryModel.value.geometry!.locations!.lat.toString();
     super.initState();
-    print( 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'+placedIdGloaballat.value);
+    // print( 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'+placedIdGloaballat.value);
   }
   @override
   Widget build(BuildContext context) {
@@ -252,6 +285,7 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                             color: dark.primaryColor.withOpacity(0.8)),
                                       ),
                                       suggestionsCallback: (pattern) async {
+
                                         if(_isActiveCurrentLocation) {
                                           _isActiveCurrentLocation = false;
                                           return [PredictionModel()];
@@ -264,10 +298,7 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                       },
                                       itemBuilder: (context, PredictionModel suggestion) {
                                         if(suggestion.description != null) {
-                                          placedIdGloaballat.value = suggestion.geometry!.locations!.lat!.toString();
-                                          placedIdGloaballong.value =suggestion.geometry!.locations!.lng!.toString();
-                                          print("fffffffffffffffffffffffffffffffffffffffffffffffffffffff${placedIdGloaballat.value.toString()}");
-                                          print("fffffffffffffffffffffffffffffffffffffffffffffffffffffff${placedIdGloaballong.value.toString()}");
+                                          fetchPlaceApiLocation(suggestion.description.toString());
                                           return Padding(
                                             padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                                             child: Row(
@@ -293,9 +324,9 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
         // _address = await Get.find<LocationController>().setLocation(suggestion.placeId!,suggestion.description!,suggestion.geometry!.locations!.lat!,suggestion.geometry!.locations!.lng!,suggestion.description!) ;
 
                                         placedIdGloabal.value = suggestion.placeId!;
-                                        placedIdGloaballat.value = suggestion.geometry!.locations!.lat!;
-                                        placedIdGloaballong.value = suggestion.geometry!.locations!.lng!;
-                                        print( 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'+placedIdGloaballat.value);
+                                        // placedIdGloaballat.value = suggestion.geometry!.locations!.lat!;
+                                        // placedIdGloaballong.value = suggestion.geometry!.locations!.lng!;
+                                        // print( 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'+placedIdGloaballat.value);
                                       },
                                     ),),
                                     InkWell(

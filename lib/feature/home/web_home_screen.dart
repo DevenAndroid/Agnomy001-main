@@ -112,13 +112,13 @@ class WebHomeScreen extends StatelessWidget {
             child: Center(
               child: SizedBox(
                 width: Dimensions.webMaxWidth,
-                child: Column(
-                  children: [
-                    SizedBox(height: Dimensions.paddingSizeLarge),
-                    WebCampaignView(),
-                    SizedBox(height: Dimensions.paddingSizeLarge),
-                  ],
-                ),
+                // child: Column(
+                //   children: [
+                //     SizedBox(height: Dimensions.paddingSizeLarge),
+                //     WebCampaignView(),
+                //     SizedBox(height: Dimensions.paddingSizeLarge),
+                //   ],
+                // ),
               ),
             ),
           ),
