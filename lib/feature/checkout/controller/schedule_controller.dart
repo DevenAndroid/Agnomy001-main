@@ -70,6 +70,20 @@ class ScheduleController extends GetxController{
       ),
       firstDate: DateTime(2019),
       lastDate: DateTime(2101),
+        builder: (context, child) {
+          return Column(
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxWidth: 400.0, maxHeight: 700.0),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: child,
+                ),
+              )
+            ],
+          );
+        }
     );
 
     if (picked != null) {

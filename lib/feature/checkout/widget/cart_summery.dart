@@ -186,7 +186,7 @@ class _CartSummeryState extends State<CartSummery> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -197,11 +197,14 @@ class _CartSummeryState extends State<CartSummery> {
                                     fontSize: Dimensions.fontSizeDefault),
                               ),
                               Container(
-                                height:114,
+                                height:90,
                                 width: Get.width*0.2,
                                 color: Colors.transparent,
                                 child: Text(quotesListModel.value.content!.quoteData!
                                     .serviceShortDescription.toString(),
+                                  softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
                                   // overflow: TextOverflow.ellipsis,softWrap: true,
                                 ),
                               )

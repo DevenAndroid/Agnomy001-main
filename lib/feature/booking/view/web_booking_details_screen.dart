@@ -429,6 +429,8 @@ class WebBookingDetailsSection extends StatelessWidget {
                             decoration: TextDecoration.none,
                           )),
                       const SizedBox(height: Dimensions.radiusDefault),
+                      bookingDetailsContent.isPaid == 0?
+                      Text(""):
                       Text(bookingDetailsContent.paymentMethod!.tr,
                           style: ubuntuRegular.copyWith(
                               fontSize: Dimensions.fontSizeExtraSmall,
@@ -439,7 +441,9 @@ class WebBookingDetailsSection extends StatelessWidget {
                                   .withOpacity(0.6)),
                           overflow: TextOverflow.ellipsis),
                       const SizedBox(height: Dimensions.radiusDefault),
-                      Text(
+                      bookingDetailsContent.isPaid == 0?
+                          Text("")
+                          :Text(
                           '${'transaction_id'.tr} : ${bookingDetailsContent.transactionId?.tr ?? ''}',
                           style: ubuntuRegular.copyWith(
                               fontSize: Dimensions.fontSizeExtraSmall,
@@ -537,14 +541,17 @@ class WebBookingDetailsSection extends StatelessWidget {
                               Gaps.verticalGapOf(
                                   Dimensions.paddingSizeExtraSmall),
                               Text(
-                                  "${bookingDetailsContent.serviceman!.user?.firstName} ${bookingDetailsContent.serviceman!.user?.lastName}",
+                                 bookingDetailsContent.serviceman!.user?.firstName == null
+                                      ? "${bookingDetailsContent.serviceman!.user?.firstName} ${bookingDetailsContent.serviceman!.user?.lastName}"
+                              :"",
                                   style: ubuntuBold.copyWith(
                                       fontSize:
                                           Dimensions.fontSizeExtraSmall)),
                               Gaps.verticalGapOf(
                                   Dimensions.paddingSizeExtraSmall),
                               Text(
-                                  "${bookingDetailsContent.serviceman!.user!.phone}",
+                                  bookingDetailsContent.serviceman!.user!.phone==null?   "${bookingDetailsContent.serviceman!.user!.phone}"
+                                  : "",
                                   style: ubuntuRegular.copyWith(
                                       fontSize:
                                           Dimensions.fontSizeExtraSmall)),
@@ -559,7 +566,7 @@ class WebBookingDetailsSection extends StatelessWidget {
             ),
 
             // const SizedBox(height: Dimensions.paddingSizeDefault),
-            bookingDetailsContent.posts!.latestbid!= null
+            bookingDetailsContent.posts!= null &&   bookingDetailsContent.posts!.latestbid!= null
                 ? Container(
                     decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
@@ -581,13 +588,13 @@ class WebBookingDetailsSection extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-        
+
                             Text("Provider Notes :-",
                                 style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
                                     color: Theme.of(context).textTheme.bodyLarge!.color!)),
                             Text(bookingDetailsContent.posts!.latestbid!.providerNote ?? "",
                                 style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyLarge!.color!)),
-        
+
                           ],
                         ),
                       ],

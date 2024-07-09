@@ -100,20 +100,21 @@ class CustomTextFieldState extends State<CustomTextField> {
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault,vertical: 5),
           child: Image.asset(widget.prefixIcon!, width: 20,height: 20, color: Theme.of(context).colorScheme.primary.withOpacity(0.4),),
         ) : widget.countryDialCode != null ? Padding( padding:  EdgeInsets.only(left: widget.isShowBorder == true ?  10: 0),
-          child: CountryCodePicker(
-            onChanged: widget.onCountryChanged,
-            initialSelection: widget.countryDialCode,
-            favorite: [widget.countryDialCode ?? ""],
-            showDropDownButton: true,
-            padding: EdgeInsets.zero,
-            showFlagMain: true,
-            dialogSize: Size(Dimensions.webMaxWidth/2, Get.height*0.6),
-            dialogBackgroundColor: Theme.of(context).cardColor,
-            barrierColor: Get.isDarkMode?Colors.black.withOpacity(0.4):null,
-            textStyle: ubuntuRegular.copyWith(
-              fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge!.color,
-            ),
-          ),
+          child: Image.asset("assets/images/canda.png",height: 10,width: 16,)
+          // CountryCodePicker(
+          //  // onChanged: widget.onCountryChanged,
+          //   initialSelection: widget.countryDialCode,
+          //   favorite: [widget.countryDialCode ?? ""],
+          //   showDropDownButton: true,
+          //   padding: EdgeInsets.zero,
+          //   showFlagMain: true,
+          //   dialogSize: Size(Dimensions.webMaxWidth/2, Get.height*0.6),
+          //   dialogBackgroundColor: Theme.of(context).cardColor,
+          //   barrierColor: Get.isDarkMode?Colors.black.withOpacity(0.4):null,
+          //   textStyle: ubuntuRegular.copyWith(
+          //     fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge!.color,
+          //   ),
+          // ),
         ): null,
         contentPadding:  EdgeInsets.only(
           top: widget.countryDialCode != null ? Dimensions.paddingSizeDefault : Dimensions.fontSizeSmall, bottom: Dimensions.paddingSizeDefault,

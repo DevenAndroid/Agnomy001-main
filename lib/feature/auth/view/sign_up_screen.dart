@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 
 class SignUpScreen extends StatefulWidget {
-   const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -39,104 +39,103 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
         endDrawer:ResponsiveHelper.isDesktop(context) ? const MenuDrawer():null,
         appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
-      body: GetBuilder<AuthController>(
-        init: Get.find<AuthController>(),
-        builder: (authController){
-          return FooterBaseView(
-            child: WebShadowWrap(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge),
-                child: Column(
-                  children: [
-                    Form(
-                      key: customerSignUpKey,
-                      autovalidateMode: ResponsiveHelper.isDesktop(context) ?AutovalidateMode.onUserInteraction:AutovalidateMode.disabled,
-                      child: Column(
-                        children: [
-                          const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
-                          Image.asset(
-                            Images.logo,
-                            width: Dimensions.logoSize,
-                          ),
-                          const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
-                          if(ResponsiveHelper.isMobile(context))
-                            _firstList(authController),
-                          if(ResponsiveHelper.isMobile(context))
-                            _secondList(authController),
-                         if(!ResponsiveHelper.isMobile(context))
-                         Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                            Expanded(child: _firstList(authController),),
-                            const SizedBox(width: Dimensions.paddingSizeLarge,),
-                            Expanded(
-                              child: _secondList(authController),
-                            ),
-                          ]),
-                        ]),
+        body: GetBuilder<AuthController>(
+          init: Get.find<AuthController>(),
+          builder: (authController){
+            return FooterBaseView(
+              child: WebShadowWrap(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge),
+                  child: Column(
+                    children: [
+                      Form(
+                        key: customerSignUpKey,
+                        autovalidateMode: ResponsiveHelper.isDesktop(context) ?AutovalidateMode.onUserInteraction:AutovalidateMode.disabled,
+                        child: Column(
+                            children: [
+                              const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
+                              Image.asset(
+                                Images.logo,
+                                width: Dimensions.logoSize,
+                              ),
+                              const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge),
+                              if(ResponsiveHelper.isMobile(context))
+                                _firstList(authController),
+                              if(ResponsiveHelper.isMobile(context))
+                                _secondList(authController),
+                              if(!ResponsiveHelper.isMobile(context))
+                                Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
+                                  Expanded(child: _firstList(authController),),
+                                  const SizedBox(width: Dimensions.paddingSizeLarge,),
+                                  Expanded(
+                                    child: _secondList(authController),
+                                  ),
+                                ]),
+                            ]),
                       ),
-                    const ConditionCheckBox(),
-                    const SizedBox(height: Dimensions.paddingSizeExtraLarge),
-                    !authController.isLoading! ?
-                    CustomButton(
-                      buttonText: 'sign_up'.tr,
-                      onPressed: authController.acceptTerms
-                          ? () => _register(authController)
-                          : null,
-                    )
-                        : const Center(child: CircularProgressIndicator()),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-                    Get.find<SplashController>().configModel.content!.googleSocialLogin.toString() == '1' ||
-                        Get.find<SplashController>().configModel.content!.facebookSocialLogin.toString() == '1' ?
-                    const SocialLoginWidget(fromPage: RouteHelper.main,):const SizedBox(),
-                    const SizedBox(height: Dimensions.paddingSizeDefault,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('${'already_have_an_account'.tr} ',
-                          style: ubuntuRegular.copyWith(
-                            fontSize: Dimensions.fontSizeDefault,
-                            color: Theme.of(context).textTheme.bodyLarge!.color,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
-                          },
-                          child: Text('sign_in_here'.tr, style: ubuntuRegular.copyWith(
-                            decoration: TextDecoration.underline,
-                            color: Theme.of(context).colorScheme.tertiary,
-                            fontSize: Dimensions.fontSizeDefault,
-                          )),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: Dimensions.paddingSizeSmall,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text('continue_as'.tr, style: ubuntuMedium.copyWith(
-                            fontSize: Dimensions.fontSizeDefault,
-                            color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)),),
-                        InkWell(
-                          onTap: () {
-                            Get.offNamed(RouteHelper.getMainRoute('home'));
-                          },
-                          child: Text('guest'.tr, style: ubuntuMedium.copyWith(
+                      const ConditionCheckBox(),
+                      const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+                      !authController.isLoading! ? CustomButton(
+                        buttonText: 'sign_up'.tr,
+                        onPressed: authController.acceptTerms
+                            ? () => _register(authController)
+                            : null,
+                      )
+                          : const Center(child: CircularProgressIndicator()),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
+                      Get.find<SplashController>().configModel.content!.googleSocialLogin.toString() == '1' ||
+                          Get.find<SplashController>().configModel.content!.facebookSocialLogin.toString() == '1' ?
+                      const SocialLoginWidget(fromPage: RouteHelper.main,):const SizedBox(),
+                      const SizedBox(height: Dimensions.paddingSizeDefault,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('${'already_have_an_account'.tr} ',
+                            style: ubuntuRegular.copyWith(
                               fontSize: Dimensions.fontSizeDefault,
-                              color: Theme.of(context).colorScheme.primary),),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge,),
+                              color: Theme.of(context).textTheme.bodyLarge!.color,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+                            },
+                            child: Text('sign_in_here'.tr, style: ubuntuRegular.copyWith(
+                              decoration: TextDecoration.underline,
+                              color: Theme.of(context).colorScheme.tertiary,
+                              fontSize: Dimensions.fontSizeDefault,
+                            )),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: Dimensions.paddingSizeSmall,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('continue_as'.tr, style: ubuntuMedium.copyWith(
+                              fontSize: Dimensions.fontSizeDefault,
+                              color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)),),
+                          InkWell(
+                            onTap: () {
+                              Get.offNamed(RouteHelper.getMainRoute('home'));
+                            },
+                            child: Text('guest'.tr, style: ubuntuMedium.copyWith(
+                                fontSize: Dimensions.fontSizeDefault,
+                                color: Theme.of(context).colorScheme.primary),),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: Dimensions.paddingSizeExtraMoreLarge,),
 
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              ),
-          );
-        },
-      )
+            );
+          },
+        )
     );
   }
 
@@ -188,9 +187,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       const SizedBox(height: Dimensions.paddingSizeSmall),
 
       CustomTextField(
-        onCountryChanged: (CountryCode countryCode){
-          authController.countryDialCodeForSignup = countryCode.dialCode!;
-        },
+        // onCountryChanged: (CountryCode countryCode){
+        //   authController.countryDialCodeForSignup = countryCode.dialCode!;
+        // },
         countryDialCode: authController.countryDialCodeForSignup,
         hintText: 'enter_phone_number'.tr,
         controller: authController.phoneController,
@@ -269,4 +268,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 }
-
