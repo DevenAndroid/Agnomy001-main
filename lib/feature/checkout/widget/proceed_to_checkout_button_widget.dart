@@ -119,10 +119,13 @@ class _ProceedToCheckoutButtonWidgetState
                     ]))),
             InkWell(
               onTap: () {
-                if (Get.find<AuthController>().acceptTerms) {
-                  AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+                AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+                 if (Get.find<AuthController>().acceptTerms) {
+
+
 
                   if (Get.find<CartController>().cartList.isEmpty) {
+
                     //Get.offAllNamed(RouteHelper.getMainRoute('home'));
 
                     print('if 1');
@@ -369,7 +372,7 @@ class _ProceedToCheckoutButtonWidgetState
                       }
                     }
                   }
-                }
+               }
                 else {
                   print('if 22');
 
