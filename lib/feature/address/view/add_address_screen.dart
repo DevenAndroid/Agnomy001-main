@@ -2,6 +2,8 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 
+import '../../../controller/crop_typeccccontroller.dart';
+
 class AddAddressScreen extends StatefulWidget {
   final bool fromCheckout;
   final AddressModel? address;
@@ -21,6 +23,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _zipController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
+  final TextEditingController _cropController = TextEditingController();
+  // final TextEditingController _streetController = TextEditingController();
 
   final FocusNode _nameNode = FocusNode();
   final FocusNode _numberNode = FocusNode();
@@ -38,9 +42,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   String  countryDialCode = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content?.countryCode ?? "BD").dialCode!;
   CameraPosition? _cameraPosition;
 
+  final CropTypesController _controllers = Get.put(CropTypesController());
+  String cropTypesdropdownvalue = 'Orchard';
+
   @override
   void initState() {
     super.initState();
+    _controllers.fetchCropTypes();
     Get.find<LocationController>().resetAddress();
     if(widget.address != null) {
       setControllerData();
@@ -82,6 +90,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     _zipController.text = widget.address?.zipCode ?? '';
     _houseController.text = widget.address?.house ?? '';
     _floorController.text = widget.address?.floor ?? '';
+    _zipController.text = widget.address?.zipCode ?? '';
+    _zipController.text = widget.address?.zipCode ?? '';
 
     Get.find<LocationController>().updateAddressLabel(addressLabelString: widget.address?.addressLabel??"");
     Get.find<LocationController>().setPlaceMark(addressModel : widget.address);
@@ -442,6 +452,67 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               title: 'zip_code'.tr,
               hintText: 'enter_zip_code'.tr,
               inputType: TextInputType.text,
+              focusNode: _zipNode,
+              nextFocus: _streetNode,
+              controller: _zipController..text = locationController.address.zipCode ?? "",
+              onChanged: (text) => locationController.setPlaceMark(zipCode: text),
+              isRequired: false,
+            ),
+          ),
+
+        ],
+      ),
+      const SizedBox(height: Dimensions.paddingSizeLarge),
+      Row(
+        children: [
+          Expanded(
+            child:Expanded(
+              child: DropdownButtonFormField<dynamic>(
+                value: cropTypesdropdownvalue,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: _controllers.cropTypes.value.content!.map((dynamic items) {
+                  return DropdownMenuItem<dynamic>(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (dynamic newValue) {
+                  setState(() {
+                    cropTypesdropdownvalue = newValue!;
+                    print('Selected value: $newValue');
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Select Item',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(width: Dimensions.paddingSizeDefault),
+
+          Expanded(
+            child: CustomTextField(
+              title: 'crop'.tr,
+              hintText: 'enter_country'.tr,
+              inputType: TextInputType.phone,
+              focusNode: _countryNode,
+              inputAction: TextInputAction.next,
+              nextFocus: _zipNode,
+              controller: _countryController..text = locationController.address.country ?? "",
+              onChanged: (text) => locationController.setPlaceMark(country: text),
+              isRequired: false,
+            ),
+          ),
+
+          const SizedBox(height: Dimensions.paddingSizeLarge),
+
+          Expanded(
+            child: CustomTextField(
+              title: 'aceerage'.tr,
+              hintText: 'enter_zip_code'.tr,
+              inputType: TextInputType.phone,
               focusNode: _zipNode,
               nextFocus: _streetNode,
               controller: _zipController..text = locationController.address.zipCode ?? "",

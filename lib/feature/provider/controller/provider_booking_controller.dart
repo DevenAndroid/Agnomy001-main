@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:demandium/components/core_export.dart';
@@ -72,7 +73,7 @@ class ProviderBookingController extends GetxController implements GetxService {
   RxInt refreshInt = 0.obs;
 
 
-  Future<void> getProviderList({required int offset, required bool reload, String? placeId, int? distance }) async {
+  Future<void> getProviderList({required int offset, required bool reload, String? placeId, int? distance,String ?cropTypes  }) async {
 
     if(offset != 1 || _providerModel == null || reload){
       if(reload){
@@ -85,7 +86,8 @@ class ProviderBookingController extends GetxController implements GetxService {
           'limit': '10',
           'offset': offset,
           'placeid': placeId,
-          'distance': distance
+          'distance': distance,
+        // 'crop_types':jsonEncode(cropTypes)
       }; 
       
       if(selectedCategoryId.isNotEmpty){
@@ -208,6 +210,23 @@ class ProviderBookingController extends GetxController implements GetxService {
     update();
 
   }
+
+  // void toggleFromCropTypeCheckeBox(int index) {
+  //
+  //   categoryCheckList[index] = !categoryCheckList[index];
+  //
+  //   if(categoryCheckList[index]==true){
+  //     if(!selectedCategoryId.contains(categoryList[index].id)){
+  //       selectedCategoryId.add(categoryList[index].id!);
+  //     }
+  //   }else{
+  //     if(selectedCategoryId.contains(categoryList[index].id)){
+  //       selectedCategoryId.remove(categoryList[index].id);
+  //     }
+  //   }
+  //   update();
+  //
+  // }
 
   resetProviderFilterData({bool shouldUpdate= false}){
     selectedCategoryId=[];

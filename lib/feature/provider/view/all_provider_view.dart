@@ -34,6 +34,7 @@ class _AllProviderViewState extends State<AllProviderView> {
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
             context: context, builder: (context) => ProviderFilterView(
+
             onUpdate: (){
               setState(() {});
             },

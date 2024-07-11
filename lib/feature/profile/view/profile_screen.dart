@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
 
     final profileCartModelList = [
-      ProfileCardItemModel( 'my_address'.tr, Images.address,Get.find<AuthController>().isLoggedIn() ?
+      ProfileCardItemModel( 'Property Addresses', Images.address,Get.find<AuthController>().isLoggedIn() ?
       RouteHelper.getAddressRoute('fromProfileScreen') : RouteHelper.getNotLoggedScreen(RouteHelper.profile,"profile"),
       ),
       ProfileCardItemModel(

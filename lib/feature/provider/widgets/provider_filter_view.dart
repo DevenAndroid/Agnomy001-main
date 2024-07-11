@@ -4,8 +4,10 @@ import 'package:demandium/feature/provider/widgets/filter_rating_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
-
+import '../../../controller/crop_typeccccontroller.dart';
 import '../../web_landing/widget/web_landing_search_box.dart';
+
+
 
 class ProviderFilterView extends StatefulWidget {
   const ProviderFilterView({super.key, required this.onUpdate});
@@ -13,6 +15,7 @@ class ProviderFilterView extends StatefulWidget {
   final Function() onUpdate;
 
   @override
+
   State<ProviderFilterView> createState() => _ProductBottomSheetState();
 }
 
@@ -29,6 +32,31 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
   //   '175',
   //   '200',
   // ];
+
+  final CropTypesController _controller = Get.put(CropTypesController());
+
+  String? checked ='';
+
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.fetchCropTypes();
+  }
+  void printCheckboxStates() {
+    print('Checkbox states: ${_controller.checkboxStates}');
+    final checkedItems = _controller.checkboxStates
+        .where((item) => item['isChecked'] == true)
+        .map((item) => '"${item['title']}"')
+        .toList();
+    final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(', ')}]' : '[]';
+    checked = checkedItemsString;
+    print('Checked items: $checkedItemsString');
+    print('Checked items: ${checkedItemsString.length}');
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +216,73 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                           ),
                         ],
                       ),
+
+                      //
+    Obx(() {
+      if (_controller.cropTypes.value.content == null || _controller.cropTypes.value.content!.isEmpty) {
+        return Center(child: CircularProgressIndicator());
+      }
+      else {
+        return
+          ListView.builder(
+            itemCount:_controller.checkboxStates.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Padding(padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.paddingSizeDefault),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(_controller.checkboxStates[index]['title'].toString(),
+                        style: ubuntuRegular.copyWith(
+                            fontSize: Dimensions.fontSizeDefault),
+                      ),
+                      SizedBox(width: 20.0,
+                        child: Checkbox(
+                          value:_controller.checkboxStates[index]['isChecked'],
+                          onChanged: (bool? value) {
+                            setState(() {
+
+                            });
+                            _controller.checkboxStates[index]['isChecked'] = value!;
+                            _controller.checkboxStates.refresh();
+                          },
+                        )
+                      ),
+                    ]),
+              );
+            }
+            );
+        //   Row(
+        //   children: [
+        //     DropdownButton(
+        //       // Initial Value
+        //       value: serviceController.cropTypesdropdownvalue,
+        //
+        //       // Down Arrow Icon
+        //       icon: const Icon(Icons.keyboard_arrow_down),
+        //
+        //       // Array list of items
+        //       items: _controller.cropTypes.value.content!.map((String items) {
+        //         return DropdownMenuItem(
+        //           value: items,
+        //           child: Text(items),
+        //         );
+        //       }).toList(),
+        //       // After selecting the desired option,it will
+        //       // change button value to selected value
+        //       onChanged: (String? newValue) {
+        //         setState(() {
+        //           serviceController.cropTypesdropdownvalue = newValue!;
+        //         });
+        //       },
+        //     ),
+        //   ],
+        // );
+      }
+    }),
+
+                      //
+
                       Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
@@ -203,6 +298,7 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                       CustomButton(
                         buttonText: 'search'.tr,
                         onPressed: () async {
+                          printCheckboxStates();
                           var pp = Get.find<LocationController>();
                           Get.back();
                           Get.dialog(
@@ -210,7 +306,10 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                             barrierDismissible: false,
                           );
                           await providerBookingController.getProviderList(
-                              offset: 1, reload: true, placeId: placedIdGloabal.value, distance: int.parse(serviceController.milesdropdownvalue.replaceAll("150+", "150")));
+                              offset: 1, reload: true,
+                              cropTypes:checked,
+                              placeId: placedIdGloabal.value,
+                              distance: int.parse(serviceController.milesdropdownvalue.replaceAll("150+", "150")));
                           widget.onUpdate();
                           Get.back();
                         },

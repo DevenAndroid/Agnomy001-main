@@ -42,7 +42,10 @@ class _ProceedToCheckoutButtonWidgetState
 
         ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
         ..fields['question_input'] = questionController.text
-        ..fields['service_description'] = messageController.text
+        // ..fields['service_description'] = messageController.text
+        ..fields['acerage'] = aacurageController.text
+        ..fields['crop'] = cropController.text
+        ..fields['crop_type'] = messageController.text
         ..fields['quote_id'] = quote_id
         ..fields['zone_id'] =  Get.find<LocationController>().getUserAddress()!.zoneId.toString();
 
