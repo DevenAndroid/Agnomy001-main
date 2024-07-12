@@ -52,17 +52,30 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
     print('Checkbox states: ${_controller.checkboxStates}');
     final checkedItems = _controller.checkboxStates
         .where((item) => item['isChecked'] == true)
-        .map((item) => '"${item['title']}"')
+        .map((item) => "${item['title']}")
         .toList();
-    final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(', ')}]' : '[]';
+    final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(',')}]' : '[]';
     checked = checkedItemsString;
     print('Checked items: $checkedItemsString');
-    cropTypesvalue= checkedItems;
+    cropTypesvalue = checkedItems;
     print("cropTypes${cropTypesvalue}");
     print('Checked items: ${checkedItemsString.length}');
 
     String jsonString = jsonEncode(checkedItems);
     print("Datajson to ${jsonString}");
+    // final checkedItems = _controller.checkboxStates
+    //     .where((item) => item['isChecked'] == true)
+    //     .map((item) => '"${item['title']}"')
+    //     .toList();
+    // final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(', ')}]' : '[]';
+    // checked = checkedItemsString;
+    // print('Checked items: $checkedItemsString');
+    // cropTypesvalue= checkedItems;
+    // print("cropTypes${cropTypesvalue}");
+    // print('Checked items: ${checkedItemsString.length}');
+    //
+    // String jsonString = jsonEncode(checkedItems);
+    // print("Datajson to ${jsonString}");
 
   }
 

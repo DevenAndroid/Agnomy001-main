@@ -90,7 +90,7 @@ class ProviderBookingController extends GetxController implements GetxService {
           'offset': offset,
           'placeid': placeId,
           'distance': distance,
-        'crop_type':cropTypesvalue.toString()
+        'crop_type':jsonEncode(cropTypesvalue)
         // 'crop_type':jsonEncode(cropTypesvalue.toString())
         // 'crop_types':jsonEncode(cropTypes)
       }; 
