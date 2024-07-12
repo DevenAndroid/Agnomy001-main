@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/provider/widgets/custom_checkbox.dart';
 import 'package:demandium/feature/provider/widgets/filter_rating_widgets.dart';
@@ -8,6 +10,7 @@ import '../../../controller/crop_typeccccontroller.dart';
 import '../../web_landing/widget/web_landing_search_box.dart';
 
 
+List<dynamic>? cropTypesvalue;
 
 class ProviderFilterView extends StatefulWidget {
   const ProviderFilterView({super.key, required this.onUpdate});
@@ -54,7 +57,12 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
     final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(', ')}]' : '[]';
     checked = checkedItemsString;
     print('Checked items: $checkedItemsString');
+    cropTypesvalue= checkedItems;
+    print("cropTypes${cropTypesvalue}");
     print('Checked items: ${checkedItemsString.length}');
+
+    String jsonString = jsonEncode(checkedItems);
+    print("Datajson to ${jsonString}");
 
   }
 
@@ -224,34 +232,47 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
       }
       else {
         return
-          ListView.builder(
-            itemCount:_controller.checkboxStates.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return Padding(padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.paddingSizeDefault),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(_controller.checkboxStates[index]['title'].toString(),
-                        style: ubuntuRegular.copyWith(
-                            fontSize: Dimensions.fontSizeDefault),
-                      ),
-                      SizedBox(width: 20.0,
-                        child: Checkbox(
-                          value:_controller.checkboxStates[index]['isChecked'],
-                          onChanged: (bool? value) {
-                            setState(() {
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Crop Type',
+                style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault),
+              ),
+              SizedBox(
+                height: Get.height * 0.20,
+                child: ListView.builder(
+                  itemCount:_controller.checkboxStates.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.paddingSizeDefault),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(_controller.checkboxStates[index]['title'].toString(),
+                              style: ubuntuRegular.copyWith(
+                                  fontSize: Dimensions.fontSizeDefault),
+                            ),
+                            SizedBox(width: 20.0,
+                              child: Checkbox(
+                                value:_controller.checkboxStates[index]['isChecked'],
+                                onChanged: (bool? value) {
+                                  setState(() {
 
-                            });
-                            _controller.checkboxStates[index]['isChecked'] = value!;
-                            _controller.checkboxStates.refresh();
-                          },
-                        )
-                      ),
-                    ]),
-              );
-            }
-            );
+                                  });
+                                  _controller.checkboxStates[index]['isChecked'] = value!;
+                                  _controller.checkboxStates.refresh();
+                                },
+                              )
+                            ),
+                          ]),
+                    );
+                  }
+                  ),
+              ),
+            ],
+          );
         //   Row(
         //   children: [
         //     DropdownButton(

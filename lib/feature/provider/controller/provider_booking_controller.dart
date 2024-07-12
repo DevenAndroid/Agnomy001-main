@@ -7,6 +7,8 @@ import 'package:demandium/feature/provider/model/provider_details_model.dart';
 import 'package:demandium/feature/provider/model/provider_model.dart';
 import 'package:get/get.dart';
 
+import '../widgets/provider_filter_view.dart';
+
 
 class ProviderBookingController extends GetxController implements GetxService {
   final ProviderBookingRepo providerBookingRepo;
@@ -18,6 +20,7 @@ class ProviderBookingController extends GetxController implements GetxService {
     super.onInit();
     getCategoryList();
   }
+
 
   final bool _isLoading = false;
   get isLoading => _isLoading;
@@ -87,6 +90,8 @@ class ProviderBookingController extends GetxController implements GetxService {
           'offset': offset,
           'placeid': placeId,
           'distance': distance,
+        'crop_type':cropTypesvalue.toString()
+        // 'crop_type':jsonEncode(cropTypesvalue.toString())
         // 'crop_types':jsonEncode(cropTypes)
       }; 
       

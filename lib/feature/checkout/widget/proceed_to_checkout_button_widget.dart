@@ -64,7 +64,7 @@ print("Datajson to ${jsonString}");
         ..fields['service_description'] = questionController.text
         ..fields['acerage'] = aacurageController.text
         ..fields['crop'] = cropController.text
-        ..fields['crop_type'] = list.toString()
+        ..fields['crop_type'] = jsonEncode(jsonString)
         ..fields['quote_id'] = quote_id
         ..fields['zone_id'] =  Get.find<LocationController>().getUserAddress()!.zoneId.toString();
 
