@@ -179,105 +179,105 @@ class BookingTabBar extends StatelessWidget {
                               child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                bookingDetailsContent.bookingStatus
-                                            .toString() ==
-                                        "pending"
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(1.0),
-                                        child: GetBuilder<CheckOutController>(
-                                            builder: (checkoutController) {
-                                          AddressModel? addressModel =
-                                              Get.find<LocationController>()
-                                                      .selectedAddress ??
-                                                  Get.find<LocationController>()
-                                                      .getUserAddress();
-
-                                          return GetBuilder<CartController>(
-                                              builder: (cartController) {
-                                            bool isPartialPayment =
-                                                CheckoutHelper
-                                                    .checkPartialPayment(
-                                                        walletBalance:
-                                                            cartController
-                                                                .walletBalance,
-                                                        bookingAmount:
-                                                            cartController
-                                                                .totalPrice);
-                                            return InkWell(
-                                              onTap: () {
-                                                print(
-                                                    "addressModel=>${addressModel}");
-                                                print(
-                                                    " checkoutController.selectedDigitalPaymentMethod=>${checkoutController.selectedDigitalPaymentMethod}");
-                                                print(
-                                                    " isPartialPayment=>${isPartialPayment}");
-
-                                                checkoutController.updateState(
-                                                    PageState.payment);
-                                                if (GetPlatform.isWeb) {
-                                                  Get.toNamed(RouteHelper
-                                                      .getCheckoutRoute(
-                                                    'cart',
-                                                    Get.find<
-                                                            CheckOutController>()
-                                                        .currentPageState
-                                                        .name,
-                                                    pageState == 'payment'
-                                                        ? addressId.toString()
-                                                        : addressModel!.id
-                                                            .toString(),
-                                                    reload: false,
-                                                  ));
-                                                }
-
-                                                print(bookingDetailsContent
-                                                    .bookingStatus
-                                                    .toString());
-                                                print("payment");
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: Dimensions
-                                                            .paddingSizeLarge,
-                                                        vertical: 4),
-                                                child: Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: Dimensions
-                                                          .paddingSizeSmall,
-                                                      vertical: Dimensions
-                                                          .paddingSizeEight),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            Dimensions
-                                                                .radiusDefault),
-                                                    border: Border.all(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        width: 1),
-                                                  ),
-                                                  child: Center(
-                                                      child: Text(
-                                                          "Payment Now".tr,
-                                                          style: ubuntuMedium.copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .primary,
-                                                              fontSize: Dimensions
-                                                                  .fontSizeSmall))),
-                                                ),
-                                              ),
-                                            );
-                                          });
-                                        }))
-                                    : const SizedBox(
-                                        height: 0,
-                                        width: 0,
-                                      ),
+                                // bookingDetailsContent.bookingStatus
+                                //             .toString() ==
+                                //         "pending"
+                                //     ? Padding(
+                                //         padding: const EdgeInsets.all(1.0),
+                                //         child: GetBuilder<CheckOutController>(
+                                //             builder: (checkoutController) {
+                                //           AddressModel? addressModel =
+                                //               Get.find<LocationController>()
+                                //                       .selectedAddress ??
+                                //                   Get.find<LocationController>()
+                                //                       .getUserAddress();
+                                //
+                                //           return GetBuilder<CartController>(
+                                //               builder: (cartController) {
+                                //             bool isPartialPayment =
+                                //                 CheckoutHelper
+                                //                     .checkPartialPayment(
+                                //                         walletBalance:
+                                //                             cartController
+                                //                                 .walletBalance,
+                                //                         bookingAmount:
+                                //                             cartController
+                                //                                 .totalPrice);
+                                //             return InkWell(
+                                //               onTap: () {
+                                //                 print(
+                                //                     "addressModel=>${addressModel}");
+                                //                 print(
+                                //                     " checkoutController.selectedDigitalPaymentMethod=>${checkoutController.selectedDigitalPaymentMethod}");
+                                //                 print(
+                                //                     " isPartialPayment=>${isPartialPayment}");
+                                //
+                                //                 checkoutController.updateState(
+                                //                     PageState.payment);
+                                //                 if (GetPlatform.isWeb) {
+                                //                   Get.toNamed(RouteHelper
+                                //                       .getCheckoutRoute(
+                                //                     'cart',
+                                //                     Get.find<
+                                //                             CheckOutController>()
+                                //                         .currentPageState
+                                //                         .name,
+                                //                     pageState == 'payment'
+                                //                         ? addressId.toString()
+                                //                         : addressModel!.id
+                                //                             .toString(),
+                                //                     reload: false,
+                                //                   ));
+                                //                 }
+                                //
+                                //                 print(bookingDetailsContent
+                                //                     .bookingStatus
+                                //                     .toString());
+                                //                 print("payment");
+                                //               },
+                                //               child: Padding(
+                                //                 padding:
+                                //                     const EdgeInsets.symmetric(
+                                //                         horizontal: Dimensions
+                                //                             .paddingSizeLarge,
+                                //                         vertical: 4),
+                                //                 child: Container(
+                                //                   padding: const EdgeInsets
+                                //                       .symmetric(
+                                //                       horizontal: Dimensions
+                                //                           .paddingSizeSmall,
+                                //                       vertical: Dimensions
+                                //                           .paddingSizeEight),
+                                //                   decoration: BoxDecoration(
+                                //                     borderRadius:
+                                //                         BorderRadius.circular(
+                                //                             Dimensions
+                                //                                 .radiusDefault),
+                                //                     border: Border.all(
+                                //                         color: Theme.of(context)
+                                //                             .colorScheme
+                                //                             .primary,
+                                //                         width: 1),
+                                //                   ),
+                                //                   child: Center(
+                                //                       child: Text(
+                                //                           "Payment Now".tr,
+                                //                           style: ubuntuMedium.copyWith(
+                                //                               color: Theme.of(
+                                //                                       context)
+                                //                                   .colorScheme
+                                //                                   .primary,
+                                //                               fontSize: Dimensions
+                                //                                   .fontSizeSmall))),
+                                //                 ),
+                                //               ),
+                                //             );
+                                //           });
+                                //         }))
+                                //     : const SizedBox(
+                                //         height: 0,
+                                //         width: 0,
+                                //       ),
                                 bookingDetailsContent.bookingStatus ==
                                         "Accepted"
                                     ? GetBuilder<CheckOutController>(

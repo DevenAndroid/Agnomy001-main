@@ -19,7 +19,8 @@ TextEditingController messageController = TextEditingController();
 //
 TextEditingController cropController = TextEditingController();
 TextEditingController aacurageController = TextEditingController();
-String? cropTypesdropdownvalue= '';
+List<dynamic>? cropTypesdropdownvalue;
+// String? cropTypesdropdownvalue= '';
 
 class CartSummery extends StatefulWidget {
   CartSummery({Key? key}) : super(key: key);
@@ -31,7 +32,8 @@ class CartSummery extends StatefulWidget {
 class _CartSummeryState extends State<CartSummery> {
   RxInt refereshInt = 0.obs;
   final CropTypesController _controllers = Get.put(CropTypesController());
-  dynamic cropTypesdropdownvalue = 'Orchard';
+
+
   @override
   void initState() {
     getQuoteList();
@@ -46,8 +48,8 @@ class _CartSummeryState extends State<CartSummery> {
         .map((item) => '"${item['title']}"')
         .toList();
     final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(', ')}]' : '[]';
-    print('Checked items: $checkedItemsString');
-    print('Checked items: ${checkedItemsString.length}');
+    print('Checked items: $checkedItems');
+    print('Checked items: ${checkedItemsString}');
 
   }
   @override
@@ -88,9 +90,14 @@ class _CartSummeryState extends State<CartSummery> {
                 Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: Dimensions.paddingSizeDefault),
-                    child: Text('Provider info',
-                        style: ubuntuMedium.copyWith(
-                            fontSize: Dimensions.fontSizeDefault))),
+                    child: GestureDetector(
+                      onTap: (){
+                        printCheckboxStates();
+                      },
+                      child: Text('Provider info',
+                          style: ubuntuMedium.copyWith(
+                              fontSize: Dimensions.fontSizeDefault)),
+                    )),
                 ListView.builder(
                   itemCount: quotesListModel
                       .value.content!.quoteData!.quoteProviders!.length,
@@ -272,15 +279,17 @@ class _CartSummeryState extends State<CartSummery> {
                         Row(
                           children: [
                             Expanded(
-                              child: MultiSelectDialogField<dynamic>(
+                              child:MultiSelectDialogField<dynamic>(
                                 items: _controllers.cropTypes.value.content!
-                                    .map((dynamic item) => MultiSelectItem<dynamic>(item, item))
+                                    .map((dynamic item) =>
+                                    MultiSelectItem<dynamic>(item, item))
                                     .toList(),
                                 initialValue: [],
                                 title: Text("Select Items"),
                                 selectedColor: Colors.blue,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                                   border: Border.all(
                                     color: Colors.grey,
                                     width: 2,

@@ -27,12 +27,17 @@ class _ProceedToCheckoutButtonWidgetState
     extends State<ProceedToCheckoutButtonWidget> {
 
   Future<void> checkoutSummeryApiCall() async {
-    print("proceed_to_checkout");
+print("Data summary ka Body drop :${cropTypesdropdownvalue.toString()}");
+// final checkedItemsString = cropTypesdropdownvalue!.isNotEmpty ? '[${cropTypesdropdownvalue!.join(', ')}]' : '[]';
+// print("datalist:${checkedItemsString}");
+print("Data summary ka Body crop:${ cropController.text}");
+print("Data summary ka Body accur:${ aacurageController.text}");
     print("question_input");
     print("quote_id${quote_id}");
     print("zoneId${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
     if (questionController.text != null &&
-        messageController.text != null &&
+        cropController.text != null &&
+        aacurageController.text != null &&
         questionController.text.isNotEmpty &&
         messageController.text.isNotEmpty) {
       var url = Uri.parse(
@@ -45,7 +50,7 @@ class _ProceedToCheckoutButtonWidgetState
         // ..fields['service_description'] = messageController.text
         ..fields['acerage'] = aacurageController.text
         ..fields['crop'] = cropController.text
-        ..fields['crop_type'] = messageController.text
+        ..fields['crop_type'] = jsonDecode(cropTypesdropdownvalue.toString())
         ..fields['quote_id'] = quote_id
         ..fields['zone_id'] =  Get.find<LocationController>().getUserAddress()!.zoneId.toString();
 
