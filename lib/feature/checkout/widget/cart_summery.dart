@@ -285,7 +285,7 @@ class _CartSummeryState extends State<CartSummery> {
                                     MultiSelectItem<dynamic>(item, item))
                                     .toList(),
                                 initialValue: [],
-                                title: Text("Select Items"),
+                                title:cropTypesdropdownvalue==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdownvalue.toString()}"),
                                 selectedColor: Colors.blue,
                                 decoration: BoxDecoration(
                                   borderRadius:
@@ -299,13 +299,13 @@ class _CartSummeryState extends State<CartSummery> {
                                   Icons.keyboard_arrow_down,
                                   color: Colors.grey,
                                 ),
-                                buttonText: Text(
+                                buttonText:cropTypesdropdownvalue==null ?  Text(
                                   "Select Items",
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 16,
                                   ),
-                                ),
+                                ):Text("${cropTypesdropdownvalue.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
                                 onConfirm: (List<dynamic> values) {
                                   setState(() {
                                     cropTypesdropdownvalue = values;

@@ -556,7 +556,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   MultiSelectItem<dynamic>(item, item))
                   .toList(),
               initialValue: [],
-              title: Text("Select Items"),
+              title:cropTypesdropdown==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdown.toString()}"),
               selectedColor: Colors.blue,
               decoration: BoxDecoration(
                 borderRadius:
@@ -570,13 +570,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 Icons.keyboard_arrow_down,
                 color: Colors.grey,
               ),
-              buttonText: Text(
+              buttonText: cropTypesdropdown==null ?  Text(
                 "Select Items",
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 16,
                 ),
-              ),
+              ):Text("${cropTypesdropdown.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
               onConfirm: (List<dynamic> values) {
                 setState(() {
                   cropTypesdropdown = values;
