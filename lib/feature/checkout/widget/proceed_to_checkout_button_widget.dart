@@ -28,10 +28,22 @@ class _ProceedToCheckoutButtonWidgetState
 
   Future<void> checkoutSummeryApiCall() async {
 print("Data summary ka Body drop :${cropTypesdropdownvalue.toString()}");
+String jsonString = jsonEncode(cropTypesdropdownvalue);
+print("Datajson to ${jsonString}");
 // final checkedItemsString = cropTypesdropdownvalue!.isNotEmpty ? '[${cropTypesdropdownvalue!.join(', ')}]' : '[]';
 // print("datalist:${checkedItemsString}");
-print("Data summary ka Body crop:${ cropController.text}");
-print("Data summary ka Body accur:${ aacurageController.text}");
+    List<dynamic> list = cropTypesdropdownvalue!.map((item) => '"$item"').toList();
+    print("result${list}");
+    // List<dynamic> list = jsonDecode(result);
+    // List<String> stringList = List<String>.from(list);
+
+    // print("result${stringList}");
+    // print("result${list}");
+    print("result${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+    print("Data summary ka Body crop:${ cropController.text}");
+    print("Data summary ka Body accur:${ aacurageController.text}");
+    print("Data summary ka Body message:${ messageController.text}");
+    print("Data summary ka zone id:${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
     print("question_input");
     print("quote_id${quote_id}");
     print("zoneId${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
@@ -39,18 +51,20 @@ print("Data summary ka Body accur:${ aacurageController.text}");
         cropController.text != null &&
         aacurageController.text != null &&
         questionController.text.isNotEmpty &&
-        messageController.text.isNotEmpty) {
+        // cropController.text.isNotEmpty &&
+        // questionController.text.isNotEmpty &&
+        aacurageController.text.isNotEmpty) {
       var url = Uri.parse(
           'https://admin.agnomy.com/api/v1/customer/checkout-summery');
 
       var request = http.MultipartRequest('POST', url)
 
         ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
-        ..fields['question_input'] = questionController.text
-        // ..fields['service_description'] = messageController.text
+        //..fields['question_input'] = questionController.text
+        ..fields['service_description'] = questionController.text
         ..fields['acerage'] = aacurageController.text
         ..fields['crop'] = cropController.text
-        ..fields['crop_type'] = jsonDecode(cropTypesdropdownvalue.toString())
+        ..fields['crop_type'] = list.toString()
         ..fields['quote_id'] = quote_id
         ..fields['zone_id'] =  Get.find<LocationController>().getUserAddress()!.zoneId.toString();
 
@@ -61,8 +75,8 @@ print("Data summary ka Body accur:${ aacurageController.text}");
           print('Response data checkoutSummeryApiCall: ${responseData.body}');
 
         } else {
-          customSnackBar(
-              "please enter the field it is required",duration:2);
+          customSnackBar("please enter the field it is required",duration:2);
+          print('Request failed with status: ${response.statusCode}');
           print('Request failed with status: ${response.statusCode}');
         }
       } catch (e) {
