@@ -276,45 +276,50 @@ class _CartSummeryState extends State<CartSummery> {
                             ],
                           ),
                         ),
+                        const SizedBox(height: Dimensions.paddingSizeLarge),
+                        Row(children: [
+                          Expanded(
+                            child:MultiSelectDialogField<dynamic>(
+                              items: _controllers.cropTypes.value.content!
+                                  .map((dynamic item) =>
+                                  MultiSelectItem<dynamic>(item, item))
+                                  .toList(),
+                              initialValue: [],
+                              title:cropTypesdropdownvalue==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdownvalue.toString()}"),
+                              selectedColor: Colors.blue,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 2,
+                                ),
+                              ),
+                              buttonIcon: Icon(
+                                Icons.keyboard_arrow_down,
+                                color: Colors.grey,
+                              ),
+                              buttonText:cropTypesdropdownvalue==null ?  Text(
+                                "Select Items",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ):Text("${cropTypesdropdownvalue.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
+                              onConfirm: (List<dynamic> values) {
+                                setState(() {
+                                  cropTypesdropdownvalue = values;
+                                  print('Selected values: $values');
+                                });
+                              },
+                            ),
+                          ),
+                        ],),
+
                         Row(
                           children: [
-                            Expanded(
-                              child:MultiSelectDialogField<dynamic>(
-                                items: _controllers.cropTypes.value.content!
-                                    .map((dynamic item) =>
-                                    MultiSelectItem<dynamic>(item, item))
-                                    .toList(),
-                                initialValue: [],
-                                title:cropTypesdropdownvalue==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdownvalue.toString()}"),
-                                selectedColor: Colors.blue,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 2,
-                                  ),
-                                ),
-                                buttonIcon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Colors.grey,
-                                ),
-                                buttonText:cropTypesdropdownvalue==null ?  Text(
-                                  "Select Items",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                  ),
-                                ):Text("${cropTypesdropdownvalue.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
-                                onConfirm: (List<dynamic> values) {
-                                  setState(() {
-                                    cropTypesdropdownvalue = values;
-                                    print('Selected values: $values');
-                                  });
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: Dimensions.paddingSizeDefault),
+
+
 
                             Expanded(
                               child: CustomTextField(
@@ -330,7 +335,8 @@ class _CartSummeryState extends State<CartSummery> {
                               ),
                             ),
 
-                            const SizedBox(height: Dimensions.paddingSizeLarge),
+
+                            const SizedBox(width: Dimensions.paddingSizeDefault),
 
                             Expanded(
                               child: CustomTextField(

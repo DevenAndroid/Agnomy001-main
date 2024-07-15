@@ -549,46 +549,51 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       Row(
         children: [
           Expanded(
-            child:  _controllers.cropTypes.value.content!=null?
-            MultiSelectDialogField<dynamic>(
-              items: _controllers.cropTypes.value.content!
-                  .map((dynamic item) =>
-                  MultiSelectItem<dynamic>(item, item))
-                  .toList(),
-              initialValue: [],
-              title:cropTypesdropdown==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdown.toString()}"),
-              selectedColor: Colors.blue,
-              decoration: BoxDecoration(
-                borderRadius:
-                BorderRadius.all(Radius.circular(10)),
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 2,
+              child:  _controllers.cropTypes.value.content!=null?
+              MultiSelectDialogField<dynamic>(
+                items: _controllers.cropTypes.value.content!
+                    .map((dynamic item) =>
+                    MultiSelectItem<dynamic>(item, item))
+                    .toList(),
+                initialValue: [],
+                title:cropTypesdropdown==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdown.toString()}"),
+                selectedColor: Colors.blue,
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 2,
+                  ),
                 ),
-              ),
-              buttonIcon: Icon(
-                Icons.keyboard_arrow_down,
-                color: Colors.grey,
-              ),
-              buttonText: cropTypesdropdown==null ?  Text(
-                "Select Items",
-                style: TextStyle(
+                buttonIcon: Icon(
+                  Icons.keyboard_arrow_down,
                   color: Colors.grey,
-                  fontSize: 16,
                 ),
-              ):Text("${cropTypesdropdown.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
-              onConfirm: (List<dynamic> values) {
-                setState(() {
-                  cropTypesdropdown = values;
-                  print('Selected values: $values');
-                });
-              },
-            )
-            :const SizedBox(
-                height: 10,width: 10,
-                child: CircularProgressIndicator())
+                buttonText: cropTypesdropdown==null ?  Text(
+                  "Select Items",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
+                ):Text("${cropTypesdropdown.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
+                onConfirm: (List<dynamic> values) {
+                  setState(() {
+                    cropTypesdropdown = values;
+                    print('Selected values: $values');
+                  });
+                },
+              )
+                  :const SizedBox(
+                  height: 10,width: 10)
           ),
-          const SizedBox(width: Dimensions.paddingSizeDefault),
+        ],
+      ),
+      const SizedBox(height: Dimensions.paddingSizeLarge),
+      Row(
+        children: [
+
+         // const SizedBox(width: Dimensions.paddingSizeDefault),
 
           Expanded(
             child: CustomTextField(
@@ -604,7 +609,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             ),
           ),
 
-          const SizedBox(height: Dimensions.paddingSizeLarge),
+          const SizedBox(width: Dimensions.paddingSizeDefault),
 
           Expanded(
             child: CustomTextField(
