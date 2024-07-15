@@ -372,7 +372,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   Widget _secondList(LocationController locationController) {
-    return Column(children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
       const AddressLabelWidget(),
       const SizedBox(height: Dimensions.paddingSizeLarge),
       CustomTextField(
@@ -438,6 +441,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       const SizedBox(height: Dimensions.paddingSizeLarge),
 
       Row(
+
         children: [
           Expanded(
             child: CustomTextField(
@@ -546,6 +550,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       //
       //   ],
       // ),
+      Text("Crop Type Drop Down",style:  ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyLarge?.color),),
+     SizedBox(height: 10,),
       Row(
         children: [
           Expanded(
@@ -559,13 +565,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 title:cropTypesdropdown==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdown.toString()}"),
                 selectedColor: Colors.blue,
                 decoration: BoxDecoration(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 2,
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  border: Border.fromBorderSide(BorderSide(
+                      color: Colors.grey
+                  ),)
                 ),
+
                 buttonIcon: Icon(
                   Icons.keyboard_arrow_down,
                   color: Colors.grey,
@@ -589,7 +594,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           ),
         ],
       ),
-      const SizedBox(height: Dimensions.paddingSizeLarge),
+      // const SizedBox(height: Dimensions.paddingSizeLarge),
+        SizedBox(height: 4,),
       Row(
         children: [
 
@@ -597,7 +603,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
           Expanded(
             child: CustomTextField(
-              title: 'crop'.tr,
+              title: 'Crop'.tr,
               hintText: 'enter_crop'.tr,
               inputType: TextInputType.phone,
               // focusNode: _countryNode,
@@ -605,7 +611,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               // nextFocus: _zipNode,
               controller: addrescropController,
               // onChanged: (text) => locationController.setPlaceMark(country: text),
-              //isRequired: false,
+              isRequired: false,
             ),
           ),
 
@@ -613,14 +619,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
           Expanded(
             child: CustomTextField(
-              title: 'aceerage'.tr,
-              hintText: 'enter_aceerage'.tr,
+              title: 'Acreage'.tr,
+              hintText: 'enter_acreage'.tr,
               inputType: TextInputType.phone,
               // focusNode: _zipNode,
               // nextFocus: _streetNode,
               controller:addresaacurageController ,
               //onChanged: (text) => locationController.setPlaceMark(zipCode: text),
-              // isRequired: false,
+              isRequired: false,
             ),
           ),
 

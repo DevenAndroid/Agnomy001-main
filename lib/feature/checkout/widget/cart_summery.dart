@@ -207,6 +207,8 @@ class _CartSummeryState extends State<CartSummery> {
                     padding:
                         const EdgeInsets.all(Dimensions.paddingSizeDefault),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // Divider(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)),
 
@@ -277,6 +279,8 @@ class _CartSummeryState extends State<CartSummery> {
                           ),
                         ),
                         const SizedBox(height: Dimensions.paddingSizeLarge),
+                        Text("Crop Type Drop Down",style:  ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyLarge?.color)),
+                       SizedBox(height: 10,),
                         Row(children: [
                           Expanded(
                             child:MultiSelectDialogField<dynamic>(
@@ -288,12 +292,10 @@ class _CartSummeryState extends State<CartSummery> {
                               title:cropTypesdropdownvalue==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdownvalue.toString()}"),
                               selectedColor: Colors.blue,
                               decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 2,
-                                ),
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  border: Border.fromBorderSide(BorderSide(
+                                      color: Colors.grey
+                                  ),)
                               ),
                               buttonIcon: Icon(
                                 Icons.keyboard_arrow_down,
@@ -323,7 +325,7 @@ class _CartSummeryState extends State<CartSummery> {
 
                             Expanded(
                               child: CustomTextField(
-                                title: 'crop'.tr,
+                                title: 'Crop'.tr,
                                 hintText: 'enter_crop'.tr,
                                 inputType: TextInputType.phone,
                                // focusNode: _countryNode,
@@ -331,7 +333,7 @@ class _CartSummeryState extends State<CartSummery> {
                                // nextFocus: _zipNode,
                                 controller: cropController,
                                // onChanged: (text) => locationController.setPlaceMark(country: text),
-                                //isRequired: false,
+                                isRequired: false,
                               ),
                             ),
 
@@ -340,14 +342,14 @@ class _CartSummeryState extends State<CartSummery> {
 
                             Expanded(
                               child: CustomTextField(
-                                title: 'aceerage'.tr,
-                                hintText: 'enter_aceerage'.tr,
+                                title: 'Acreage'.tr,
+                                hintText: 'enter_acreage'.tr,
                                 inputType: TextInputType.phone,
                                // focusNode: _zipNode,
                                // nextFocus: _streetNode,
                                 controller:aacurageController ,
                                 //onChanged: (text) => locationController.setPlaceMark(zipCode: text),
-                               // isRequired: false,
+                                isRequired: false,
                               ),
                             ),
 
