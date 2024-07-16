@@ -34,6 +34,7 @@ class BookingDetailsContent {
   String? providerId;
   String? zoneId;
   String? bookingStatus;
+  dynamic customerBookingStatus;
   int? isPaid;
   String? paymentMethod;
   String? transactionId;
@@ -73,6 +74,7 @@ class BookingDetailsContent {
         this.providerId,
         this.zoneId,
         this.bookingStatus,
+        this.customerBookingStatus,
         this.isPaid,
         this.paymentMethod,
         this.transactionId,
@@ -113,6 +115,7 @@ class BookingDetailsContent {
     providerId = json['provider_id'];
     zoneId = json['zone_id'];
     bookingStatus = json['booking_status'];
+    customerBookingStatus = json['customer_booking_status'];
     isPaid = json['is_paid'];
     paymentMethod = json['payment_method'];
     transactionId = json['transaction_id'];
@@ -183,6 +186,7 @@ class BookingDetailsContent {
     data['provider_id'] = providerId;
     data['zone_id'] = zoneId;
     data['booking_status'] = bookingStatus;
+    data['customer_booking_status'] = customerBookingStatus;
     data['is_paid'] = isPaid;
     data['payment_method'] = paymentMethod;
     data['transaction_id'] = transactionId;

@@ -1,6 +1,17 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+
+import '../../../controller/crop_typeccccontroller.dart';
+
+
+// addrescropController
+// addresaacurageController
+TextEditingController addrescropController = TextEditingController();
+TextEditingController addresaacurageController = TextEditingController();
+List<dynamic>? cropTypesdropdown;
 
 class AddAddressScreen extends StatefulWidget {
   final bool fromCheckout;
@@ -21,6 +32,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _zipController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
+  final TextEditingController _cropController = TextEditingController();
+  // final TextEditingController _streetController = TextEditingController();
 
   final FocusNode _nameNode = FocusNode();
   final FocusNode _numberNode = FocusNode();
@@ -38,9 +51,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   String  countryDialCode = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content?.countryCode ?? "BD").dialCode!;
   CameraPosition? _cameraPosition;
 
+  final CropTypesController _controllers = Get.put(CropTypesController());
+  String cropTypesdropdownvalue = 'Orchard';
+
   @override
   void initState() {
     super.initState();
+    _controllers.fetchCropTypes();
     Get.find<LocationController>().resetAddress();
     if(widget.address != null) {
       setControllerData();
@@ -53,6 +70,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         Get.find<SplashController>().configModel.content?.defaultLocation?.location?.lon ?? 0.0,
       );
     }
+  }
+
+  void printCheckboxStates() {
+    print('Checkbox states: ${_controllers.checkboxStates}');
+    final checkedItems = _controllers.checkboxStates
+        .where((item) => item['isChecked'] == true)
+        .map((item) => '"${item['title']}"')
+        .toList();
+    final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(', ')}]' : '[]';
+    print('Checked items: $checkedItems');
+    print('Checked items: ${checkedItemsString}');
+
   }
 
   setControllerData() async {
@@ -82,6 +111,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     _zipController.text = widget.address?.zipCode ?? '';
     _houseController.text = widget.address?.house ?? '';
     _floorController.text = widget.address?.floor ?? '';
+    _zipController.text = widget.address?.zipCode ?? '';
+    _zipController.text = widget.address?.zipCode ?? '';
 
     Get.find<LocationController>().updateAddressLabel(addressLabelString: widget.address?.addressLabel??"");
     Get.find<LocationController>().setPlaceMark(addressModel : widget.address);
@@ -175,6 +206,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         longitude: locationController.position.longitude.toString(),
         zoneId: locationController.zoneID,
         street: _streetController.text,
+        crop:addrescropController.text,
+        acurage:addresaacurageController.text,
       );
 
       if(widget.address == null) {
@@ -339,7 +372,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   Widget _secondList(LocationController locationController) {
-    return Column(children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
       const AddressLabelWidget(),
       const SizedBox(height: Dimensions.paddingSizeLarge),
       CustomTextField(
@@ -385,7 +421,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             ),
           ),
 
-          const SizedBox(width: Dimensions.paddingSizeDefault),
+          const SizedBox(width: Dimensions.paddingSizeDefault,),
 
           Expanded(
             child: CustomTextField(
@@ -405,6 +441,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       const SizedBox(height: Dimensions.paddingSizeLarge),
 
       Row(
+
         children: [
           Expanded(
             child: CustomTextField(
@@ -446,6 +483,149 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               nextFocus: _streetNode,
               controller: _zipController..text = locationController.address.zipCode ?? "",
               onChanged: (text) => locationController.setPlaceMark(zipCode: text),
+              isRequired: false,
+            ),
+          ),
+
+        ],
+      ),
+      const SizedBox(height: Dimensions.paddingSizeLarge),
+      // Row(
+      //   children: [
+      //     Expanded(
+      //       child:Expanded(
+      //         child: DropdownButtonFormField<dynamic>(
+      //           value: cropTypesdropdownvalue,
+      //           icon: const Icon(Icons.keyboard_arrow_down),
+      //           items: _controllers.cropTypes.value.content!.map((dynamic items) {
+      //             return DropdownMenuItem<dynamic>(
+      //               value: items,
+      //               child: Text(items),
+      //             );
+      //           }).toList(),
+      //           onChanged: (dynamic newValue) {
+      //             setState(() {
+      //               cropTypesdropdownvalue = newValue!;
+      //               print('Selected value: $newValue');
+      //             });
+      //           },
+      //           decoration: InputDecoration(
+      //             labelText: 'Select Item',
+      //             border: OutlineInputBorder(),
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //
+      //     const SizedBox(width: Dimensions.paddingSizeDefault),
+      //
+      //     Expanded(
+      //       child: CustomTextField(
+      //         title: 'crop'.tr,
+      //         hintText: 'enter_country'.tr,
+      //         inputType: TextInputType.phone,
+      //         focusNode: _countryNode,
+      //         inputAction: TextInputAction.next,
+      //         nextFocus: _zipNode,
+      //         controller: _countryController..text = locationController.address.country ?? "",
+      //         onChanged: (text) => locationController.setPlaceMark(country: text),
+      //         isRequired: false,
+      //       ),
+      //     ),
+      //
+      //     const SizedBox(height: Dimensions.paddingSizeLarge),
+      //
+      //     Expanded(
+      //       child: CustomTextField(
+      //         title: 'aceerage'.tr,
+      //         hintText: 'enter_zip_code'.tr,
+      //         inputType: TextInputType.phone,
+      //         focusNode: _zipNode,
+      //         nextFocus: _streetNode,
+      //         controller: _zipController..text = locationController.address.zipCode ?? "",
+      //         onChanged: (text) => locationController.setPlaceMark(zipCode: text),
+      //         isRequired: false,
+      //       ),
+      //     ),
+      //
+      //   ],
+      // ),
+      Text("Crop Type Drop Down",style:  ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyLarge?.color),),
+     SizedBox(height: 10,),
+      Row(
+        children: [
+          Expanded(
+              child:  _controllers.cropTypes.value.content!=null?
+              MultiSelectDialogField<dynamic>(
+                items: _controllers.cropTypes.value.content!
+                    .map((dynamic item) =>
+                    MultiSelectItem<dynamic>(item, item))
+                    .toList(),
+                initialValue: [],
+                title:cropTypesdropdown==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdown.toString()}"),
+                selectedColor: Colors.blue,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  border: Border.fromBorderSide(BorderSide(
+                      color: Colors.grey
+                  ),)
+                ),
+
+                buttonIcon: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.grey,
+                ),
+                buttonText: cropTypesdropdown==null ?  Text(
+                  "Select Items",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
+                ):Text("${cropTypesdropdown.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
+                onConfirm: (List<dynamic> values) {
+                  setState(() {
+                    cropTypesdropdown = values;
+                    print('Selected values: $values');
+                  });
+                },
+              )
+                  :const SizedBox(
+                  height: 10,width: 10)
+          ),
+        ],
+      ),
+      // const SizedBox(height: Dimensions.paddingSizeLarge),
+        SizedBox(height: 4,),
+      Row(
+        children: [
+
+         // const SizedBox(width: Dimensions.paddingSizeDefault),
+
+          Expanded(
+            child: CustomTextField(
+              title: 'Crop'.tr,
+              hintText: 'enter_crop'.tr,
+              inputType: TextInputType.phone,
+              // focusNode: _countryNode,
+              //inputAction: TextInputAction.next,
+              // nextFocus: _zipNode,
+              controller: addrescropController,
+              // onChanged: (text) => locationController.setPlaceMark(country: text),
+              isRequired: false,
+            ),
+          ),
+
+          const SizedBox(width: Dimensions.paddingSizeDefault),
+
+          Expanded(
+            child: CustomTextField(
+              title: 'Acreage'.tr,
+              hintText: 'enter_acreage'.tr,
+              inputType: TextInputType.phone,
+              // focusNode: _zipNode,
+              // nextFocus: _streetNode,
+              controller:addresaacurageController ,
+              //onChanged: (text) => locationController.setPlaceMark(zipCode: text),
               isRequired: false,
             ),
           ),

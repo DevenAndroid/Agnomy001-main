@@ -18,6 +18,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../components/core_export.dart';
+
 RxString placedIdGloabal = "".obs;
 RxString placedIdGloaballat = "".obs;
 RxString placedIdGloaballong = "".obs;
@@ -242,6 +244,9 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                     Expanded(child: TypeAheadField(
                                       textFieldConfiguration: TextFieldConfiguration(
                                         controller: _controller,
+                                        // inputFormatters: [
+                                        //   FilteringTextInputFormatter.deny(RegExp(r'[!@#$%^&*(),.?":{}|<>]')),
+                                        // ],
                                         textInputAction: TextInputAction.search,
                                         textCapitalization: TextCapitalization.words,
                                         keyboardType: TextInputType.streetAddress,
@@ -256,6 +261,7 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                                 color: Theme.of(context).primaryColor.withOpacity(0.3), width: 1),
 
                                           ),
+
                                           enabledBorder: OutlineInputBorder(
                                             borderRadius: const BorderRadius.only(topLeft: Radius.circular(10),bottomLeft: Radius.circular(10)),
                                             borderSide: BorderSide(color: Theme.of(context).primaryColor.withOpacity(0.3), width: 1),

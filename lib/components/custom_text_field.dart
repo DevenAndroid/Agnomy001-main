@@ -96,11 +96,12 @@ class CustomTextFieldState extends State<CustomTextField> {
         ],) : null,
         labelStyle: widget.countryDialCode == null ? ubuntuMedium.copyWith(fontSize: 20) : null,
 
-        prefixIcon: widget.prefixIcon != null ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault,vertical: 5),
-          child: Image.asset(widget.prefixIcon!, width: 20,height: 20, color: Theme.of(context).colorScheme.primary.withOpacity(0.4),),
-        ) : widget.countryDialCode != null ? Padding( padding:  EdgeInsets.only(left: widget.isShowBorder == true ?  10: 0),
-          child: Image.asset("assets/images/canda.png",height: 10,width: 16,)
+        // prefixIcon: widget.prefixIcon != null ? Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault,vertical: 5),
+        //   child: Image.asset(widget.prefixIcon!, width: 20,height: 20, color: Theme.of(context).colorScheme.primary.withOpacity(0.4),),
+        // ) : widget.countryDialCode != null ? Padding( padding:  EdgeInsets.only(left: widget.isShowBorder == true ?  10: 0),
+        //   child: Image.asset("assets/images/canda.png",height: 10,width: 16,)
+
           // CountryCodePicker(
           //  // onChanged: widget.onCountryChanged,
           //   initialSelection: widget.countryDialCode,
@@ -115,7 +116,8 @@ class CustomTextFieldState extends State<CustomTextField> {
           //     fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge!.color,
           //   ),
           // ),
-        ): null,
+
+       // ): null,
         contentPadding:  EdgeInsets.only(
           top: widget.countryDialCode != null ? Dimensions.paddingSizeDefault : Dimensions.fontSizeSmall, bottom: Dimensions.paddingSizeDefault,
           left:  widget.isShowBorder != null && widget.isShowBorder! ? Dimensions.paddingSizeDefault :  0,

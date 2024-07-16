@@ -163,7 +163,7 @@ class HorizontalScrollServiceView extends GetView<ServiceController> {
                                                           discountType: discountModel.discountAmountType
                                                       ),
                                                         style: ubuntuRegular.copyWith(
-                                                            fontSize: Dimensions.paddingSizeDefault,
+                                                            fontSize: Dimensions.fontSizeLarge,// Dimensions.paddingSizeDefault,
                                                             color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
                                                       ),
                                                     ):
@@ -171,7 +171,7 @@ class HorizontalScrollServiceView extends GetView<ServiceController> {
                                                       textDirection: TextDirection.ltr,
                                                       child: Text(
                                                         PriceConverter.convertPrice(lowestPrice),
-                                                        style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                                                        style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
                                                       ),
                                                     ),
                                                   ],

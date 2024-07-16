@@ -30,16 +30,41 @@ class BookingInfo extends StatelessWidget {
 
             Container(
               padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall-2,horizontal: Dimensions.paddingSizeDefault),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Theme.of(context).hintColor),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),
+                  // color: Theme.of(context).hintColor)
+                   color:   bookingDetailsContent.bookingStatus == "ongoing"
+                       ? Theme.of(context).colorScheme.primary.withOpacity(.5)
+                       :  bookingDetailsContent.bookingStatus == "pending"
+                       ? Theme.of(context).colorScheme.error.withOpacity(.2) //Theme.of(context).colorScheme.primary
+                       .withOpacity(.2)
+                       :  bookingDetailsContent.bookingStatus == "accepted"
+                       ? Theme.of(context).colorScheme.error.withOpacity(.2)
+                       :  bookingDetailsContent.bookingStatus == "completed"
+                       ? Theme.of(context).colorScheme.primary
+                       : Theme.of(context).colorScheme.primary.withOpacity(.5)
+              )
+
+              ,
+
+
               child: Text(bookingDetailsContent.bookingStatus?.tr ?? "",
                 style:ubuntuMedium.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: Dimensions.fontSizeSmall,
-                  color: bookingDetailsContent.bookingStatus=="ongoing" ? Theme.of(context).colorScheme.tertiary:
-                  bookingDetailsContent.bookingStatus=="pending" ? Theme.of(context).colorScheme.primary:
-                  bookingDetailsContent.bookingStatus=="accepted" ? Theme.of(context).colorScheme.tertiary:
-                  bookingDetailsContent.bookingStatus=="completed" ? Theme.of(context).colorScheme.tertiary:
-                  const Color(0xffFF3737),
+                  color:  bookingDetailsContent.bookingStatus == "ongoing"
+                      ? Theme.of(context).colorScheme.primary
+                      : bookingDetailsContent.bookingStatus == "pending"
+                      ? Theme.of(context).colorScheme.error
+                      : bookingDetailsContent.bookingStatus == "accepted"
+                      ? Theme.of(context).colorScheme.error
+                      : bookingDetailsContent.bookingStatus == "completed"
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.primary
+                  // bookingDetailsContent.bookingStatus=="ongoing" ? Theme.of(context).colorScheme.tertiary:
+                  // bookingDetailsContent.bookingStatus=="pending" ? Theme.of(context).colorScheme.primary:
+                  // bookingDetailsContent.bookingStatus=="accepted" ? Theme.of(context).colorScheme.tertiary:
+                  // bookingDetailsContent.bookingStatus=="completed" ? Theme.of(context).colorScheme.tertiary:
+                  // const Color(0xffFF3737),
                 ),
               ),
             )

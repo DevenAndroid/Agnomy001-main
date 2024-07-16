@@ -138,8 +138,7 @@ class _CategoryViewState extends State<CategoryView> {
                                   index.toString()));
                             },
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  top: Dimensions.paddingSizeExtraSmall),
+                              padding: const EdgeInsets.only(top: Dimensions.paddingSizeExtraSmall),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).hoverColor,
                                 borderRadius: const BorderRadius.all(
@@ -147,8 +146,7 @@ class _CategoryViewState extends State<CategoryView> {
                                 ),
                               ),
                               child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     ClipRRect(
@@ -158,15 +156,14 @@ class _CategoryViewState extends State<CategoryView> {
                                         image:
                                             '${Get.find<SplashController>().configModel.content!.imageBaseUrl}/category/${categoryController.categoryList![index].image}',
                                         fit: BoxFit.contain,
-                                        height: ResponsiveHelper.isMobile(
-                                                context)
-                                            ? 50
+                                        height: ResponsiveHelper.isMobile(context)
+                                            ? 40
                                             : ResponsiveHelper.isTab(context)
                                                 ? 60
                                                 : 80,
                                         width: ResponsiveHelper.isMobile(
                                                 context)
-                                            ? 50
+                                            ? 40
                                             : ResponsiveHelper.isTab(context)
                                                 ? 60
                                                 : 80,

@@ -27,22 +27,44 @@ class _ProceedToCheckoutButtonWidgetState
     extends State<ProceedToCheckoutButtonWidget> {
 
   Future<void> checkoutSummeryApiCall() async {
-    print("proceed_to_checkout");
+print("Data summary ka Body drop :${cropTypesdropdownvalue.toString()}");
+String jsonString = jsonEncode(cropTypesdropdownvalue);
+print("Datajson to ${jsonString}");
+// final checkedItemsString = cropTypesdropdownvalue!.isNotEmpty ? '[${cropTypesdropdownvalue!.join(', ')}]' : '[]';
+// print("datalist:${checkedItemsString}");
+    List<dynamic> list = cropTypesdropdownvalue!.map((item) => '"$item"').toList();
+    print("result${list}");
+    // List<dynamic> list = jsonDecode(result);
+    // List<String> stringList = List<String>.from(list);
+
+    // print("result${stringList}");
+    // print("result${list}");
+    print("result${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
+    print("Data summary ka Body crop:${ cropController.text}");
+    print("Data summary ka Body accur:${ aacurageController.text}");
+    print("Data summary ka Body message:${ messageController.text}");
+    print("Data summary ka zone id:${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
     print("question_input");
     print("quote_id${quote_id}");
     print("zoneId${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
     if (questionController.text != null &&
-        messageController.text != null &&
+        cropController.text != null &&
+        aacurageController.text != null &&
         questionController.text.isNotEmpty &&
-        messageController.text.isNotEmpty) {
+        // cropController.text.isNotEmpty &&
+        // questionController.text.isNotEmpty &&
+        aacurageController.text.isNotEmpty) {
       var url = Uri.parse(
           'https://admin.agnomy.com/api/v1/customer/checkout-summery');
 
       var request = http.MultipartRequest('POST', url)
 
         ..headers['Authorization'] = "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
-        ..fields['question_input'] = questionController.text
-        ..fields['service_description'] = messageController.text
+        //..fields['question_input'] = questionController.text
+        ..fields['service_description'] = questionController.text
+        ..fields['acerage'] = aacurageController.text
+        ..fields['crop'] = cropController.text
+        ..fields['crop_type'] = jsonEncode(jsonString)
         ..fields['quote_id'] = quote_id
         ..fields['zone_id'] =  Get.find<LocationController>().getUserAddress()!.zoneId.toString();
 
@@ -53,8 +75,8 @@ class _ProceedToCheckoutButtonWidgetState
           print('Response data checkoutSummeryApiCall: ${responseData.body}');
 
         } else {
-          customSnackBar(
-              "please enter the field it is required",duration:2);
+          customSnackBar("please enter the field it is required",duration:2);
+          print('Request failed with status: ${response.statusCode}');
           print('Request failed with status: ${response.statusCode}');
         }
       } catch (e) {
@@ -119,10 +141,13 @@ class _ProceedToCheckoutButtonWidgetState
                     ]))),
             InkWell(
               onTap: () {
-                if (Get.find<AuthController>().acceptTerms) {
-                  AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+                AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+                 if (Get.find<AuthController>().acceptTerms) {
+
+
 
                   if (Get.find<CartController>().cartList.isEmpty) {
+
                     //Get.offAllNamed(RouteHelper.getMainRoute('home'));
 
                     print('if 1');
@@ -369,7 +394,7 @@ class _ProceedToCheckoutButtonWidgetState
                       }
                     }
                   }
-                }
+               }
                 else {
                   print('if 22');
 

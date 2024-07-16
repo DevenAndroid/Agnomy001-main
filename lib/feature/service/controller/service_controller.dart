@@ -49,7 +49,7 @@ class ServiceController extends GetxController implements GetxService {
     '150',
     '150+'
   ];
-
+  // String cropTypesdropdownvalue = 'Orchard';
   bool _isLoading = false;
   List<int>? _variationIndex;
   int? _quantity = 1;

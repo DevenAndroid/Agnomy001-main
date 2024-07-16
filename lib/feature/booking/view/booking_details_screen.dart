@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
+import 'dart:math';
 import 'package:demandium/feature/booking/controller/invoice_controller.dart';
 import 'package:demandium/feature/booking/view/web_booking_details_screen.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../model/approved_model.dart';
+
+String status = "";
 
 class BookingDetailsScreen extends StatefulWidget {
   final String bookingID;
@@ -176,141 +179,207 @@ class BookingTabBar extends StatelessWidget {
                               child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                bookingDetailsContent.bookingStatus
-                                            .toString() ==
-                                        "pending"
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(1.0),
-                                        child: GetBuilder<CheckOutController>(
-                                            builder: (checkoutController) {
-                                          AddressModel? addressModel =
-                                              Get.find<LocationController>()
-                                                      .selectedAddress ??
-                                                  Get.find<LocationController>()
-                                                      .getUserAddress();
+                                // bookingDetailsContent.bookingStatus
+                                //             .toString() ==
+                                //         "pending"
+                                //     ? Padding(
+                                //         padding: const EdgeInsets.all(1.0),
+                                //         child: GetBuilder<CheckOutController>(
+                                //             builder: (checkoutController) {
+                                //           AddressModel? addressModel =
+                                //               Get.find<LocationController>()
+                                //                       .selectedAddress ??
+                                //                   Get.find<LocationController>()
+                                //                       .getUserAddress();
+                                //
+                                //           return GetBuilder<CartController>(
+                                //               builder: (cartController) {
+                                //             bool isPartialPayment =
+                                //                 CheckoutHelper
+                                //                     .checkPartialPayment(
+                                //                         walletBalance:
+                                //                             cartController
+                                //                                 .walletBalance,
+                                //                         bookingAmount:
+                                //                             cartController
+                                //                                 .totalPrice);
+                                //             return InkWell(
+                                //               onTap: () {
+                                //                 print(
+                                //                     "addressModel=>${addressModel}");
+                                //                 print(
+                                //                     " checkoutController.selectedDigitalPaymentMethod=>${checkoutController.selectedDigitalPaymentMethod}");
+                                //                 print(
+                                //                     " isPartialPayment=>${isPartialPayment}");
+                                //
+                                //                 checkoutController.updateState(
+                                //                     PageState.payment);
+                                //                 if (GetPlatform.isWeb) {
+                                //                   Get.toNamed(RouteHelper
+                                //                       .getCheckoutRoute(
+                                //                     'cart',
+                                //                     Get.find<
+                                //                             CheckOutController>()
+                                //                         .currentPageState
+                                //                         .name,
+                                //                     pageState == 'payment'
+                                //                         ? addressId.toString()
+                                //                         : addressModel!.id
+                                //                             .toString(),
+                                //                     reload: false,
+                                //                   ));
+                                //                 }
+                                //
+                                //                 print(bookingDetailsContent
+                                //                     .bookingStatus
+                                //                     .toString());
+                                //                 print("payment");
+                                //               },
+                                //               child: Padding(
+                                //                 padding:
+                                //                     const EdgeInsets.symmetric(
+                                //                         horizontal: Dimensions
+                                //                             .paddingSizeLarge,
+                                //                         vertical: 4),
+                                //                 child: Container(
+                                //                   padding: const EdgeInsets
+                                //                       .symmetric(
+                                //                       horizontal: Dimensions
+                                //                           .paddingSizeSmall,
+                                //                       vertical: Dimensions
+                                //                           .paddingSizeEight),
+                                //                   decoration: BoxDecoration(
+                                //                     borderRadius:
+                                //                         BorderRadius.circular(
+                                //                             Dimensions
+                                //                                 .radiusDefault),
+                                //                     border: Border.all(
+                                //                         color: Theme.of(context)
+                                //                             .colorScheme
+                                //                             .primary,
+                                //                         width: 1),
+                                //                   ),
+                                //                   child: Center(
+                                //                       child: Text(
+                                //                           "Payment Now".tr,
+                                //                           style: ubuntuMedium.copyWith(
+                                //                               color: Theme.of(
+                                //                                       context)
+                                //                                   .colorScheme
+                                //                                   .primary,
+                                //                               fontSize: Dimensions
+                                //                                   .fontSizeSmall))),
+                                //                 ),
+                                //               ),
+                                //             );
+                                //           });
+                                //         }))
+                                //     : const SizedBox(
+                                //         height: 0,
+                                //         width: 0,
+                                //       ),
+                                bookingDetailsContent.bookingStatus ==
+                                        "Accepted"
+                                    ? GetBuilder<CheckOutController>(
+                                        builder: (checkoutController) {
+                                        AddressModel? addressModel =
+                                            Get.find<LocationController>()
+                                                    .selectedAddress ??
+                                                Get.find<LocationController>()
+                                                    .getUserAddress();
+                                        return GetBuilder<CartController>(
+                                            builder: (cartController) {
+                                          bool isPartialPayment = CheckoutHelper
+                                              .checkPartialPayment(
+                                                  walletBalance: cartController
+                                                      .walletBalance,
+                                                  bookingAmount: cartController
+                                                      .totalPrice);
+                                          return
+                                          //  status != "200" ?
+                                            bookingDetailsContent.customerBookingStatus.toString() =="0" ?
+                                          InkWell(
+                                                  onTap: () {
+                                                    fetchOfferApproved();
+                                                    //////////////////////////////////
+                                                    print(
+                                                        "addressModel=>${addressModel}");
+                                                    print(
+                                                        "addressModel=>${addressId.toString()}");
+                                                    print(
+                                                        "addressModel=>${addressModel!.id.toString()}");
+                                                    print(
+                                                        " checkoutController.selectedDigitalPaymentMethod=>${checkoutController.selectedDigitalPaymentMethod}");
+                                                    print(
+                                                        " isPartialPayment=>${isPartialPayment}");
 
-                                          return GetBuilder<CartController>(
-                                              builder: (cartController) {
-                                            bool isPartialPayment =
-                                                CheckoutHelper
-                                                    .checkPartialPayment(
-                                                        walletBalance:
-                                                            cartController
-                                                                .walletBalance,
-                                                        bookingAmount:
-                                                            cartController
-                                                                .totalPrice);
-                                            return InkWell(
-                                              onTap: () {
-                                                print(
-                                                    "addressModel=>${addressModel}");
-                                                print(
-                                                    " checkoutController.selectedDigitalPaymentMethod=>${checkoutController.selectedDigitalPaymentMethod}");
-                                                print(
-                                                    " isPartialPayment=>${isPartialPayment}");
+                                                    checkoutController.updateState(PageState.payment);
 
-                                                checkoutController.updateState(
-                                                    PageState.payment);
-                                                if (GetPlatform.isWeb) {
-                                                  Get.toNamed(RouteHelper
-                                                      .getCheckoutRoute(
-                                                    'cart',
-                                                    Get.find<
-                                                            CheckOutController>()
-                                                        .currentPageState
-                                                        .name,
-                                                    pageState == 'payment'
-                                                        ? addressId.toString()
-                                                        : addressModel!.id
-                                                            .toString(),
-                                                    reload: false,
-                                                  ));
-                                                }
-
-                                                print(bookingDetailsContent
-                                                    .bookingStatus
-                                                    .toString());
-                                                print("payment");
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: Dimensions
-                                                            .paddingSizeLarge,
-                                                        vertical: 4),
-                                                child: Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: Dimensions
-                                                          .paddingSizeSmall,
-                                                      vertical: Dimensions
-                                                          .paddingSizeEight),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            Dimensions
-                                                                .radiusDefault),
-                                                    border: Border.all(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        width: 1),
-                                                  ),
-                                                  child: Center(
-                                                      child: Text(
-                                                          "Payment Now".tr,
-                                                          style: ubuntuMedium.copyWith(
+                                                    if (GetPlatform.isWeb) {
+                                                      Timer(const Duration(seconds: 1),
+                                                          () {
+                                                        Get.toNamed(RouteHelper
+                                                            .getCheckoutRoute(
+                                                          'cart',
+                                                          Get.find<
+                                                                  CheckOutController>()
+                                                              .currentPageState
+                                                              .name,
+                                                          pageState == 'payment'
+                                                              ? addressId
+                                                                  .toString()
+                                                              : addressModel!.id
+                                                                  .toString(),
+                                                          reload: false,
+                                                        ));
+                                                      });
+                                                    }
+                                                    print("payment");
+                                                    ////////////////////////////////////
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            6.0),
+                                                    child: Container(
+                                                        padding: const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: Dimensions
+                                                                .paddingSizeSmall),
+                                                        // padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeEight),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                  .radiusDefault),
+                                                          border: Border.all(
                                                               color: Theme.of(
                                                                       context)
                                                                   .colorScheme
                                                                   .primary,
-                                                              fontSize: Dimensions
-                                                                  .fontSizeSmall))),
-                                                ),
-                                              ),
-                                            );
-                                          });
-                                        }))
-                                    : const SizedBox(
-                                        height: 0,
-                                        width: 0,
-                                      ),
-                                bookingDetailsContent.bookingStatus ==
-                                        "Accepted"
-                                    ? InkWell(
-                                        onTap: () {
-                                          fetchOfferApproved();
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: Dimensions
-                                                          .paddingSizeSmall),
-                                              // padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeEight),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dimensions
-                                                            .radiusDefault),
-                                                border: Border.all(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primary,
-                                                    width: 1),
-                                              ),
-                                              child: Center(
-                                                child: Text("accept".tr,
-                                                    style: ubuntuMedium.copyWith(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        fontSize: Dimensions
-                                                            .fontSizeSmall)),
-                                              )),
-                                        ),
-                                      )
+                                                              width: 1),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                              "accept".tr,
+                                                              style: ubuntuMedium.copyWith(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .colorScheme
+                                                                      .primary,
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .fontSizeSmall)),
+                                                        )),
+                                                  ),
+                                                )
+                                            :SizedBox(height: 0,width: 0,)
+
+
+                                          ;
+
+                                        });
+                                      })
                                     : SizedBox(
                                         height: 0,
                                         width: 0,
@@ -692,12 +761,15 @@ class BookingTabBar extends StatelessWidget {
 
     http.StreamedResponse response = await request.send();
 
+    status = response.statusCode.toString();
+    print("AAAAAAAAAAAA${status}");
     if (response.statusCode == 200) {
       String responseBody = await response.stream.bytesToString();
       print(responseBody);
       Map<String, dynamic> jsonResponse = json.decode(responseBody);
       String messagepa = jsonResponse['message'];
       print(messagepa);
+
       customSnackBar(messagepa.toString(), backgroundColor: Colors.green);
     } else {
       print(

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:demandium/components/core_export.dart';
@@ -5,6 +6,8 @@ import 'package:demandium/feature/provider/model/category_model_item.dart';
 import 'package:demandium/feature/provider/model/provider_details_model.dart';
 import 'package:demandium/feature/provider/model/provider_model.dart';
 import 'package:get/get.dart';
+
+import '../widgets/provider_filter_view.dart';
 
 
 class ProviderBookingController extends GetxController implements GetxService {
@@ -17,6 +20,7 @@ class ProviderBookingController extends GetxController implements GetxService {
     super.onInit();
     getCategoryList();
   }
+
 
   final bool _isLoading = false;
   get isLoading => _isLoading;
@@ -72,7 +76,7 @@ class ProviderBookingController extends GetxController implements GetxService {
   RxInt refreshInt = 0.obs;
 
 
-  Future<void> getProviderList({required int offset, required bool reload, String? placeId, int? distance }) async {
+  Future<void> getProviderList({required int offset, required bool reload, String? placeId, int? distance,String ?cropTypes  }) async {
 
     if(offset != 1 || _providerModel == null || reload){
       if(reload){
@@ -85,7 +89,10 @@ class ProviderBookingController extends GetxController implements GetxService {
           'limit': '10',
           'offset': offset,
           'placeid': placeId,
-          'distance': distance
+          'distance': distance,
+        'crop_type':jsonEncode(cropTypesvalue)
+        // 'crop_type':jsonEncode(cropTypesvalue.toString())
+        // 'crop_types':jsonEncode(cropTypes)
       }; 
       
       if(selectedCategoryId.isNotEmpty){
@@ -208,6 +215,23 @@ class ProviderBookingController extends GetxController implements GetxService {
     update();
 
   }
+
+  // void toggleFromCropTypeCheckeBox(int index) {
+  //
+  //   categoryCheckList[index] = !categoryCheckList[index];
+  //
+  //   if(categoryCheckList[index]==true){
+  //     if(!selectedCategoryId.contains(categoryList[index].id)){
+  //       selectedCategoryId.add(categoryList[index].id!);
+  //     }
+  //   }else{
+  //     if(selectedCategoryId.contains(categoryList[index].id)){
+  //       selectedCategoryId.remove(categoryList[index].id);
+  //     }
+  //   }
+  //   update();
+  //
+  // }
 
   resetProviderFilterData({bool shouldUpdate= false}){
     selectedCategoryId=[];

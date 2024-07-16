@@ -18,6 +18,8 @@ class AddressModel {
   String? house;
   String? floor;
   int? availableServiceCountInZone;
+  String? crop;
+  String? acurage;
 
   AddressModel(
       {this.id,
@@ -38,7 +40,9 @@ class AddressModel {
         this.street,
         this.house,
         this.floor,
-        this.availableServiceCountInZone
+        this.availableServiceCountInZone,
+       this.crop,
+        this. acurage
       });
 
   AddressModel.fromJson(Map<String, dynamic> json) {
@@ -61,6 +65,8 @@ class AddressModel {
     house = json['house'];
     floor = json['floor'];
     availableServiceCountInZone = json['available_service_count'];
+    crop = json['crop'];
+    acurage = json['acurage'];
 
   }
 
@@ -85,6 +91,8 @@ class AddressModel {
     data['house'] = house;
     data['floor'] = floor;
     data['available_service_count'] = availableServiceCountInZone;
+    data['crop'] = crop;
+    data['acurage'] = acurage;
     return data;
   }
 }

@@ -28,7 +28,8 @@ class MenuButton extends StatelessWidget {
             child: Image.asset(menu!.icon!, width: size, height: size),
           ),
           const SizedBox(height: Dimensions.paddingSizeEight),
-          Text(menu!.title!, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall), textAlign: TextAlign.center),
+          Text(menu!.title!, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall), textAlign: TextAlign.center,maxLines: 2,overflow: TextOverflow.ellipsis,
+          softWrap: true),
         ]),
         Positioned.fill(child: RippleButton(onTap: () async {
           if(isLogout!) {

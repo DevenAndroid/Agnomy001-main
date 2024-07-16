@@ -6,12 +6,21 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/checkout/widget/row_text.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 import '../../../components/service_center_dialog1.dart';
+import '../../../controller/crop_typeccccontroller.dart';
 import '../../../data/model/quotelist-model.dart';
 import '../../service/widget/service_overview.dart';
 
 TextEditingController questionController = TextEditingController();
 TextEditingController messageController = TextEditingController();
+
+//
+TextEditingController cropController = TextEditingController();
+TextEditingController aacurageController = TextEditingController();
+List<dynamic>? cropTypesdropdownvalue;
+// String? cropTypesdropdownvalue= '';
 
 class CartSummery extends StatefulWidget {
   CartSummery({Key? key}) : super(key: key);
@@ -22,14 +31,27 @@ class CartSummery extends StatefulWidget {
 
 class _CartSummeryState extends State<CartSummery> {
   RxInt refereshInt = 0.obs;
+  final CropTypesController _controllers = Get.put(CropTypesController());
 
 
   @override
   void initState() {
     getQuoteList();
     super.initState();
+    _controllers.fetchCropTypes();
   }
 
+  void printCheckboxStates() {
+    print('Checkbox states: ${_controllers.checkboxStates}');
+    final checkedItems = _controllers.checkboxStates
+        .where((item) => item['isChecked'] == true)
+        .map((item) => '"${item['title']}"')
+        .toList();
+    final checkedItemsString = checkedItems.isNotEmpty ? '[${checkedItems.join(', ')}]' : '[]';
+    print('Checked items: $checkedItems');
+    print('Checked items: ${checkedItemsString}');
+
+  }
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartController>(builder: (cartController) {
@@ -68,9 +90,14 @@ class _CartSummeryState extends State<CartSummery> {
                 Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: Dimensions.paddingSizeDefault),
-                    child: Text('Provider info',
-                        style: ubuntuMedium.copyWith(
-                            fontSize: Dimensions.fontSizeDefault))),
+                    child: GestureDetector(
+                      onTap: (){
+                        printCheckboxStates();
+                      },
+                      child: Text('Provider info',
+                          style: ubuntuMedium.copyWith(
+                              fontSize: Dimensions.fontSizeDefault)),
+                    )),
                 ListView.builder(
                   itemCount: quotesListModel
                       .value.content!.quoteData!.quoteProviders!.length,
@@ -180,6 +207,8 @@ class _CartSummeryState extends State<CartSummery> {
                     padding:
                         const EdgeInsets.all(Dimensions.paddingSizeDefault),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // Divider(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)),
 
@@ -249,15 +278,82 @@ class _CartSummeryState extends State<CartSummery> {
                             ],
                           ),
                         ),
-                        CustomTextField(
-                          controller: messageController,
-                          title: 'Question Ask'.tr,
-                          hintText: 'please enter the question'.tr,
-                          // focusNode: _phoneFocus,
-                          capitalization: TextCapitalization.words,
-                          // onValidate: (String? value){
-                          //   return (GetUtils.isEmail(value.tr)) ? null : 'enter_email_or_phone'.tr;
-                          // },
+                        const SizedBox(height: Dimensions.paddingSizeLarge),
+                        Text("Crop Type Drop Down",style:  ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyLarge?.color)),
+                       SizedBox(height: 10,),
+                        Row(children: [
+                          Expanded(
+                            child:MultiSelectDialogField<dynamic>(
+                              items: _controllers.cropTypes.value.content!
+                                  .map((dynamic item) =>
+                                  MultiSelectItem<dynamic>(item, item))
+                                  .toList(),
+                              initialValue: [],
+                              title:cropTypesdropdownvalue==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdownvalue.toString()}"),
+                              selectedColor: Colors.blue,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  border: Border.fromBorderSide(BorderSide(
+                                      color: Colors.grey
+                                  ),)
+                              ),
+                              buttonIcon: Icon(
+                                Icons.keyboard_arrow_down,
+                                color: Colors.grey,
+                              ),
+                              buttonText:cropTypesdropdownvalue==null ?  Text(
+                                "Select Items",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ):Text("${cropTypesdropdownvalue.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
+                              onConfirm: (List<dynamic> values) {
+                                setState(() {
+                                  cropTypesdropdownvalue = values;
+                                  print('Selected values: $values');
+                                });
+                              },
+                            ),
+                          ),
+                        ],),
+
+                        Row(
+                          children: [
+
+
+
+                            Expanded(
+                              child: CustomTextField(
+                                title: 'Crop'.tr,
+                                hintText: 'enter_crop'.tr,
+                                inputType: TextInputType.phone,
+                               // focusNode: _countryNode,
+                                //inputAction: TextInputAction.next,
+                               // nextFocus: _zipNode,
+                                controller: cropController,
+                               // onChanged: (text) => locationController.setPlaceMark(country: text),
+                                isRequired: false,
+                              ),
+                            ),
+
+
+                            const SizedBox(width: Dimensions.paddingSizeDefault),
+
+                            Expanded(
+                              child: CustomTextField(
+                                title: 'Acreage'.tr,
+                                hintText: 'enter_acreage'.tr,
+                                inputType: TextInputType.phone,
+                               // focusNode: _zipNode,
+                               // nextFocus: _streetNode,
+                                controller:aacurageController ,
+                                //onChanged: (text) => locationController.setPlaceMark(zipCode: text),
+                                isRequired: false,
+                              ),
+                            ),
+
+                          ],
                         ),
                         CustomTextField(
                           controller: questionController,
