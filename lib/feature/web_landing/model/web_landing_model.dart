@@ -26,7 +26,7 @@ class WebLandingContentModel {
   }
 }
 
-class WebLandingContent {
+class      WebLandingContent {
   List<BannerImage>? bannerImage;
   List<TextContent>? textContent;
   List<ImageContent>? imageContent;

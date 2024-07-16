@@ -65,7 +65,7 @@ class CartServiceWidget extends StatelessWidget {
                                     child: CustomImage(
                                       image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl}/service/${cart.service!.thumbnail}',
                                       height: 65,
-                                      width: 70,
+                                      width:ResponsiveHelper.isMobile(context)? 60 : 70,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -93,7 +93,9 @@ class CartServiceWidget extends StatelessWidget {
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
-                                          const SizedBox(height: 5),
+                                          // const SizedBox(height: 5),
+                                          SizedBox(height:ResponsiveHelper.isMobile(context)? 0 : 5,),
+
                                           Directionality(
                                             textDirection: TextDirection.ltr,
                                             child: Text(
@@ -101,7 +103,7 @@ class CartServiceWidget extends StatelessWidget {
                                               style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6)),
                                             ),
                                           ),
-                                          const SizedBox(height: 5),
+                                          SizedBox(height:ResponsiveHelper.isMobile(context)? 0 : 5,),
                                         ]),
                                   ),
                                 ],

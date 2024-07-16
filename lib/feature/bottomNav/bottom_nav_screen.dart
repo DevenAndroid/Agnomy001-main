@@ -5,6 +5,8 @@ import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/booking/view/booking_list_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class BottomNavScreen extends StatefulWidget {
   final AddressModel ? previousAddress;
@@ -72,7 +74,11 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         floatingActionButton: ResponsiveHelper.isDesktop(context)
             ? null
             : InkWell(
-          onTap: () => Get.toNamed(RouteHelper.getCartRoute()),
+          onTap: (){
+            Get.toNamed(RouteHelper.getCartRoute());
+            print("kfhejwrhf");
+            fetchCartList();
+          } ,
           child: Container(
             height: 70,
             width: 70,
@@ -223,6 +229,47 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     //no page will will be return shows only menu dialog from _bnbItem tap
       case BnbItem.more:
         break;
+    }
+  }
+
+
+  Future<void> fetchCartList() async {
+    print("mycartlist");
+    print("guest_id:-${Get.find<SplashController>().getGuestId()}");
+
+    var headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}'
+    };
+
+    var request = http.Request(
+        'GET',
+        Uri.parse('https://admin.agnomy.com/api/v1/customer/cart/list?limit=10&offset=1&guest_id=${Get.find<SplashController>().getGuestId()}')
+    );
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String responseBody = await response.stream.bytesToString();
+      Map<String, dynamic> jsonResponse = json.decode(responseBody);
+
+      // Assuming the structure of your JSON response
+      if (jsonResponse.containsKey('content')) {
+        Map<String, dynamic> content = jsonResponse['content'];
+        if (content.containsKey('total_cost')) {
+          cartListTotalPrice = content['total_cost'];
+          cartListTotalPrice= double.parse(cartListTotalPrice.toString());
+          print('Total Cost: $cartListTotalPrice');
+        } else {
+          print('total_cost not found in content');
+        }
+      } else {
+        print('content not found in response');
+      }
+    } else {
+      print(response.reasonPhrase);
     }
   }
 }

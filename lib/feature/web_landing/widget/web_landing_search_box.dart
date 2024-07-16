@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demandium/components/custom_button.dart';
 import 'package:demandium/components/custom_image.dart';
 import 'package:demandium/components/custom_loader.dart';
@@ -12,6 +14,7 @@ import 'package:demandium/feature/location/model/zone_response.dart';
 import 'package:demandium/feature/web_landing/controller/web_landing_controller.dart';
 import 'package:demandium/utils/dimensions.dart';
 import 'package:demandium/utils/styles.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
@@ -47,6 +50,7 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
     final String baseUrl = 'https://admin.agnomy.com/api/v1/customer/config/place-api-location';
     final String queryParams = '?search_text=$searchText';
     final String url = '$baseUrl$queryParams';
+    log("searching text${searchText}");
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -241,12 +245,15 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                 child: Row(
                                   children: [
                                     const SizedBox(width: Dimensions.paddingSizeDefault,),
-                                    Expanded(child: TypeAheadField(
-                                      textFieldConfiguration: TextFieldConfiguration(
+                                    Expanded(child:
+                                    TypeAheadField(
+                                      textFieldConfiguration:
+                                      TextFieldConfiguration(
+
                                         controller: _controller,
-                                        // inputFormatters: [
-                                        //   FilteringTextInputFormatter.deny(RegExp(r'[!@#$%^&*(),.?":{}|<>]')),
-                                        // ],
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.deny(RegExp(r'[!@#$%^&*(),.?":{}|<>]')),
+                                        ],
                                         textInputAction: TextInputAction.search,
                                         textCapitalization: TextCapitalization.words,
                                         keyboardType: TextInputType.streetAddress,
@@ -275,6 +282,7 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                             padding: const EdgeInsets.only(right: Dimensions.paddingSizeLarge),
                                             onPressed: () async {
                                               Get.dialog(const CustomLoader(), barrierDismissible: false);
+                                              // await Future.delayed(const Duration(seconds: 300));
                                               _address = await Get.find<LocationController>().getCurrentLocation(true);
                                               _controller.text = _address!.address!;
                                               _isActiveCurrentLocation = true;
@@ -289,7 +297,9 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                         style: ubuntuRegular.copyWith(
                                             fontSize: Dimensions.fontSizeSmall,
                                             color: dark.primaryColor.withOpacity(0.8)),
+
                                       ),
+
                                       suggestionsCallback: (pattern) async {
 
                                         if(_isActiveCurrentLocation) {
@@ -326,13 +336,14 @@ class _WebLandingSearchSectionState extends State<WebLandingSearchSection> {
                                       },
                                       onSuggestionSelected: (PredictionModel suggestion) async {
                                         _controller.text = suggestion.description!;
-                                        _address = await Get.find<LocationController>().setLocation(suggestion.placeId!, suggestion.description!, null) ;
-        // _address = await Get.find<LocationController>().setLocation(suggestion.placeId!,suggestion.description!,suggestion.geometry!.locations!.lat!,suggestion.geometry!.locations!.lng!,suggestion.description!) ;
+                                        EasyDebounce.debounce('debouncer1', Duration(milliseconds: 1000),
+                                                () async {
+                                                  _address = await Get.find<LocationController>().setLocation(suggestion.placeId!, suggestion.description!, null) ;
+                                                  placedIdGloabal.value = suggestion.placeId!;
+                                                }
+                                        );
 
-                                        placedIdGloabal.value = suggestion.placeId!;
-                                        // placedIdGloaballat.value = suggestion.geometry!.locations!.lat!;
-                                        // placedIdGloaballong.value = suggestion.geometry!.locations!.lng!;
-                                        // print( 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'+placedIdGloaballat.value);
+
                                       },
                                     ),),
                                     InkWell(

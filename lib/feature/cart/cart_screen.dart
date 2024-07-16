@@ -395,58 +395,151 @@ class _CartScreenState extends State<CartScreen> {
               child: Row(
                 children: [
                   if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
-                  cartController.preSelectedProvider?
-                  GestureDetector(
-                    onTap: (){
-                      showModalBottomSheet(
-                        useRootNavigator: true,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        context: context, builder: (context) => AvailableProviderWidget(
-                        subcategoryId: cartController.cartList.first.subCategoryId,
-                      ),);
-                    },
-                    child: const SelectedProductWidget(),
-                  ):
-                  GestureDetector(
-                    onTap: (){
-                      showModalBottomSheet(
-                        useRootNavigator: true,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        context: context, builder: (context) => AvailableProviderWidget(
-                        subcategoryId: cartController.cartList.first.subCategoryId,
-                      ),);
-                    },
-                    child: const UnselectedProductWidget(),
-                  ),
-                  if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
-                  const SizedBox(width: Dimensions.paddingSizeEight,),
-
-
+                  // cartController.preSelectedProvider?
+                  // GestureDetector(
+                  //   onTap: (){
+                  //     // showModalBottomSheet(
+                  //     //   useRootNavigator: true,
+                  //     //   isScrollControlled: true,
+                  //     //   backgroundColor: Colors.transparent,
+                  //     //   context: context, builder: (context) =>  AvailableProviderWidget(
+                  //     //   subcategoryId: cartController.cartList.first.subCategoryId,
+                  //     // ),);
+                  //   },
+                  //   child: const SelectedProductWidget(),
+                  // ): GestureDetector(
+                  //   onTap: (){
+                  //     showModalBottomSheet(
+                  //       useRootNavigator: true,
+                  //       isScrollControlled: true,
+                  //       backgroundColor: Colors.transparent,
+                  //       context: context, builder: (context) => AvailableProviderWidget(
+                  //       subcategoryId: cartController.cartList.first.subCategoryId,
+                  //     ),);
+                  //   },
+                  //   child: const UnselectedProductWidget(),
+                  // ),
+                    if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
+                      const SizedBox(width: Dimensions.paddingSizeSmall),
                   Expanded(
-                    child: CustomButton(
-                      width: Get.width,
-                      height:  ResponsiveHelper.isDesktop(context)? 50 : 45,
-                      radius: Dimensions.radiusDefault,
-                      buttonText: 'proceed_to_checkout'.tr,
-                      onPressed: Get.find<CartController>().cartList.isNotEmpty && Get.find<CartController>().preSelectedProvider
-                          && Get.find<CartController>().cartList[0].provider !=null && (Get.find<CartController>().cartList[0].provider?.serviceAvailability == 0 || Get.find<CartController>().cartList[0].provider?.isActive== 0) ? (){
-                        customSnackBar("your_selected_provider_is_unavailable_right_now".tr);
-                      }: (Get.find<SplashController>().configModel.content?.minBookingAmount ?? 0) >  cartController.totalPrice ? (){
-                       cartController.showMinimumAndMaximumOrderValueToaster();
-                      } : () {
-                        if (Get.find<SplashController>().configModel.content?.guestCheckout== 0 && !Get.find<AuthController>().isLoggedIn()) {
-                          Get.toNamed(RouteHelper.getNotLoggedScreen(RouteHelper.cart,"cart"));
-                        } else {
-                          Get.find<CheckOutController>().updateState(PageState.orderDetails);
-                          Get.toNamed(RouteHelper.getCheckoutRoute('cart','orderDetails','null'));
-                        }
-                      },
+                    child: GetBuilder<CheckOutController>(builder: (checkoutController) {
+
+                      AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+
+                      return
+                        GetBuilder<CartController>(builder: (cartController) {
+
+                          bool isPartialPayment = CheckoutHelper.checkPartialPayment(
+                              walletBalance: cartController.walletBalance,
+                              bookingAmount: cartController.totalPrice);
+                          return
+                            InkWell(
+                                onTap: (){
+                                  print("addressModel=>${addressModel}");
+                                  print("addressModel=>${addressId.toString()}");
+                                  print("addressModel=>${addressModel!.id.toString()}");
+                                  print(" checkoutController.selectedDigitalPaymentMethod=>${ checkoutController.selectedDigitalPaymentMethod}");
+                                  print(" isPartialPayment=>${isPartialPayment}");
+
+
+                                  checkoutController.updateState(PageState.payment);
+                                  if(GetPlatform.isWeb) {
+                                    Get.toNamed(RouteHelper.getCheckoutRoute(
+                                      'cart',
+                                      Get.find<CheckOutController>().currentPageState.name,
+                                      pageState == 'payment' ?
+                                      addressId.toString()
+                                          : addressModel!.id.toString(),
+                                      reload: false,
+                                    ));
+                                  }
+
+                                  print("payment");
+                                },
+                                child:
+
+                                Container(
+                                  // height: 50,
+                                  height:  ResponsiveHelper.isDesktop(context)? 50 : 45,
+                                  width: Get.width,
+                                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeEight),
+                                  decoration: BoxDecoration(
+                                    color:  Theme.of(context).colorScheme.primary,
+                                    // borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                    border:Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
+                                  ),
+                                  child:Center(child:
+                                  Text("Proceed to Payment".tr,
+                                      style:ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault,
+                                          color: Colors.white
+                                      )),
+                                  ),
+
+
+                                )
+                            );
+                        });}
+
                     ),
                   ),
                 ],
               ),
+              // Row(
+              //   children: [
+              //     // if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
+              //     // cartController.preSelectedProvider?
+              //     // GestureDetector(
+              //     //   onTap: (){
+              //     //     showModalBottomSheet(
+              //     //       useRootNavigator: true,
+              //     //       isScrollControlled: true,
+              //     //       backgroundColor: Colors.transparent,
+              //     //       context: context, builder: (context) => AvailableProviderWidget(
+              //     //       subcategoryId: cartController.cartList.first.subCategoryId,
+              //     //     ),);
+              //     //   },
+              //     //   child: const SelectedProductWidget(),
+              //     // ):
+              //     // GestureDetector(
+              //     //   onTap: (){
+              //     //     showModalBottomSheet(
+              //     //       useRootNavigator: true,
+              //     //       isScrollControlled: true,
+              //     //       backgroundColor: Colors.transparent,
+              //     //       context: context, builder: (context) => AvailableProviderWidget(
+              //     //       subcategoryId: cartController.cartList.first.subCategoryId,
+              //     //     ),);
+              //     //   },
+              //     //   child: const UnselectedProductWidget(),
+              //     // ),
+              //     if(Get.find<SplashController>().configModel.content?.directProviderBooking==1)
+              //     const SizedBox(width: Dimensions.paddingSizeEight,),
+              //
+              //
+              //     Expanded(
+              //       child: CustomButton(
+              //         width: Get.width,
+              //         height:  ResponsiveHelper.isDesktop(context)? 50 : 45,
+                       //radius: Dimensions.radiusDefault,
+              //         buttonText: 'proceed_to_checkout'.tr,
+              //         onPressed: Get.find<CartController>().cartList.isNotEmpty && Get.find<CartController>().preSelectedProvider
+              //             && Get.find<CartController>().cartList[0].provider !=null && (Get.find<CartController>().cartList[0].provider?.serviceAvailability == 0 || Get.find<CartController>().cartList[0].provider?.isActive== 0) ? (){
+              //           customSnackBar("your_selected_provider_is_unavailable_right_now".tr);
+              //         }: (Get.find<SplashController>().configModel.content?.minBookingAmount ?? 0) >  cartController.totalPrice ? (){
+              //          cartController.showMinimumAndMaximumOrderValueToaster();
+              //         } : () {
+              //           if (Get.find<SplashController>().configModel.content?.guestCheckout== 0 && !Get.find<AuthController>().isLoggedIn()) {
+              //             Get.toNamed(RouteHelper.getNotLoggedScreen(RouteHelper.cart,"cart"));
+              //           } else {
+              //             Get.find<CheckOutController>().updateState(PageState.orderDetails);
+              //             Get.toNamed(RouteHelper.getCheckoutRoute('cart','orderDetails','null'));
+              //           }
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ),
           ],)
         ]);},

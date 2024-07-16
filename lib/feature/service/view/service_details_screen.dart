@@ -277,160 +277,166 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                           },
                                                           builder: (controller){
                                                             return
-                                                              GridView.builder(
-                                                                shrinkWrap: true,
-                                                                scrollDirection: Axis.vertical, // Change this to Axis.horizontal if you want horizontal scrolling
-                                                                itemCount:service.providers!.length,
-                                                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                  crossAxisCount: 3,
-                                                                  mainAxisSpacing: 10.0,
-                                                                  crossAxisSpacing: 10.0,
-                                                                  childAspectRatio: 6 / 2,
+                                                              Padding(
+                                                                padding: const EdgeInsets.symmetric(
+                                                                    vertical: 6,
+                                                                    horizontal: 8
                                                                 ),
-                                                                itemBuilder: (context, index) {
-                                                                  return Container(
-                                                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                                                    decoration: BoxDecoration(
-                                                                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                                                      border: Border.all(color: Colors.grey),
-                                                                    ),
-                                                                    child: Column(
-                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                                      children: [
-                                                                        Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            CircleAvatar(
-                                                                              minRadius:10,
-                                                                              child: Container(
-                                                                                width:30,
-                                                                                color: Colors.transparent,
-                                                                                child: ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(50),
-                                                                                  child: Image(
-                                                                                    image: NetworkImage(
-                                                                                        "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${service.providers![index].logo.toString()}"
+                                                                child: GridView.builder(
+                                                                  shrinkWrap: true,
+                                                                  scrollDirection: Axis.vertical, // Change this to Axis.horizontal if you want horizontal scrolling
+                                                                  itemCount:service.providers!.length,
+                                                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                                    crossAxisCount: ResponsiveHelper.isDesktop(context) ? 3 :1 ,
+                                                                    crossAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
+                                                                    mainAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
+                                                                    childAspectRatio: ResponsiveHelper.isDesktop(context) ? 6/2  : 2/0.5 ,
+                                                                  ),
+                                                                  itemBuilder: (context, index) {
+                                                                    return Container(
+                                                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                                      decoration: BoxDecoration(
+                                                                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                        border: Border.all(color: Colors.grey),
+                                                                      ),
+                                                                      child: Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              CircleAvatar(
+                                                                                minRadius:10,
+                                                                                child: Container(
+                                                                                  width:30,
+                                                                                  color: Colors.transparent,
+                                                                                  child: ClipRRect(
+                                                                                    borderRadius: BorderRadius.circular(50),
+                                                                                    child: Image(
+                                                                                      image: NetworkImage(
+                                                                                          "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${service.providers![index].logo.toString()}"
+                                                                                      ),
+                                                                                      height: 30,
+                                                                                      width:30,fit: BoxFit.cover,
                                                                                     ),
-                                                                                    height: 30,
-                                                                                    width:30,fit: BoxFit.cover,
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            ),
-                                                                            const SizedBox(width: 20),
-                                                                            Column(
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                Text(service.providers![index].companyName.toString()),
-                                                                                Row(
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                                  children: [
-                                                                                    RatingBar(rating: service.providers![index].avgRating),
-                                                                                    Gaps.horizontalGapOf(5),
-                                                                                    Directionality(
-                                                                                      textDirection: TextDirection.ltr,
-                                                                                      child:  Text('${service.providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
-                                                                                        fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
-                                                                                      )),
-                                                                                    ),
-                                                                                    // const Text("0 Reviews"),
-                                                                                  ],
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  width: Get.width*0.176,
-                                                                                  child: Text(service.providers![index].companyDescription.toString(),
-                                                                                    style: ubuntuRegular.copyWith(
-                                                                                      overflow:TextOverflow.ellipsis,
-                                                                                      fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
-                                                                                    ),textAlign: TextAlign.start,maxLines:1,softWrap: true,overflow: TextOverflow.ellipsis,
+                                                                              const SizedBox(width: 20),
+                                                                              Column(
+                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                children: [
+                                                                                  Text(service.providers![index].companyName.toString()),
+                                                                                  Row(
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    children: [
+                                                                                      RatingBar(rating: service.providers![index].avgRating),
+                                                                                      Gaps.horizontalGapOf(5),
+                                                                                      Directionality(
+                                                                                        textDirection: TextDirection.ltr,
+                                                                                        child:  Text('${service.providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
+                                                                                          fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                                                                                        )),
+                                                                                      ),
+                                                                                      // const Text("0 Reviews"),
+                                                                                    ],
                                                                                   ),
-                                                                                )// width: Get.width*0.2,
-                                                                              ],
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Gaps.horizontalGapOf(6),
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.only(left:50.0),
-                                                                          child: Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Text("with in ${service.providers![index].distance!.toInt()} miles"),
-
-                                                                              ElevatedButton(
-
-                                                                                onPressed: () async {
-                                                                                  print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
-                                                                                  print("categoryId${categoryId}");
-                                                                               categoryId = service.providers![index].categoryId;
-                                                                               subCategoryId = service.providers![index].subCategoryId;
-                                                                                  serviceProviderIDss = [serviceID];
-                                                                                  print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
-                                                                                  if(Get.find<AuthController>().isLoggedIn()) {
-                                                                                    Get.find<CartController>().resetPreselectedProviderInfo();
-
-
-                                                                                    if (serviceProviderIDss!.isNotEmpty) {
-                                                                                      await createQuote();
-                                                                                      print("Get Quote Button first pop");
-                                                                                      if (Get.find<SplashController>()
-                                                                                          .configModel.content
-                                                                                          ?.guestCheckout ==
-                                                                                          0 &&
-                                                                                          !Get.find<AuthController>()
-                                                                                              .isLoggedIn()) {
-                                                                                        Get.toNamed(
-                                                                                            RouteHelper.getNotLoggedScreen(
-                                                                                                RouteHelper.cart, "cart"));
-                                                                                      } else {
-                                                                                        Get.find<CheckOutController>()
-                                                                                            .updateState(
-                                                                                            PageState.orderDetails);
-                                                                                        Get.toNamed(RouteHelper.getCheckoutRoute('cart', 'orderDetails', 'null'));
-                                                                                      }
-                                                                                      // Get.to(CheckoutScreen(
-                                                                                      //   Get.parameters.containsKey('flag') &&
-                                                                                      //           Get.parameters['flag']! ==
-                                                                                      //               'success'
-                                                                                      //       ? 'complete'
-                                                                                      //       : Get.parameters['currentPage']
-                                                                                      //           .toString(),
-                                                                                      //   Get.parameters['addressID'] != null
-                                                                                      //       ? Get.parameters['addressID']!
-                                                                                      //       : 'null',
-                                                                                      //   reload: Get.parameters['reload']
-                                                                                      //                   .toString() ==
-                                                                                      //               "true" ||
-                                                                                      //           Get.parameters['reload']
-                                                                                      //                   .toString() ==
-                                                                                      //               "null"
-                                                                                      //       ? true
-                                                                                      //       : false,
-                                                                                      //   token: Get.parameters["token"],
-                                                                                      // ));
-                                                                                    } else {
-                                                                                      customSnackBar(
-                                                                                          "please any one add to provider", duration: 2);
-                                                                                      //snackbar
-                                                                                    }
-                                                                                  } else {
-                                                                                    customSnackBar("please login First",duration:2);
-                                                                                    Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
-                                                                                  }
-
-                                                                                },
-                                                                                child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
+                                                                                  SizedBox(
+                                                                                    width: Get.width*0.176,
+                                                                                    child: Text(service.providers![index].companyDescription.toString(),
+                                                                                      style: ubuntuRegular.copyWith(
+                                                                                        overflow:TextOverflow.ellipsis,
+                                                                                        fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                                                                                      ),textAlign: TextAlign.start,maxLines:1,softWrap: true,overflow: TextOverflow.ellipsis,
+                                                                                    ),
+                                                                                  )// width: Get.width*0.2,
+                                                                                ],
                                                                               ),
                                                                             ],
                                                                           ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  );
-                                                                },
+                                                                          Gaps.horizontalGapOf(6),
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.only(left:50.0),
+                                                                            child: Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                Text("with in ${service.providers![index].distance!.toInt()} miles"),
+
+                                                                                ElevatedButton(
+
+                                                                                  onPressed: () async {
+                                                                                    print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+                                                                                    print("categoryId${categoryId}");
+                                                                                 categoryId = service.providers![index].categoryId;
+                                                                                 subCategoryId = service.providers![index].subCategoryId;
+                                                                                    serviceProviderIDss = [serviceID];
+                                                                                    print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+                                                                                    if(Get.find<AuthController>().isLoggedIn()) {
+                                                                                      Get.find<CartController>().resetPreselectedProviderInfo();
+
+
+                                                                                      if (serviceProviderIDss!.isNotEmpty) {
+                                                                                        await createQuote();
+                                                                                        print("Get Quote Button first pop");
+                                                                                        if (Get.find<SplashController>()
+                                                                                            .configModel.content
+                                                                                            ?.guestCheckout ==
+                                                                                            0 &&
+                                                                                            !Get.find<AuthController>()
+                                                                                                .isLoggedIn()) {
+                                                                                          Get.toNamed(
+                                                                                              RouteHelper.getNotLoggedScreen(
+                                                                                                  RouteHelper.cart, "cart"));
+                                                                                        } else {
+                                                                                          Get.find<CheckOutController>()
+                                                                                              .updateState(
+                                                                                              PageState.orderDetails);
+                                                                                          Get.toNamed(RouteHelper.getCheckoutRoute('cart', 'orderDetails', 'null'));
+                                                                                        }
+                                                                                        // Get.to(CheckoutScreen(
+                                                                                        //   Get.parameters.containsKey('flag') &&
+                                                                                        //           Get.parameters['flag']! ==
+                                                                                        //               'success'
+                                                                                        //       ? 'complete'
+                                                                                        //       : Get.parameters['currentPage']
+                                                                                        //           .toString(),
+                                                                                        //   Get.parameters['addressID'] != null
+                                                                                        //       ? Get.parameters['addressID']!
+                                                                                        //       : 'null',
+                                                                                        //   reload: Get.parameters['reload']
+                                                                                        //                   .toString() ==
+                                                                                        //               "true" ||
+                                                                                        //           Get.parameters['reload']
+                                                                                        //                   .toString() ==
+                                                                                        //               "null"
+                                                                                        //       ? true
+                                                                                        //       : false,
+                                                                                        //   token: Get.parameters["token"],
+                                                                                        // ));
+                                                                                      } else {
+                                                                                        customSnackBar(
+                                                                                            "please any one add to provider", duration: 2);
+                                                                                        //snackbar
+                                                                                      }
+                                                                                    } else {
+                                                                                      customSnackBar("please login First",duration:2);
+                                                                                      Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+                                                                                    }
+
+                                                                                  },
+                                                                                  child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ),
                                                               );
 
 

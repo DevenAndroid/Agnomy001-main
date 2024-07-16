@@ -1,5 +1,5 @@
 class PredictionModel {
-  String? description;
+  dynamic description;
   String? id;
   int? distanceMeters;
   String? placeId;

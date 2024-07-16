@@ -415,259 +415,282 @@ class _ServiceOverviewState extends State<ServiceOverview> {
               style: ubuntuRegular.copyWith(
                   fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
             ),
-          ), const SizedBox(height: 20,),
-          GridView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical, // Change this to Axis.horizontal if you want horizontal scrolling
-            itemCount: widget.providers.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              childAspectRatio: 6 / 2,
+          ),
+           SizedBox(
+             height:ResponsiveHelper.isMobile(context)?6:20,
+            // height: 20
+    ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 6,
+              horizontal: 8
             ),
-            itemBuilder: (context, index) {
-           // serviceProviderIDss = [widget.providers[index].id];
-              return Container(
-                // height: 10,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          minRadius:10,
-                          child: Container(
-                            width:30,
-                            color: Colors.transparent,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image(
-                                image: NetworkImage(
-                                    "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${widget.service.providers![index].logo.toString()}"
+            child: GridView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical, // Change this to Axis.horizontal if you want horizontal scrolling
+              itemCount: widget.providers.length,
+              // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //   crossAxisCount: 3,
+              //   mainAxisSpacing: 10.0,
+              //   crossAxisSpacing: 10.0,
+              //   childAspectRatio: 6 / 2,
+              // ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: ResponsiveHelper.isDesktop(context) ? 3 :1 ,
+                crossAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
+                mainAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
+                childAspectRatio: ResponsiveHelper.isDesktop(context) ? 6/2  : 2/0.5 ,
+              ),
+              itemBuilder: (context, index) {
+             // serviceProviderIDss = [widget.providers[index].id];
+                return Container(
+                  // height: 10,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            minRadius:10,
+                            child: Container(
+                              width:30,
+                              color: Colors.transparent,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image(
+                                  image: NetworkImage(
+                                      "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${widget.service.providers![index].logo.toString()}"
+                                  ),
+                                  // height: 30,
+                                  // width:30,
+                                  height: ResponsiveHelper.isMobile(context) ? 40: 30,
+                                  width: ResponsiveHelper.isMobile(context) ? 40 : 30,
+                                  fit: BoxFit.cover,
                                 ),
-                                height: 30,
-                                width:30,fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(widget.providers![index].companyName.toString()),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                RatingBar(rating: widget.providers![index].avgRating),
-                                Gaps.horizontalGapOf(5),
-                                Directionality(
-                                  textDirection: TextDirection.ltr,
-                                  child:  Text('${widget.providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
-                                    fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
-                                  )),
-                                ),
-                                // const Text("0 Reviews"),
-                              ],
-                            ),
-                            SizedBox(
-                              width: Get.width*0.178,
-                              child: Text(widget.providers![index].companyDescription.toString(),
-                                style: ubuntuRegular.copyWith(
-                                  overflow:TextOverflow.ellipsis,
-                                  fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
-                                ),textAlign: TextAlign.start,maxLines:1,softWrap: true,overflow: TextOverflow.ellipsis,
+                          const SizedBox(width: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(widget.providers![index].companyName.toString()),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  RatingBar(rating: widget.providers![index].avgRating),
+                                  Gaps.horizontalGapOf(5),
+                                  Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child:  Text('${widget.providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
+                                      fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                                    )),
+                                  ),
+                                  // const Text("0 Reviews"),
+                                ],
                               ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Gaps.horizontalGapOf(6),
-                    // Text(serviceProviderIDss.toString()),
-                    // Text(widget.providers[index].id.toString()),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 50.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("with in ${widget.providers[index].distance!.toInt()} miles"),
+                              SizedBox(
+                                width: Get.width*0.178,
+                                child: Text(widget.providers![index].companyDescription.toString(),
+                                  style: ubuntuRegular.copyWith(
+                                    overflow:TextOverflow.ellipsis,
+                                    fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                                  ),textAlign: TextAlign.start,maxLines:1,softWrap: true,overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      Gaps.horizontalGapOf(6),
+                      // Text(serviceProviderIDss.toString()),
+                      // Text(widget.providers[index].id.toString()),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 50.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("with in ${widget.providers[index].distance!.toInt()} miles"),
 
-                          ElevatedButton(
-                            onPressed: () async {
-                              serviceProviderIDss = [widget.providers[index].id];
-                              print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
-                              if(Get.find<AuthController>().isLoggedIn()) {
-                                Get.find<CartController>().resetPreselectedProviderInfo();
+                            ElevatedButton(
+                              onPressed: () async {
+                                serviceProviderIDss = [widget.providers[index].id];
+                                print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
+                                if(Get.find<AuthController>().isLoggedIn()) {
+                                  Get.find<CartController>().resetPreselectedProviderInfo();
 
 
-                                if (serviceProviderIDss!.isNotEmpty) {
-                                  await createQuote();
-                                  print("Get Quote Button first pop");
-                                  if (Get.find<SplashController>()
-                                      .configModel.content
-                                      ?.guestCheckout ==
-                                      0 &&
-                                      !Get.find<AuthController>()
-                                          .isLoggedIn()) {
-                                    Get.toNamed(
-                                        RouteHelper.getNotLoggedScreen(
-                                            RouteHelper.cart, "cart"));
+                                  if (serviceProviderIDss!.isNotEmpty) {
+                                    await createQuote();
+                                    print("Get Quote Button first pop");
+                                    if (Get.find<SplashController>()
+                                        .configModel.content
+                                        ?.guestCheckout ==
+                                        0 &&
+                                        !Get.find<AuthController>()
+                                            .isLoggedIn()) {
+                                      Get.toNamed(
+                                          RouteHelper.getNotLoggedScreen(
+                                              RouteHelper.cart, "cart"));
+                                    } else {
+                                      Get.find<CheckOutController>()
+                                          .updateState(
+                                          PageState.orderDetails);
+                                       Get.toNamed(RouteHelper.getCheckoutRoute('cart', 'orderDetails', 'null'));
+                                    }
+                                    // Get.to(CheckoutScreen(
+                                    //   Get.parameters.containsKey('flag') &&
+                                    //           Get.parameters['flag']! ==
+                                    //               'success'
+                                    //       ? 'complete'
+                                    //       : Get.parameters['currentPage']
+                                    //           .toString(),
+                                    //   Get.parameters['addressID'] != null
+                                    //       ? Get.parameters['addressID']!
+                                    //       : 'null',
+                                    //   reload: Get.parameters['reload']
+                                    //                   .toString() ==
+                                    //               "true" ||
+                                    //           Get.parameters['reload']
+                                    //                   .toString() ==
+                                    //               "null"
+                                    //       ? true
+                                    //       : false,
+                                    //   token: Get.parameters["token"],
+                                    // ));
                                   } else {
-                                    Get.find<CheckOutController>()
-                                        .updateState(
-                                        PageState.orderDetails);
-                                     Get.toNamed(RouteHelper.getCheckoutRoute('cart', 'orderDetails', 'null'));
+                                    customSnackBar(
+                                        "please any one add to provider", duration: 2);
+                                    //snackbar
                                   }
-                                  // Get.to(CheckoutScreen(
-                                  //   Get.parameters.containsKey('flag') &&
-                                  //           Get.parameters['flag']! ==
-                                  //               'success'
-                                  //       ? 'complete'
-                                  //       : Get.parameters['currentPage']
-                                  //           .toString(),
-                                  //   Get.parameters['addressID'] != null
-                                  //       ? Get.parameters['addressID']!
-                                  //       : 'null',
-                                  //   reload: Get.parameters['reload']
-                                  //                   .toString() ==
-                                  //               "true" ||
-                                  //           Get.parameters['reload']
-                                  //                   .toString() ==
-                                  //               "null"
-                                  //       ? true
-                                  //       : false,
-                                  //   token: Get.parameters["token"],
-                                  // ));
                                 } else {
-                                  customSnackBar(
-                                      "please any one add to provider", duration: 2);
-                                  //snackbar
+                                  customSnackBar("please login First",duration:2);
+                                  Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
                                 }
-                              } else {
-                                customSnackBar("please login First",duration:2);
-                                Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
-                              }
 
-                            },
-                            // onPressed: () {
-                            //   if (Get.find<AuthController>().isLoggedIn()) {
-                            //     Get.find<CartController>()
-                            //         .resetPreselectedProviderInfo();
+                              },
+                              // onPressed: () {
+                              //   if (Get.find<AuthController>().isLoggedIn()) {
+                              //     Get.find<CartController>()
+                              //         .resetPreselectedProviderInfo();
+                              //     showModalBottomSheet(
+                              //         context: context,
+                              //         useRootNavigator: true,
+                              //         isScrollControlled: true,
+                              //         backgroundColor: Colors.transparent,
+                              //         builder: (context) => ServiceCenterDialog1(
+                              //           service: service,
+                              //           isFromDetails: true,
+                              //         ));
+                              //   } else {
+                              //     customSnackBar("please login First",duration:2);
+                              //     // Get.toNamed(RouteHelper.getSignInRoute(
+                              //     //     Get.currentRoute));
+                              //     Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+                              //   }
+                              //
+                              //
+                              //   // var providerid= providers[index].id.toString();
+                              //   // print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${providers[index].id.toString()}");
+                              //   // Get.find<CartController>().resetPreselectedProviderInfo();
+                              //   // showModalBottomSheet(
+                              //   //     context: context,
+                              //   //     useRootNavigator: true,
+                              //   //     isScrollControlled: true,
+                              //   //     backgroundColor: Colors.transparent,
+                              //   //     builder: (context) => ServiceCenterDialog(
+                              //   //       service: service, isFromDetails: true,
+                              //   //       providerId: providers[index].distance!.toInt(),
+                              //   //       logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providers![index].logo.toString()}",
+                              //   //     )
+                              //   // );
+                              // },
+                              child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
+                            ),
+
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     var providerid= providers[index].id.toString();
+                            //     print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${providers[index].id.toString()}");
+                            //     Get.find<CartController>().resetPreselectedProviderInfo();
                             //     showModalBottomSheet(
                             //         context: context,
                             //         useRootNavigator: true,
                             //         isScrollControlled: true,
                             //         backgroundColor: Colors.transparent,
-                            //         builder: (context) => ServiceCenterDialog1(
-                            //           service: service,
-                            //           isFromDetails: true,
-                            //         ));
-                            //   } else {
-                            //     customSnackBar("please login First",duration:2);
-                            //     // Get.toNamed(RouteHelper.getSignInRoute(
-                            //     //     Get.currentRoute));
-                            //     Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
-                            //   }
-                            //
-                            //
-                            //   // var providerid= providers[index].id.toString();
-                            //   // print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${providers[index].id.toString()}");
-                            //   // Get.find<CartController>().resetPreselectedProviderInfo();
-                            //   // showModalBottomSheet(
-                            //   //     context: context,
-                            //   //     useRootNavigator: true,
-                            //   //     isScrollControlled: true,
-                            //   //     backgroundColor: Colors.transparent,
-                            //   //     builder: (context) => ServiceCenterDialog(
-                            //   //       service: service, isFromDetails: true,
-                            //   //       providerId: providers[index].distance!.toInt(),
-                            //   //       logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providers![index].logo.toString()}",
-                            //   //     )
-                            //   // );
-                            // },
-                            child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
-                          ),
+                            //         builder: (context) => ServiceCenterDialog(
+                            //           service: service, isFromDetails: true,
+                            //           providerId: providers[index].distance!.toInt(),
+                            //           logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providers![index].logo.toString()}",
+                            //         )
+                            //     );
+                            //   },
+                            //   child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
+                            // ),
+                            /*
+                              SizedBox(
+                                height: 30,
+                                child:  GetBuilder<CartController>(builder: (cartControllerInit) {
+                                  return GetBuilder<CartController>(
+                                      builder: (cartController) {
+                                        bool addToCart = true;
+                                        return cartController.isLoading
+                                            ? const Center(
+                                            child: CircularProgressIndicator())
+                                            : ElevatedButton(
+                                          onPressed: () {
+                                            print("ADD CARD1");
 
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     var providerid= providers[index].id.toString();
-                          //     print("ankur=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${providers[index].id.toString()}");
-                          //     Get.find<CartController>().resetPreselectedProviderInfo();
-                          //     showModalBottomSheet(
-                          //         context: context,
-                          //         useRootNavigator: true,
-                          //         isScrollControlled: true,
-                          //         backgroundColor: Colors.transparent,
-                          //         builder: (context) => ServiceCenterDialog(
-                          //           service: service, isFromDetails: true,
-                          //           providerId: providers[index].distance!.toInt(),
-                          //           logoImage:"${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providers![index].logo.toString()}",
-                          //         )
-                          //     );
-                          //   },
-                          //   child: Text('${"Quote".tr}',style: ubuntuRegular.copyWith(color: Colors.white),),
-                          // ),
-                          /*
-                            SizedBox(
-                              height: 30,
-                              child:  GetBuilder<CartController>(builder: (cartControllerInit) {
-                                return GetBuilder<CartController>(
-                                    builder: (cartController) {
-                                      bool addToCart = true;
-                                      return cartController.isLoading
-                                          ? const Center(
-                                          child: CircularProgressIndicator())
-                                          : ElevatedButton(
-                                        onPressed: () {
-                                          print("ADD CARD1");
+                                            if(Get.find<SplashController>().configModel.content?.biddingStatus==1);
 
-                                          if(Get.find<SplashController>().configModel.content?.biddingStatus==1);
+                                            cartController.updateQuantity(index, true);
+                                            cartController.showMinimumAndMaximumOrderValueToaster();
 
-                                          cartController.updateQuantity(index, true);
-                                          cartController.showMinimumAndMaximumOrderValueToaster();
+                                              if (addToCart) {
+                                                addToCart = false;
+                                                 cartController.addMultipleCartToServer();
+                                                 cartController.getCartListFromServer(shouldUpdate: true);
+                                              }
 
-                                            if (addToCart) {
-                                              addToCart = false;
-                                               cartController.addMultipleCartToServer();
-                                               cartController.getCartListFromServer(shouldUpdate: true);
-                                            }
+                                            print("ADD CARD");
+                                          },
+                                          child:
 
-                                          print("ADD CARD");
-                                        },
-                                        child:
+                                        Text('${"add".tr} +',style: ubuntuRegular.copyWith(color: Colors.white),
+                                        )
+                                        );
+                                      }
+                                  );
+                                }
+                              ),
+                              )
 
-                                      Text('${"add".tr} +',style: ubuntuRegular.copyWith(color: Colors.white),
-                                      )
-                                      );
-                                    }
-                                );
-                              }
-                            ),
-                            )
-
-                         */
+                           */
 
 
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
+
+          SizedBox(
+            height:ResponsiveHelper.isMobile(context)?6:20,),
 
         ],
       ),

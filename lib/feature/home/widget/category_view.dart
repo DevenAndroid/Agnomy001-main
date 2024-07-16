@@ -156,17 +156,10 @@ class _CategoryViewState extends State<CategoryView> {
                                         image:
                                             '${Get.find<SplashController>().configModel.content!.imageBaseUrl}/category/${categoryController.categoryList![index].image}',
                                         fit: BoxFit.contain,
-                                        height: ResponsiveHelper.isMobile(context)
-                                            ? 40
-                                            : ResponsiveHelper.isTab(context)
-                                                ? 60
-                                                : 80,
-                                        width: ResponsiveHelper.isMobile(
-                                                context)
-                                            ? 40
-                                            : ResponsiveHelper.isTab(context)
-                                                ? 60
-                                                : 80,
+                                        height: ResponsiveHelper.isMobile(context) ? 40
+                                            : ResponsiveHelper.isTab(context) ? 60 : 80,
+                                        width: ResponsiveHelper.isMobile(context) ? 40
+                                            : ResponsiveHelper.isTab(context) ? 60 : 80,
                                       ),
                                     ),
                                     Padding(

@@ -3,6 +3,8 @@ import 'package:demandium/components/ripple_button.dart';
 import 'package:demandium/components/service_center_dialog.dart';
 import 'package:demandium/components/core_export.dart';
 
+import '../../../components/service_center_dialog1.dart';
+
 class HorizontalScrollServiceView extends GetView<ServiceController> {
   final String? fromPage;
   final List<Service>? serviceList;
@@ -66,6 +68,13 @@ class HorizontalScrollServiceView extends GetView<ServiceController> {
                           children: [
                             Stack(
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                                  child: Icon(
+                                      Icons.add_box_sharp,
+                                      color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).focusColor,
+                                      size: Dimensions.paddingSizeExtraLarge),
+                                ),
                                 Container(
                                   width: Get.width / 2.3,
                                   decoration: BoxDecoration(
@@ -136,8 +145,22 @@ class HorizontalScrollServiceView extends GetView<ServiceController> {
                                               children: [
                                                 SizedBox(height:ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeMini: Dimensions.paddingSizeEight,),
                                                 Text(
-                                                  'starts_from'.tr,
+                                                  'Service ${service.providerCount.toString()} Provider',
+                                                  // 'starts_from'.tr,
                                                   style:  ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),),
+
+                                                service.maxDistanceProvider!=null&&service.maxDistanceProvider!=""?
+                                                Text(
+                                                  "Within ${service.maxDistanceProvider!.ceil().toString()} Miles",
+                                                  style: ubuntuRegular.copyWith(
+                                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                                      color: Theme.of(context).colorScheme.primary),
+                                                ):   Text(
+                                                  "Within 0 Miles",
+                                                  style: ubuntuRegular.copyWith(
+                                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                                      color: Theme.of(context).colorScheme.primary),),
+
                                                 Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
@@ -154,26 +177,26 @@ class HorizontalScrollServiceView extends GetView<ServiceController> {
                                                         ),
                                                       ),
                                                     const SizedBox(height: Dimensions.paddingSizeMini,),
-                                                    discountModel.discountAmount! > 0?
-                                                    Directionality(
-                                                      textDirection: TextDirection.ltr,
-                                                      child: Text(PriceConverter.convertPrice(
-                                                          lowestPrice,
-                                                          discount: discountModel.discountAmount!.toDouble(),
-                                                          discountType: discountModel.discountAmountType
-                                                      ),
-                                                        style: ubuntuRegular.copyWith(
-                                                            fontSize: Dimensions.fontSizeLarge,// Dimensions.paddingSizeDefault,
-                                                            color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                                                      ),
-                                                    ):
-                                                    Directionality(
-                                                      textDirection: TextDirection.ltr,
-                                                      child: Text(
-                                                        PriceConverter.convertPrice(lowestPrice),
-                                                        style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                                                      ),
-                                                    ),
+                                                    // discountModel.discountAmount! > 0?
+                                                    // Directionality(
+                                                    //   textDirection: TextDirection.ltr,
+                                                    //   child: Text(PriceConverter.convertPrice(
+                                                    //       lowestPrice,
+                                                    //       discount: discountModel.discountAmount!.toDouble(),
+                                                    //       discountType: discountModel.discountAmountType
+                                                    //   ),
+                                                    //     style: ubuntuRegular.copyWith(
+                                                    //         fontSize: Dimensions.fontSizeLarge,// Dimensions.paddingSizeDefault,
+                                                    //         color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                                                    //   ),
+                                                    // ):
+                                                    // Directionality(
+                                                    //   textDirection: TextDirection.ltr,
+                                                    //   child: Text(
+                                                    //     PriceConverter.convertPrice(lowestPrice),
+                                                    //     style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
+                                                    //   ),
+                                                    // ),
                                                   ],
                                                 )
                                               ],
@@ -193,21 +216,38 @@ class HorizontalScrollServiceView extends GetView<ServiceController> {
                                   padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                                   child: Icon(
                                       Icons.add_box_sharp,
-                                      color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).focusColor,
+                                      color: Theme.of(context).colorScheme.primary,
                                       size: Dimensions.paddingSizeExtraLarge),
                                 ),
                                 Positioned.fill(
                                   child: RippleButton(
                                     onTap: () {
-                                      Get.find<CartController>().resetPreselectedProviderInfo();
-                                      showModalBottomSheet(
-                                        context: context,
-                                        useRootNavigator: true,
-                                        isScrollControlled: true,
-                                        builder: (context) => ServiceCenterDialog(service: service),
-                                        backgroundColor: Colors.transparent
-
-                                    );},
+                                      if (Get.find<AuthController>().isLoggedIn()) {
+                                        Get.find<CartController>()
+                                            .resetPreselectedProviderInfo();
+                                        showModalBottomSheet(
+                                            context: context,
+                                            useRootNavigator: true,
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            builder: (context) => ServiceCenterDialog1(
+                                              service: service,
+                                              isFromDetails: true,
+                                            ));
+                                      } else {
+                                        customSnackBar("please login First",duration:2);
+                                        Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+                                      }
+                                    //   Get.find<CartController>().resetPreselectedProviderInfo();
+                                    //   showModalBottomSheet(
+                                    //     context: context,
+                                    //     useRootNavigator: true,
+                                    //     isScrollControlled: true,
+                                    //     builder: (context) => ServiceCenterDialog(service: service),
+                                    //     backgroundColor: Colors.transparent
+                                    //
+                                    // );
+                                      },
                                   ),
                                 )
                               ],

@@ -20,7 +20,7 @@ class OrderDetailsPage extends StatelessWidget {
       ),
       Get.find<CartController>().preSelectedProvider ? const ProviderDetailsCard(): const SizedBox(),
 
-      const ShowVoucher(),
+     // const ShowVoucher(),
 
       showWalletPaymentCart? const WalletPaymentCard(fromPage: 'checkout',): const SizedBox(),
 

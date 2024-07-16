@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                          const SizedBox(height: Dimensions.paddingSizeDefault,),
 
-                        const FeatheredCategoryView(),
+                        //const FeatheredCategoryView(),
 
                         (serviceController.allService != null && serviceController.allService!.isNotEmpty) ? (ResponsiveHelper.isMobile(context) || ResponsiveHelper.isTab(context))?  Padding(
                           padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault, 15, Dimensions.paddingSizeDefault,  Dimensions.paddingSizeSmall,),

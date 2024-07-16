@@ -137,7 +137,12 @@ class ProviderItemView extends StatelessWidget {
             Row(children: [
 
               ClipRRect(borderRadius: BorderRadius.circular(Dimensions.radiusExtraMoreLarge),
-                child: CustomImage(height: 70, width: 70, fit: BoxFit.cover,
+                child: CustomImage(
+                    // height: 70,
+                    height:ResponsiveHelper.isMobile(context)? 26 : 70,
+                    width:ResponsiveHelper.isMobile(context)? 26 : 70,
+                    // width: 70,
+                    fit: BoxFit.cover,
                     image: "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${providerData.logo}"),
               ),
 
