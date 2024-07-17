@@ -83,8 +83,8 @@ class _PickMapScreenState extends State<PickMapScreen> {
             return Stack(children: [
               GoogleMap(
                 initialCameraPosition: CameraPosition(
-                  target: widget.fromAddAddress! ?   LatLng(locationController.position.latitude, locationController.position.longitude) : _initialPosition!,
-                  zoom: 16
+                    target: widget.fromAddAddress! ?   LatLng(locationController.position.latitude, locationController.position.longitude) : _initialPosition!,
+                    zoom: 16
                 ),
                 minMaxZoomPreference: const MinMaxZoomPreference(0, 16),
                 onMapCreated: (GoogleMapController mapController) {
@@ -117,9 +117,9 @@ class _PickMapScreenState extends State<PickMapScreen> {
                   try{
                     Get.find<LocationController>().updatePosition(_cameraPosition!, false, formCheckout: widget.formCheckout);
                   }catch(e){
-                      if (kDebugMode) {
-                        print('');
-                      }
+                    if (kDebugMode) {
+                      print('');
+                    }
                   }
                 },
                 myLocationButtonEnabled: false,
@@ -191,18 +191,18 @@ class _PickMapScreenState extends State<PickMapScreen> {
                       }else {
 
                         AddressModel address = AddressModel(
-                          latitude: locationController.pickPosition.latitude.toString(),
-                          longitude: locationController.pickPosition.longitude.toString(),
-                          addressType: 'others',
-                          address: locationController.pickAddress.address ?? "",
-                          city: locationController.pickAddress.city ?? "",
-                          country : locationController.pickAddress.country ?? "",
-                          house : locationController.pickAddress.house ?? "",
-                          street : locationController.pickAddress.street ?? "",
-                          zipCode: locationController.pickAddress.zipCode ??""
+                            latitude: locationController.pickPosition.latitude.toString(),
+                            longitude: locationController.pickPosition.longitude.toString(),
+                            addressType: 'others',
+                            address: locationController.pickAddress.address ?? "",
+                            city: locationController.pickAddress.city ?? "",
+                            country : locationController.pickAddress.country ?? "",
+                            house : locationController.pickAddress.house ?? "",
+                            street : locationController.pickAddress.street ?? "",
+                            zipCode: locationController.pickAddress.zipCode ??""
                         );
 
-                       locationController.saveAddressAndNavigate(address, widget.fromSignUp!, widget.route!, widget.canRoute!, true );
+                        locationController.saveAddressAndNavigate(address, widget.fromSignUp!, widget.route!, widget.canRoute!, true );
                       }
                     }else {
                       customSnackBar('pick_an_address'.tr);

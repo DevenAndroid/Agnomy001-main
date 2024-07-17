@@ -39,7 +39,8 @@ class HomeCreatePostView extends StatelessWidget {
                     radius: Dimensions.radiusSmall,
                     onPressed: (){
                       if(Get.find<AuthController>().isLoggedIn()){
-                        showModalBottomSheet(backgroundColor: Colors.transparent, isScrollControlled: true, context: context, builder: (BuildContext context){
+                        showModalBottomSheet(backgroundColor: Colors.transparent, isScrollControlled: true,
+                            context: context, builder: (BuildContext context){
                           return const CustomDateTimePicker();
                         });
                         Get.find<CreatePostController>().resetCreatePostValue();
