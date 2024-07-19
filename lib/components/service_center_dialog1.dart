@@ -75,16 +75,18 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
   void removeOneServiceIDs(int index) {
     if (serviceProviderIDs!
         .contains(servicewiseProviderModel.value.content![index].providerId)) {
-      serviceProviderIDs!.removeWhere((element) =>
-          element == servicewiseProviderModel.value.content![index].providerId);
+      serviceProviderIDs!.removeWhere((element) => element == servicewiseProviderModel.value.content![index].providerId);
     }
   }
 
   @override
   void initState() {
     // Get.find<CartController>().setInitialCartList(widget.service!, widget.providerId);
+    AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
 
     print("placeID => ${placedIdGloabal.value}");
+    print("placeID @ Gloabal => ${placedIdGloabal}");
+    print("placeID @ Gloabal => ${addressModel.id}");
     print("serviceId => ${widget.service!.id.toString()}");
 
     getZoneId();
@@ -782,12 +784,13 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
   RxBool success = false.obs;
 
   Future<ServicewiseProviderModel> fetchServiceProviders() async {
+    AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
     final String url =
         'https://admin.agnomy.com/api/v1/customer/service/providders';
     final String serviceId = widget.service!.id.toString();
     final String placeId = placedIdGloabal.value;
     final String? zoneId = addressModel?.zoneId.toString(); //
-    final Uri uri = Uri.parse('$url?service_id=$serviceId&placeid=$placeId&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}');
+    final Uri uri = Uri.parse('$url?service_id=$serviceId&placeid=$placeId&lat=${addressModel.latitude.toString()}&long=${addressModel.longitude.toString()}');
     print("zoneId${zoneId.toString()}");
     final response = await http.get(
       uri,

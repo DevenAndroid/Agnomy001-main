@@ -79,9 +79,7 @@ class MyApp extends StatelessWidget {
     Get.find<SplashController>().getConfigData().then((bool isSuccess) async {
       if (Get.find<LocationController>().getUserAddress() != null) {
         AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
-        ZoneResponseModel responseModel = await Get.find<LocationController>()
-            .getZone(addressModel.latitude.toString(),
-                addressModel.longitude.toString(), false);
+        ZoneResponseModel responseModel = await Get.find<LocationController>().getZone(addressModel.latitude.toString(), addressModel.longitude.toString(), false);
         addressModel.availableServiceCountInZone =
             responseModel.totalServiceCount;
         Get.find<LocationController>().saveUserAddress(addressModel);

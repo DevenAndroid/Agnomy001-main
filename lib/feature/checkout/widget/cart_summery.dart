@@ -279,7 +279,12 @@ class _CartSummeryState extends State<CartSummery> {
                           ),
                         ),
                         const SizedBox(height: Dimensions.paddingSizeLarge),
-                        Text("Crop Type Drop Down",style:  ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyLarge?.color)),
+                        Row(
+                          children: [
+                            Text("Crop Type Drop Down",style:  ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyLarge?.color)),
+                            Text("*", style: ubuntuRegular.copyWith(color: Theme.of(context).colorScheme.error),)
+                          ],
+                        ),
                        SizedBox(height: 10,),
                         Row(children: [
                           Expanded(
@@ -333,7 +338,7 @@ class _CartSummeryState extends State<CartSummery> {
                                // nextFocus: _zipNode,
                                 controller: cropController,
                                // onChanged: (text) => locationController.setPlaceMark(country: text),
-                                isRequired: false,
+                                isRequired: true,
                               ),
                             ),
 
@@ -349,7 +354,7 @@ class _CartSummeryState extends State<CartSummery> {
                                // nextFocus: _streetNode,
                                 controller:aacurageController ,
                                 //onChanged: (text) => locationController.setPlaceMark(zipCode: text),
-                                isRequired: false,
+                                isRequired: true,
                               ),
                             ),
 

@@ -315,9 +315,12 @@ class Providers {
   String? providerLongitude;
   String? companyName;
   String? companyDescription;
-  double? distance;
-  double? ratingCount;
-  double? avgRating;
+  // double? distance;
+  dynamic distance;
+  // double? ratingCount;
+  dynamic ratingCount;
+  // double? avgRating;
+  dynamic avgRating;
   List<Null>? serviceDiscount;
   List<Null>? campaignDiscount;
 

@@ -379,8 +379,11 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     Directionality(
                       textDirection: TextDirection.ltr,
-                      child: Text(' ${PriceConverter.convertPrice((cartController.totalPrice),
-                          isShowLongPrice: true)} ', style: ubuntuBold.copyWith(color: Theme.of(context).colorScheme.error, fontSize: Dimensions.fontSizeLarge,),
+                      child:
+                      // cartListTotalPrice.toString() !=null?  cartListTotalPrice.toString():"0.00"
+                      Text(cartListTotalPrice.toString() !=null?  cartListTotalPrice.toString():"0.00",
+                        //' ${PriceConverter.convertPrice((cartController.totalPrice), isShowLongPrice: true)} ',
+                        style: ubuntuBold.copyWith(color: Theme.of(context).colorScheme.error, fontSize: Dimensions.fontSizeLarge,),
                       ),
                     )
                   ],

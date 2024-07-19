@@ -301,8 +301,8 @@ class _AllServiceViewState extends State<AllServiceView> {
             offset: 1,
             reload: true,
             placeId: placedIdGloabal.value,
-            distance: int.parse(
-                serviceController.servicevalue.replaceAll("150+", "151")));
+            distance: int.parse(serviceController.servicevalue.replaceAll("150+", "151")));
+
       },
           builder: (serviceController) {
         return FooterBaseView(

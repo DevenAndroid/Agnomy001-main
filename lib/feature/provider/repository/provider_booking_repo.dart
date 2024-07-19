@@ -14,8 +14,9 @@ class ProviderBookingRepo {
   }
 
   Future<Response> getProviderList({required int offset, int? distance , String? placeID,required  Map<String,dynamic> body}) async {
+    AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
 
-    return await apiClient.postData("${AppConstants.getProviderList}$offset&placeid$placeID&distance$distance&lat=${placedIdGloaballat.value}&long=${placedIdGloaballong.value}",body);
+    return await apiClient.postData("${AppConstants.getProviderList}$offset&placeid$placeID&distance$distance&lat=${addressModel.latitude.toString()}&long=${addressModel.longitude.toString()}",body);
   }
 
   Future<Response> getProviderDetails(String providerId) async {

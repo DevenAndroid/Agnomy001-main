@@ -518,7 +518,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                 ),
                 Positioned.fill(child: RippleButton(onTap: () {
                   if (Get.find<AuthController>().isLoggedIn()) {
-                    Get.find<CartController>().resetPreselectedProviderInfo();
+                    // Get.find<CartController>().resetPreselectedProviderInfo();
                     showModalBottomSheet(
                         context: context,
                         useRootNavigator: true,

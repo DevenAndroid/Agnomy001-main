@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/campaign/model/service_types.dart';
 
+import '../../location/controller/location_controller.dart';
+
 class ServiceController extends GetxController implements GetxService {
   final ServiceRepo serviceRepo;
   ServiceController({required this.serviceRepo});
@@ -121,8 +123,14 @@ class ServiceController extends GetxController implements GetxService {
   bool get shuffleRecommendList => _shuffleRecommendList;
 
 
+
+  AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
+
+
+
   @override
   Future<void> onInit() async {
+    ZoneResponseModel responseModel = await Get.find<LocationController>().getZone(addressModel.latitude.toString(), addressModel.longitude.toString(), false);
     super.onInit();
     if(Get.find<AuthController>().isLoggedIn()) {
      await Get.find<UserController>().getUserInfo();
@@ -134,12 +142,16 @@ class ServiceController extends GetxController implements GetxService {
 
 
 
-  Future<void> getAllServiceList({required int offset, required bool reload, String? placeId, int? distance }) async {
+  Future<void> getAllServiceList({required int offset, required bool reload, String? placeId, int? distance, String?lat ,String?lng }) async {
     if(offset != 1 || _allService == null || reload){
       if(reload){
         _allService = null;
       }
-      Response response = await serviceRepo.getAllServiceList( offset: offset,placeID: placeId,distance: distance );
+
+      Response response = await serviceRepo.getAllServiceList( offset: offset,placeID: placeId,distance: distance ,lat:addressModel.latitude.toString() ,lng:addressModel.longitude.toString()  );
+    //   latitude: locationController.position.latitude.toString(),
+    // longitude: locationController.position.longitude.toString(),
+      // Response response = await locationRepo.getZone(lat, long);
       if (response.statusCode == 200) {
         if(reload){
           _allService = [];
@@ -161,7 +173,7 @@ class ServiceController extends GetxController implements GetxService {
 
   Future<void> getPopularServiceList({required int offset, required bool reload, int? distance, String? placeId }) async {
     if(offset != 1 || _popularServiceList == null || reload ){
-      Response response = await serviceRepo.getPopularServiceList(offset: offset,placeID: placeId,distance: distance, );
+      Response response = await serviceRepo.getPopularServiceList(offset: offset,placeID: placeId,distance: distance,lat:addressModel.latitude.toString() ,lng:addressModel.longitude.toString() );
       if (response.statusCode == 200) {
         if(reload){
           _popularServiceList = [];
@@ -185,7 +197,7 @@ class ServiceController extends GetxController implements GetxService {
 
   Future<void> getTrendingServiceList({required int offset, required bool reload, int? distance, String? placeId }) async {
     if(offset != 1 || _trendingServiceList == null || reload ){
-      Response response = await serviceRepo.getTrendingServiceList(offset: offset,placeID: placeId,distance: distance);
+      Response response = await serviceRepo.getTrendingServiceList(offset: offset,placeID: placeId,distance: distance, lat:addressModel.latitude.toString() ,lng:addressModel.longitude.toString());
       if (response.statusCode == 200) {
         if(reload){
           _trendingServiceList = [];
@@ -238,7 +250,7 @@ class ServiceController extends GetxController implements GetxService {
         _categoryList =[];
         _featheredCategoryContent = null;
       }
-      Response response = await serviceRepo.getFeatheredCategoryServiceList(placeID : placeId, distance: distance);
+      Response response = await serviceRepo.getFeatheredCategoryServiceList(placeID : placeId, distance: distance, lat:addressModel.latitude.toString() ,lng:addressModel.longitude.toString());
       if (response.statusCode == 200) {
         _featheredCategoryContent = FeatheredCategoryModel.fromJson(response.body).content;
 
@@ -259,7 +271,7 @@ class ServiceController extends GetxController implements GetxService {
 
   Future<void> getRecommendedServiceList({required int offset, required bool reload, String? placeId, int? distance } ) async {
    if(offset != 1 || _recommendedServiceList == null || reload){
-     Response response = await serviceRepo.getRecommendedServiceList(offset: offset,placeID: placeId,distance: distance);
+     Response response = await serviceRepo.getRecommendedServiceList(offset: offset,placeID: placeId,distance: distance, lat:addressModel.latitude.toString() ,lng:addressModel.longitude.toString());
      if (response.statusCode == 200) {
        if(reload){
          _recommendedServiceList = [];
@@ -309,7 +321,7 @@ class ServiceController extends GetxController implements GetxService {
       _subCategoryBasedServiceList = null;
       update();
     }
-    Response response = await serviceRepo.getServiceListBasedOnSubCategory(subCategoryID: subCategoryID,offset: 1);
+    Response response = await serviceRepo.getServiceListBasedOnSubCategory(subCategoryID: subCategoryID,offset: 1, lat:addressModel.latitude.toString() ,lng:addressModel.longitude.toString());
     if (response.statusCode == 200) {
       if(!isWithPagination){
         _subCategoryBasedServiceList = [];

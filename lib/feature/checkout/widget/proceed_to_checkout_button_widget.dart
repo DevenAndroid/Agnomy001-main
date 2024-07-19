@@ -26,6 +26,7 @@ class ProceedToCheckoutButtonWidget extends StatefulWidget {
 class _ProceedToCheckoutButtonWidgetState
     extends State<ProceedToCheckoutButtonWidget> {
 
+
   Future<void> checkoutSummeryApiCall() async {
 print("Data summary ka Body drop :${cropTypesdropdownvalue.toString()}");
 String jsonString = jsonEncode(cropTypesdropdownvalue);
@@ -87,9 +88,8 @@ print("Datajson to ${jsonString}");
 
 
 
-
-
-
+// final controller = Get.put(ScheduleController(scheduleRepo: ScheduleRepo(apiClient: ApiClient(appBaseUrl: , sharedPreferences: sharedPreferences))));
+ final controller = Get.put( Get.find<CheckOutController>().placeBookingRequest);
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +213,9 @@ print("Datajson to ${jsonString}");
 
                     print('if 3');
 
-                    if (!Get.find<ScheduleController>().checkScheduleTime()) {
+                    if (!Get.find<ScheduleController>().checkScheduleTime()
+                    || (controller==null || controller == "null")
+                    ) {
                       print('if 4');
 
                       customSnackBar(
@@ -228,16 +230,19 @@ print("Datajson to ${jsonString}");
                             addressModel.contactPersonName!.isEmpty) ||
                         (addressModel.contactPersonNumber == "null" ||
                             addressModel.contactPersonNumber == null ||
-                            addressModel.contactPersonNumber!.isEmpty)) {
+                            addressModel.contactPersonNumber!.isEmpty)
+
+                        // (Get.find<CheckOutController>().formattedEndTime == "null" ||
+                        //     Get.find<ScheduleController>().sselectedEndDate == null
+
+                      //  )
+                    ) {
                       print('if 6');
 
-                      customSnackBar(
-                          "please_input_contact_person_name_and_phone_number"
-                              .tr);
+                      customSnackBar("please_input_contact_person_name_and_phone_number\n Add to Start Date,Time and End Date,Time".tr);
                     } else {
                       print('if 7');
-                      if (!isPartialPayment &&
-                          cartController.walletPaymentStatus) {
+                      if (!isPartialPayment && cartController.walletPaymentStatus) {
                         print('if 8');
 
                         checkoutController.placeBookingRequest(
@@ -251,14 +256,19 @@ print("Datajson to ${jsonString}");
                       else {
                         print('if 9');
 
-                        // if (questionController.text != null &&
-                        //     messageController.text != null &&
-                        //     questionController.text.isNotEmpty &&
-                        //     messageController.text.isNotEmpty)
-                        //
+                        if (
+                        cropTypesdropdownvalue != null &&
+                        aacurageController.text != null &&
+                            questionController.text != null &&
+                            cropController.text !=null &&
+                            aacurageController.text.isNotEmpty &&
+                            cropController.text.isNotEmpty &&
+                            questionController.text.isNotEmpty
+                        ){
+
                         // {
                           //checkoutController.updateState(PageState.payment); // payment vali screen pe navigation in use for
-                          if (GetPlatform.isWeb) {
+                         // if (GetPlatform.isWeb) {
 
                             ///
 
@@ -281,28 +291,30 @@ print("Datajson to ${jsonString}");
                                   ? 1
                                   : 0,
                               address: addressModel!,
-                              offlinePaymentId:
-                              checkoutController.selectedOfflineMethod?.id,
+                              offlinePaymentId: checkoutController.selectedOfflineMethod?.id,
                               customerInformation: base64Url.encode(utf8.encode(
-                                  jsonEncode(checkoutController
-                                      .offlinePaymentInputFieldValues))),
+                                  jsonEncode(checkoutController.offlinePaymentInputFieldValues))),
                             );
 
-                          }
+                    //      }
 
 
                       //  Get.toNamed(RouteHelper.getCheckoutRoute('cart',Get.find<CheckOutController>().currentPageState.name,"null"));
                           checkoutSummeryApiCall();
                           questionController.clear();
-                          messageController.clear();
+                          aacurageController.clear();
+                          cropController.clear();
+                            // jsonString
+                            // cropTypesdropdownvalue!.clear();
+                          //messageController.clear();
 
-                        //}
+                        }
 
-                        // else {
-                        //   print("error in textfrom feild");
-                        //   customSnackBar("please enter the field it is required",duration:2);
-                        //
-                        // }
+                        else {
+                          print("error in textfrom feild");
+                          customSnackBar("please enter the field it is required",duration:2);
+
+                        }
 
 
                       }

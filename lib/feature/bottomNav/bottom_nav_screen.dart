@@ -128,8 +128,10 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                     if (!isUserLoggedIn && Get.find<SplashController>().configModel.content?.guestCheckout == 1) {
                       Get.toNamed(RouteHelper.getTrackBookingRoute());
                     } else  if(!isUserLoggedIn){
+                      print("1");
                       Get.toNamed(RouteHelper.getNotLoggedScreen("booking","my_bookings"));
                     } else {
+                      print("2");
                       Get.find<BottomNavController>().changePage(BnbItem.bookings);
                     }
                   },

@@ -12,7 +12,8 @@ class CouponRepo {
 
   Future<Response> applyCoupon(String couponCode) async {
     return await apiClient.postData(AppConstants.applyCoupon,
-        {'coupon_code':couponCode,
+        {
+          'coupon_code':couponCode,
           "guest_id" : Get.find<SplashController>().getGuestId()
         }
     );

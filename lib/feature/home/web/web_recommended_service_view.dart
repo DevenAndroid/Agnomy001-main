@@ -38,9 +38,11 @@ class WebRecommendedServiceView extends StatelessWidget {
                       return
                         recommendedServiceList[index].providerCount.toString() == 0  &&
                             serviceController.recommendedServiceList![index].providerCount.toString() == 0
-                            ?  Container(
-                          height: 20,color: Colors.blue,
-                        ) :
+                            ?  const CustomLoader()
+                        // Container(
+                        //   height: 20,color: Colors.blue,
+                        // )
+                            :
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
                           child: InkWell(

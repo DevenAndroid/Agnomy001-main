@@ -440,13 +440,14 @@ class _ServiceOverviewState extends State<ServiceOverview> {
                 crossAxisCount: ResponsiveHelper.isDesktop(context) ? 3 :1 ,
                 crossAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
                 mainAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
-                childAspectRatio: ResponsiveHelper.isDesktop(context) ? 6/2  : 2/0.5 ,
+                childAspectRatio: ResponsiveHelper.isDesktop(context) ? 6/2  : 2/0.65 ,
               ),
               itemBuilder: (context, index) {
              // serviceProviderIDss = [widget.providers[index].id];
                 return Container(
                   // height: 10,
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:  EdgeInsets.symmetric(horizontal: 10,
+                      vertical: ResponsiveHelper.isMobile(context)?4:10),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     border: Border.all(color: Colors.grey),
@@ -472,7 +473,7 @@ class _ServiceOverviewState extends State<ServiceOverview> {
                                   ),
                                   // height: 30,
                                   // width:30,
-                                  height: ResponsiveHelper.isMobile(context) ? 40: 30,
+                                  height: ResponsiveHelper.isMobile(context) ? 30: 30,
                                   width: ResponsiveHelper.isMobile(context) ? 40 : 30,
                                   fit: BoxFit.cover,
                                 ),
@@ -484,16 +485,16 @@ class _ServiceOverviewState extends State<ServiceOverview> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(widget.providers![index].companyName.toString()),
+                              Text(widget.providers[index].companyName.toString()),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  RatingBar(rating: widget.providers![index].avgRating),
+                                  RatingBar(rating: widget.providers[index].avgRating.toDouble()),
                                   Gaps.horizontalGapOf(5),
                                   Directionality(
                                     textDirection: TextDirection.ltr,
-                                    child:  Text('${widget.providers![index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
+                                    child:  Text('${widget.providers[index].ratingCount} ${'reviews'.tr}', style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
                                     )),
                                   ),
@@ -501,8 +502,9 @@ class _ServiceOverviewState extends State<ServiceOverview> {
                                 ],
                               ),
                               SizedBox(
-                                width: Get.width*0.178,
-                                child: Text(widget.providers![index].companyDescription.toString(),
+                                width:ResponsiveHelper.isMobile(context)?Get.width*0.7: Get.width*0.178,
+                                // SizedBox(height:ResponsiveHelper.isMobile(context)?6:20,),
+                                child: Text(widget.providers[index].companyDescription.toString(),
                                   style: ubuntuRegular.copyWith(
                                     overflow:TextOverflow.ellipsis,
                                     fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
@@ -513,17 +515,20 @@ class _ServiceOverviewState extends State<ServiceOverview> {
                           ),
                         ],
                       ),
-                      Gaps.horizontalGapOf(6),
+                      SizedBox(height: ResponsiveHelper.isMobile(context)?0:6,),
+                      // Gaps.horizontalGapOf(6),
                       // Text(serviceProviderIDss.toString()),
                       // Text(widget.providers[index].id.toString()),
                       Padding(
                         padding: const EdgeInsets.only(left: 50.0),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("with in ${widget.providers[index].distance!.toInt()} miles"),
 
                             ElevatedButton(
+
                               onPressed: () async {
                                 serviceProviderIDss = [widget.providers[index].id];
                                 print("Listttttttttttttttttt=>${jsonEncode(serviceProviderIDss)}");
@@ -689,8 +694,7 @@ class _ServiceOverviewState extends State<ServiceOverview> {
             ),
           ),
 
-          SizedBox(
-            height:ResponsiveHelper.isMobile(context)?6:20,),
+          SizedBox(height:ResponsiveHelper.isMobile(context)?6:20,),
 
         ],
       ),

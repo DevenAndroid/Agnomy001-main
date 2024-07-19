@@ -74,10 +74,10 @@ class ScheduleController extends GetxController{
           return Column(
             children: [
               ConstrainedBox(
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                     maxWidth: 400.0, maxHeight: 700.0),
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: child,
                 ),
               )

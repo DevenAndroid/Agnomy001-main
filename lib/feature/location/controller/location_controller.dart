@@ -121,7 +121,7 @@ class LocationController extends GetxController implements GetxService {
         CameraPosition(target: LatLng(myPosition.latitude, myPosition.longitude), zoom: 16),
       ));
     }
-    AddressModel address = await getAddressFromGeocode(LatLng(myPosition.latitude, myPosition.longitude));
+   // AddressModel address = await getAddressFromGeocode(LatLng(myPosition.latitude, myPosition.longitude));
 
 
     ZoneResponseModel responseModel = await getZone(myPosition.latitude.toString(), myPosition.longitude.toString(), true, isLoading: fromAddress);

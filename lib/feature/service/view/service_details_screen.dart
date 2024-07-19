@@ -290,11 +290,12 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                                     crossAxisCount: ResponsiveHelper.isDesktop(context) ? 3 :1 ,
                                                                     crossAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
                                                                     mainAxisSpacing: ResponsiveHelper.isDesktop(context)? 10.0:Dimensions.paddingSizeSmall,
-                                                                    childAspectRatio: ResponsiveHelper.isDesktop(context) ? 6/2  : 2/0.5 ,
+                                                                    childAspectRatio: ResponsiveHelper.isDesktop(context) ? 6/2  : 2/0.65 ,
                                                                   ),
                                                                   itemBuilder: (context, index) {
                                                                     return Container(
-                                                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                                      padding:  EdgeInsets.symmetric(horizontal: 10,
+                                                                          vertical:ResponsiveHelper.isMobile(context)?4:10),
                                                                       decoration: BoxDecoration(
                                                                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                                                                         border: Border.all(color: Colors.grey),
@@ -318,8 +319,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                                                       image: NetworkImage(
                                                                                           "${Get.find<SplashController>().configModel.content!.imageBaseUrl}/provider/logo/${service.providers![index].logo.toString()}"
                                                                                       ),
-                                                                                      height: 30,
-                                                                                      width:30,fit: BoxFit.cover,
+                                                                                      height: ResponsiveHelper.isMobile(context) ? 30: 30,
+                                                                                      width: ResponsiveHelper.isMobile(context) ? 40 : 30,
+                                                                                      fit: BoxFit.cover,
                                                                                     ),
                                                                                   ),
                                                                                 ),
@@ -333,7 +335,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                     mainAxisAlignment: MainAxisAlignment.start,
                                                                                     children: [
-                                                                                      RatingBar(rating: service.providers![index].avgRating),
+                                                                                      RatingBar(rating: service.providers![index].avgRating.toDouble()),
                                                                                       Gaps.horizontalGapOf(5),
                                                                                       Directionality(
                                                                                         textDirection: TextDirection.ltr,
@@ -345,7 +347,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                                                     ],
                                                                                   ),
                                                                                   SizedBox(
-                                                                                    width: Get.width*0.176,
+                                                                                    width:ResponsiveHelper.isMobile(context)?Get.width*0.7: Get.width*0.178,
                                                                                     child: Text(service.providers![index].companyDescription.toString(),
                                                                                       style: ubuntuRegular.copyWith(
                                                                                         overflow:TextOverflow.ellipsis,
