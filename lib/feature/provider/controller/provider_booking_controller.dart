@@ -32,6 +32,7 @@ class ProviderBookingController extends GetxController implements GetxService {
   ProviderDetailsContent? get providerDetailsContent => _providerDetailsContent;
 
   List<CategoryModelItem> categoryItemList =[];
+  // List<SubscribedServices> providerDetailsContent!.subscribedServices =[];
 
   List<ProviderData>? _providerList;
   List<ProviderData>? get  providerList=> _providerList;
@@ -127,7 +128,8 @@ class ProviderBookingController extends GetxController implements GetxService {
 
     if(_providerDetailsContent == null || reload){
       if(reload){
-        categoryItemList =[];
+         categoryItemList =[];
+       // _providerDetailsContent!.subscribedServices =[];
         _providerDetailsContent = null;
       }
       Response response = await providerBookingRepo.getProviderDetails(providerId);
@@ -143,9 +145,12 @@ class ProviderBookingController extends GetxController implements GetxService {
               });
 
               if(serviceList.isNotEmpty){
-                categoryItemList.add(CategoryModelItem(
+                categoryItemList.add(
+                  //providerDetailsContent!.subscribedServices![0].name
+                    CategoryModelItem(
                   title: subcategory.name!, serviceList: serviceList,
-                ));
+                )
+                );
               }
             }
           }

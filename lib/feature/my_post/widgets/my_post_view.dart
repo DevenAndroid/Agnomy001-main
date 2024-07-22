@@ -73,7 +73,8 @@ class MyPostView extends StatelessWidget {
                     child: Text(status=="no_bid"? "no_provider_bid_for_post".tr
                           : status == "bid_available"? "${postData?.bidsCount??""} ${'provider_are_interested'.tr}"
                           : postData?.booking?.bookingStatus.toString().tr??"",
-                      style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
+                      style: ubuntuMedium.copyWith(
+                          fontSize:Dimensions.fontSizeSmall,
                         color:
                         bookingStatus=="ongoing" ? Theme.of(context).colorScheme.primary:
                         bookingStatus=="pending" ? Theme.of(context).colorScheme.primary.withOpacity(.2):
@@ -93,7 +94,7 @@ class MyPostView extends StatelessWidget {
                 right: -9,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 3),
-                  height: 17, width: 17,
+                  height: 16, width: 16,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Theme.of(context).colorScheme.error
@@ -101,7 +102,7 @@ class MyPostView extends StatelessWidget {
                   child: FittedBox(
                       child: Text(
                         postData!.bidsCount.toString(),
-                        style: ubuntuRegular.copyWith(color: light.cardColor
+                        style: ubuntuRegular.copyWith(color:light.cardColor
                         ),
                       )
                   ),

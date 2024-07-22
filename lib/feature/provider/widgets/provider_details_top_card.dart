@@ -32,6 +32,7 @@ class ProviderDetailsTopCard extends StatelessWidget {
 
                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                 Text(subcategories,
+                  //subcategories,
                   style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).secondaryHeaderColor),
                   maxLines: 2,overflow: TextOverflow.ellipsis,
                 ),

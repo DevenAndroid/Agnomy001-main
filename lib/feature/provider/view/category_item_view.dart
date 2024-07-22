@@ -3,22 +3,31 @@ import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/provider/model/category_model_item.dart';
 import 'package:get/get.dart';
 
+import '../model/provider_details_model.dart';
+
 class CategorySection extends StatelessWidget {
-  const CategorySection({Key? key, required this.category,}) : super(key: key);
+   CategorySection({Key? key, required this.category,}) : super(key: key);
 
   final CategoryModelItem category;
+  ProviderDetailsContent? _providerDetailsContent;
+  List<SubscribedServices>? get providerDetailsContent => _providerDetailsContent!.subscribedServices;
+
+
 
   @override
   Widget build(BuildContext context) {
 
     return Container(
       decoration: BoxDecoration(
-        color: category.title=="popular"?
-        Theme.of(context).primaryColor.withOpacity(0.1): null,
+        color:
+        //category.title=="popular"?
+        Theme.of(context).primaryColor.withOpacity(0.1),
+            //: null,
         border: Border.symmetric(horizontal: BorderSide(color: Theme.of(context).hintColor.withOpacity(0.5),width: 1),),
       ),
       padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault,0,Dimensions.paddingSizeDefault,Dimensions.paddingSizeLarge),
-      child: category.serviceList.isNotEmpty?
+      child:
+      category.serviceList.isNotEmpty?
       Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
         Padding(padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeDefault),
           child: Row(
@@ -28,15 +37,29 @@ class CategorySection extends StatelessWidget {
               if(category.title=="popular")
                 const SizedBox(width: Dimensions.paddingSizeDefault,),
 
-              Text(category.title,style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),),
+              Text(
+    // providerDetailsContent![0].name.toString(),
+    //providerDetailsContent!.subscribedServices![0].name.toString(),
+               category.title,
+
+                style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
+
+              ),
+
+
             ],
           ),
         ),
+
+
+
         category.title=="popular"?
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount:  category.serviceList.length,
+          itemCount:
+          //providerDetailsContent!.length,
+          category.serviceList.length,
           itemBuilder: (context, index){
             Discount discount = PriceConverter.discountCalculation(category.serviceList[index]);
 

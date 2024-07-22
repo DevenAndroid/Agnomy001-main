@@ -168,8 +168,7 @@ class BookingTabBar extends StatelessWidget {
                   ? const SizedBox()
                   : GetBuilder<BookingDetailsController>(
                       builder: (bookingDetailsController) {
-                      BookingDetailsContent? bookingDetailsContent =
-                          bookingDetailsController.bookingDetailsContent;
+                      BookingDetailsContent? bookingDetailsContent = bookingDetailsController.bookingDetailsContent;
 
                       // bool isPartialPayment = CheckoutHelper.checkPartialPayment(
                       //     walletBalance: cartController.walletBalance,
@@ -384,6 +383,9 @@ class BookingTabBar extends StatelessWidget {
                                         height: 0,
                                         width: 0,
                                       ),
+
+
+
                                 SizedBox(width: 1),
                                 bookingDetailsContent.bookingStatus ==
                                         "Accepted"
@@ -451,6 +453,7 @@ class BookingTabBar extends StatelessWidget {
                                         height: 0,
                                         width: 0,
                                       ),
+
                                 Padding(
                                   padding: const EdgeInsets.all(6.0),
                                   child: InkWell(
@@ -512,6 +515,7 @@ class BookingTabBar extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+
                                 const SizedBox(
                                     width: Dimensions.paddingSizeSmall),
                                 bookingDetailsContent.bookingStatus ==

@@ -31,8 +31,7 @@ class AcceptProviderRequestView extends StatelessWidget {
                     "/provider/logo/${providerOfferData.provider?.logo??""}",
               ),
             ),
-
-            const SizedBox(width: Dimensions.paddingSizeSmall,),
+             const SizedBox(width: Dimensions.paddingSizeSmall,),
             Expanded(
               child: Stack(
                 alignment:Get.find<LocalizationController>().isLtr? Alignment.topRight: Alignment.topLeft,
@@ -40,7 +39,7 @@ class AcceptProviderRequestView extends StatelessWidget {
                   Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,children: [
                     Text(providerOfferData.provider?.companyName??"", style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
                         maxLines: 1, overflow: TextOverflow.ellipsis),
-                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                   // const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                     Row(
                       children: [
                         Icon(Icons.star,color: Theme.of(context).colorScheme.primary,size: 10,),
@@ -56,7 +55,7 @@ class AcceptProviderRequestView extends StatelessWidget {
 
                       ],
                     ),
-                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                  //  const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -107,7 +106,8 @@ class AcceptProviderRequestView extends StatelessWidget {
                       ),
 
                       const SizedBox(width: Dimensions.paddingSizeSmall,),
-
+                      // bookingDetailsContent.customerBookingStatus.toString() =="0"
+                      // ?
                       GestureDetector(
                         onTap:() async {
                           Get.toNamed(RouteHelper.getCustomPostCheckoutRoute(
@@ -123,7 +123,9 @@ class AcceptProviderRequestView extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault,vertical: Dimensions.paddingSizeExtraSmall),
                           child: Center(child: Text('accept'.tr,style: ubuntuRegular.copyWith(color: Colors.white),)),
                         ),
-                      ),
+                      )
+                          //:
+                     // SizedBox(),
                     ],)
 
                   ],),

@@ -24,8 +24,9 @@ class ProviderDetails {
 class ProviderDetailsContent {
   Provider? provider;
   List<SubCategories>? subCategories;
+  List<SubscribedServices>? subscribedServices;
 
-  ProviderDetailsContent({this.provider, this.subCategories});
+  ProviderDetailsContent({this.provider, this.subCategories,  this.subscribedServices});
 
   ProviderDetailsContent.fromJson(Map<String, dynamic> json) {
     provider = json['provider'] != null
@@ -37,6 +38,13 @@ class ProviderDetailsContent {
         subCategories!.add(SubCategories.fromJson(v));
       });
     }
+    if (json['subscribed_services'] != null) {
+      subscribedServices = <SubscribedServices>[];
+      json['subscribed_services'].forEach((v) {
+        subscribedServices!.add(new SubscribedServices.fromJson(v));
+      });
+    }
+
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +55,10 @@ class ProviderDetailsContent {
     if (subCategories != null) {
       data['sub_categories'] =
           subCategories!.map((v) => v.toJson()).toList();
+    }
+    if (this.subscribedServices != null) {
+      data['subscribed_services'] =
+          this.subscribedServices!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -250,6 +262,7 @@ class SubCategories {
   }
 }
 
+
 class TimeSchedule {
   String? startTime;
   String? endTime;
@@ -265,6 +278,44 @@ class TimeSchedule {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['start_time'] = startTime;
     data['end_time'] = endTime;
+    return data;
+  }
+}
+
+
+class SubscribedServices {
+  String? name;
+  String? shortDescription;
+  String? description;
+  String? coverImage;
+  String? thumbnail;
+  int? ratingCount;
+
+  SubscribedServices(
+      {this.name,
+        this.shortDescription,
+        this.description,
+        this.coverImage,
+        this.thumbnail,
+        this.ratingCount});
+
+  SubscribedServices.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    shortDescription = json['short_description'];
+    description = json['description'];
+    coverImage = json['cover_image'];
+    thumbnail = json['thumbnail'];
+    ratingCount = json['rating_count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['short_description'] = this.shortDescription;
+    data['description'] = this.description;
+    data['cover_image'] = this.coverImage;
+    data['thumbnail'] = this.thumbnail;
+    data['rating_count'] = this.ratingCount;
     return data;
   }
 }

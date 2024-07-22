@@ -211,7 +211,7 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                         Row(
                           children: [
                             Text(
-                              'Show Provider',
+                              'Show Provider',  
                               style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeLarge),
                             ),
                             const SizedBox(width: Dimensions.paddingSizeDefault),
