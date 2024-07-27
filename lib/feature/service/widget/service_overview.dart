@@ -502,9 +502,9 @@ class _ServiceOverviewState extends State<ServiceOverview> {
                                 ],
                               ),
                               SizedBox(
-                                width:ResponsiveHelper.isMobile(context)?Get.width*0.7: Get.width*0.178,
+                                width:ResponsiveHelper.isMobile(context)?Get.width*0.7: Get.width*0.18,
                                 // SizedBox(height:ResponsiveHelper.isMobile(context)?6:20,),
-                                child: Text(widget.providers[index].companyDescription.toString(),
+                                child: Text('${widget.providers[index].city.toString()}, ${ widget.providers[index].state.toString()}',
                                   style: ubuntuRegular.copyWith(
                                     overflow:TextOverflow.ellipsis,
                                     fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,

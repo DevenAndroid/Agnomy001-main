@@ -135,36 +135,36 @@ class ProviderDetailsScreenState extends State<ProviderDetailsScreen> with Singl
                           verticalScrollPosition: VerticalScrollPosition.begin,
 
                           eachItemChild: (object, index) =>
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                 border: Border.all(
-                   color: Theme.of(context).primaryColor
-                 )
-                 // color: Colors.blue
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(providerBookingController.providerDetailsContent!.subscribedServices![index].name.toString(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                         border: Border.all(
+                                           color: Theme.of(context).primaryColor
+                                         )
+                                         // color: Colors.blue
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(providerBookingController.providerDetailsContent!.subscribedServices![index].name.toString(),
                         style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
 
-                      ),
+                                              ),
 
-                      Text(providerBookingController.providerDetailsContent!.subscribedServices![index].shortDescription.toString(),
-                      ),
-                      SizedBox(height: 8),
+                                              Text(providerBookingController.providerDetailsContent!.subscribedServices![index].shortDescription.toString(),
+                                              ),
+                                              SizedBox(height: 8),
 
-                      // Html(
-                      //   data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),
-                      //  // tagsList: Html.tags,
-                      //
-                      // ),
-                      Row(
+                                              // Html(
+                                              //   data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),
+                                              //  // tagsList: Html.tags,
+                                              //
+                                              // ),
+                                              Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           ClipRRect(
@@ -199,17 +199,18 @@ class ProviderDetailsScreenState extends State<ProviderDetailsScreen> with Singl
                             ),
                           ),
                         ],
-                      ),
-            Html(
-            data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),)
+                                              ),
+                                    Html(
+                                    data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),),
 
-                    ],
-                  ),
-                ),
-              ),
-            ),
 
-            //Text( providerBookingController.providerDetailsContent!.subscribedServices![0].name.toString()),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+
                              // CategorySection(category: object as CategoryModelItem),
                           slivers: [
                             SliverAppBar(

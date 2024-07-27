@@ -46,10 +46,16 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
 
             if(checkoutController.digitalPaymentList.isNotEmpty)
-            Row( children: [
-              Text(" ${'pay_via_online'.tr} ", style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
-              Expanded(child: Text('faster_and_secure_way_to_pay_bill'.tr, style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor))),
-            ]) ,
+            Column(
+              children: [
+                Row( children: [
+                  Text(" ${'pay_via_online'.tr} ", style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
+
+                  Expanded(child: Text('faster_and_secure_way_to_pay_bill'.tr, style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor))),
+                ]),
+                ConditionCheckBox(),
+              ],
+            ) ,
             if(checkoutController.digitalPaymentList.isNotEmpty)
             Padding( padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault),
               child: DigitalPaymentMethodView(

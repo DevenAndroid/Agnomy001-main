@@ -287,22 +287,45 @@ class _CartSummeryState extends State<CartSummery> {
                         ),
                        SizedBox(height: 10,),
                         Row(children: [
+
                           Expanded(
-                            child:MultiSelectDialogField<dynamic>(
+                            child:
+                          //   cropTypesdropdownvalue==null   ?
+                          // Container(
+                          //   height: Get.height*0.04,
+                          //   color: Colors.red,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.symmetric(horizontal: 16),
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       crossAxisAlignment: CrossAxisAlignment.center,
+                          //       children: [
+                          //         Text(quotesListModel.value.content!.quoteData!.serviceName.toString()),
+                          //         IconButton(onPressed: (){}, icon:Icon(Icons.keyboard_arrow_down,size: 18,))
+                          //       ],
+                          //     ),
+                          //   ),
+                          //
+                          // )
+                          //
+                          //   :
+                            MultiSelectDialogField<dynamic>(
                               items: _controllers.cropTypes.value.content!
                                   .map((dynamic item) =>
                                   MultiSelectItem<dynamic>(item, item))
                                   .toList(),
-                              initialValue: [],
-                              title:cropTypesdropdownvalue==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdownvalue.toString()}"),
+                              initialValue: [],           //cropTypesdropdown!.join(',')
+                              title:cropTypesdropdownvalue==null ?
+                              Text("Select Items")
+                                  :Text("Choose value:${cropTypesdropdownvalue!.join(',')}"),
                               selectedColor: Colors.blue,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                   border: Border.fromBorderSide(BorderSide(
                                       color: Colors.grey
                                   ),)
                               ),
-                              buttonIcon: Icon(
+                              buttonIcon: const Icon(
                                 Icons.keyboard_arrow_down,
                                 color: Colors.grey,
                               ),
@@ -312,14 +335,15 @@ class _CartSummeryState extends State<CartSummery> {
                                   color: Colors.grey,
                                   fontSize: 16,
                                 ),
-                              ):Text("${cropTypesdropdownvalue.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
+                              ):Text("${cropTypesdropdownvalue!.join(', ')}",softWrap: true,overflow: TextOverflow.ellipsis),
                               onConfirm: (List<dynamic> values) {
                                 setState(() {
                                   cropTypesdropdownvalue = values;
                                   print('Selected values: $values');
                                 });
                               },
-                            ),
+                            )
+                            ,
                           ),
                         ],),
 
@@ -332,7 +356,7 @@ class _CartSummeryState extends State<CartSummery> {
                               child: CustomTextField(
                                 title: 'Crop'.tr,
                                 hintText: 'enter_crop'.tr,
-                                inputType: TextInputType.phone,
+                                inputType: TextInputType.text,
                                // focusNode: _countryNode,
                                 //inputAction: TextInputAction.next,
                                // nextFocus: _zipNode,

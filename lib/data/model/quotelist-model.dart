@@ -115,6 +115,7 @@ class QuoteProviders {
   String? providerId;
   String? providerName;
   String? logo;
+  String? cropTypes;
 
   QuoteProviders({this.id, this.providerId, this.providerName, this.logo});
 
@@ -123,6 +124,7 @@ class QuoteProviders {
     providerId = json['provider_id'];
     providerName = json['provider_name'];
     logo = json['logo'];
+    cropTypes = json['crop_types'];
   }
 
   Map<String, dynamic> toJson() {
@@ -131,6 +133,7 @@ class QuoteProviders {
     data['provider_id'] = this.providerId;
     data['provider_name'] = this.providerName;
     data['logo'] = this.logo;
+    data['crop_types'] = this.cropTypes;
     return data;
   }
 }

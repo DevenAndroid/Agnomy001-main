@@ -12,6 +12,7 @@ class ProviderDetailsTopCard extends StatelessWidget {
     return GetBuilder<ProviderBookingController>(
         builder: (providerController){
           Provider providerDetails = providerController.providerDetailsContent!.provider!;
+         String serviceProviderDescription = providerController.providerDetailsContent!.serviceProviderDescription.toString();
       return Column(children: [
         Container(decoration: BoxDecoration(color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
@@ -32,6 +33,11 @@ class ProviderDetailsTopCard extends StatelessWidget {
 
                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                 Text(subcategories,
+                  //subcategories,
+                  style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).secondaryHeaderColor),
+                  maxLines: 2,overflow: TextOverflow.ellipsis,
+                ),
+                serviceProviderDescription=="null"?const SizedBox(height: 0,width: 0,):  Text(serviceProviderDescription.toString(),
                   //subcategories,
                   style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).secondaryHeaderColor),
                   maxLines: 2,overflow: TextOverflow.ellipsis,

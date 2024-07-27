@@ -561,8 +561,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     .map((dynamic item) =>
                     MultiSelectItem<dynamic>(item, item))
                     .toList(),
-                initialValue: [],
-                title:cropTypesdropdown==null ? Text("Select Items"):Text("Choose value:${cropTypesdropdown.toString()}"),
+                initialValue: [],                       //names.join(',')
+                title:cropTypesdropdown==null ? Text("Select Items"): Text("Choose value:${cropTypesdropdown!.join(',')}"),
                 selectedColor: Colors.blue,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -581,7 +581,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     color: Colors.grey,
                     fontSize: 16,
                   ),
-                ):Text("${cropTypesdropdown.toString()}",softWrap: true,overflow: TextOverflow.ellipsis),
+                ):Text("${cropTypesdropdown!.join(',')}",softWrap: true,overflow: TextOverflow.ellipsis),
                 onConfirm: (List<dynamic> values) {
                   setState(() {
                     cropTypesdropdown = values;
@@ -605,7 +605,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             child: CustomTextField(
               title: 'Crop'.tr,
               hintText: 'enter_crop'.tr,
-              inputType: TextInputType.phone,
+              inputType: TextInputType.text,
               // focusNode: _countryNode,
               //inputAction: TextInputAction.next,
               // nextFocus: _zipNode,

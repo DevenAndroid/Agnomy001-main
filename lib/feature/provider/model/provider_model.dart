@@ -84,6 +84,7 @@ class ProviderData {
   String? id;
   String? userId;
   String? companyName;
+  String? cropTypes;
   String? companyPhone;
   String? companyAddress;
   String? companyEmail;
@@ -115,6 +116,7 @@ class ProviderData {
       {this.id,
         this.userId,
         this.companyName,
+        this.cropTypes,
         this.companyPhone,
         this.companyAddress,
         this.companyEmail,
@@ -147,6 +149,7 @@ class ProviderData {
     id = json['id'];
     userId = json['user_id'];
     companyName = json['company_name'];
+    cropTypes = json['crop_types'];
     companyPhone = json['company_phone'];
     companyAddress = json['company_address'];
     companyEmail = json['company_email'];
@@ -187,6 +190,8 @@ class ProviderData {
     data['id'] = id;
     data['user_id'] = userId;
     data['company_name'] = companyName;
+    data['company_type'] = cropTypes;
+    // cropTypes = json['crop_types'];
     data['company_phone'] = companyPhone;
     data['company_address'] = companyAddress;
     data['company_email'] = companyEmail;

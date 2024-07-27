@@ -347,8 +347,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                                                     ],
                                                                                   ),
                                                                                   SizedBox(
-                                                                                    width:ResponsiveHelper.isMobile(context)?Get.width*0.7: Get.width*0.178,
-                                                                                    child: Text(service.providers![index].companyDescription.toString(),
+                                                                                    width:ResponsiveHelper.isMobile(context)?Get.width*0.7: Get.width*0.18,
+                                                                                    child: Text('${service.providers![index].city.toString()}, ${ service.providers![index].state.toString()}',
                                                                                       style: ubuntuRegular.copyWith(
                                                                                         overflow:TextOverflow.ellipsis,
                                                                                         fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,

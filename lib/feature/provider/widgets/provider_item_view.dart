@@ -179,7 +179,11 @@ class ProviderItemView extends StatelessWidget {
                       // ),
                     ),
                   ],
+
                   ),
+                 Text(providerData.cropTypes ?? "", style: ubuntuRegular.copyWith(
+                    fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+                  )),
                 ],),
               )
             ],),

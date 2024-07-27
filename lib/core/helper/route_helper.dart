@@ -159,6 +159,7 @@ class RouteHelper {
   static String getMainRoute(String page, {AddressModel? previousAddress, String? showServiceNotAvailableDialog}) {
     String data = '';
     if(previousAddress != null){
+
       List<int> encoded = utf8.encode(jsonEncode(previousAddress.toJson()));
       data = base64Encode(encoded);
     }

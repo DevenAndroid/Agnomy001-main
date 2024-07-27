@@ -315,6 +315,8 @@ class Providers {
   String? providerLongitude;
   String? companyName;
   String? companyDescription;
+  String? city;
+  String? state;
   // double? distance;
   dynamic distance;
   // double? ratingCount;
@@ -334,6 +336,8 @@ class Providers {
         this.providerLongitude,
         this.companyName,
         this.companyDescription,
+        this.city,
+        this.state,
         this.distance,
         this.ratingCount,
         this.avgRating,
@@ -351,6 +355,8 @@ class Providers {
     providerLongitude = json['provider_longitude'];
     companyName = json['company_name'];
     companyDescription = json['company_description'];
+    city = json['city'];
+    state = json['state'];
     distance = json['distance'];
     ratingCount = json['rating_count'];
     avgRating = json['avg_rating'];
@@ -376,6 +382,8 @@ class Providers {
     data['provider_longitude'] = this.providerLongitude;
     data['company_name'] = this.companyName;
     data['company_description'] = this.companyDescription;
+    data['city'] = this.city;
+    data['state'] = this.state;
     data['distance'] = this.distance;
     data['rating_count'] = this.ratingCount;
     data['avg_rating'] = this.avgRating;
