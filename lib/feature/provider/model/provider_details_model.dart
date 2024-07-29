@@ -26,13 +26,13 @@ class ProviderDetailsContent {
   Provider? provider;
   List<SubCategories>? subCategories;
   List<SubscribedServices>? subscribedServices;
-  String? serviceProviderDescription;
+  // String? serviceProviderDescription;
 
-  ProviderDetailsContent({this.provider, this.subCategories,  this.subscribedServices, this.serviceProviderDescription});
+  ProviderDetailsContent({this.provider, this.subCategories,  this.subscribedServices,});
 
   ProviderDetailsContent.fromJson(Map<String, dynamic> json) {
 
-    serviceProviderDescription = json['service_provider_description'];
+    // serviceProviderDescription = json['service_provider_description'];
     provider = json['provider'] != null
         ? Provider.fromJson(json['provider'])
         : null;
@@ -48,14 +48,14 @@ class ProviderDetailsContent {
         subscribedServices!.add(new SubscribedServices.fromJson(v));
       });
     }
-    serviceProviderDescription = json['service_provider_description'];
+    // serviceProviderDescription = json['service_provider_description'];
 
   }
 
   Map<String, dynamic> toJson() {
 
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['service_provider_description'] = this.serviceProviderDescription;
+    // data['service_provider_description'] = this.serviceProviderDescription;
     if (provider != null) {
       data['provider'] = provider!.toJson();
     }
@@ -67,7 +67,7 @@ class ProviderDetailsContent {
       data['subscribed_services'] =
           this.subscribedServices!.map((v) => v.toJson()).toList();
     }
-    data['service_provider_description'] = serviceProviderDescription;
+    // data['service_provider_description'] = serviceProviderDescription;
     return data;
   }
 }
@@ -298,6 +298,7 @@ class SubscribedServices {
   String? coverImage;
   String? thumbnail;
   int? ratingCount;
+  String? providerDescription;
 
 
   SubscribedServices(
@@ -307,6 +308,7 @@ class SubscribedServices {
         this.coverImage,
         this.thumbnail,
         this.ratingCount,
+        this.providerDescription,
       });
 
   SubscribedServices.fromJson(Map<String, dynamic> json) {
@@ -316,6 +318,7 @@ class SubscribedServices {
     coverImage = json['cover_image'];
     thumbnail = json['thumbnail'];
     ratingCount = json['rating_count'];
+    providerDescription = json['provider_description'];
 
   }
 
@@ -327,7 +330,7 @@ class SubscribedServices {
     data['cover_image'] = this.coverImage;
     data['thumbnail'] = this.thumbnail;
     data['rating_count'] = this.ratingCount;
-
+    data['provider_description'] = this.providerDescription;
     return data;
   }
 }

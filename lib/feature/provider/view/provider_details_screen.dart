@@ -61,10 +61,10 @@ class ProviderDetailsScreenState extends State<ProviderDetailsScreen> with Singl
         child: GetBuilder<ProviderBookingController>(
           builder: (providerBookingController) {
             if (providerBookingController.providerDetailsContent != null) {
-              if (providerBookingController.categoryItemList.isEmpty) {
+              if (providerBookingController.providerDetailsContent!.subscribedServices!.isEmpty) {
                 return Column(
                   children: [
-                    if (providerBookingController.providerDetailsContent?.provider?.serviceAvailability == 0)
+                     if (providerBookingController.providerDetailsContent?.provider?.serviceAvailability == 0)
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -202,6 +202,12 @@ class ProviderDetailsScreenState extends State<ProviderDetailsScreen> with Singl
                                               ),
                                     Html(
                                     data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),),
+
+                                              providerBookingController.providerDetailsContent!.subscribedServices![index].providerDescription == null ?//
+                                   const SizedBox(height: 0,width: 0,)
+                                                  :  Text(providerBookingController.providerDetailsContent!.subscribedServices![index].providerDescription.toString())
+
+
 
 
                                             ],

@@ -80,6 +80,7 @@ class _CategoryViewState extends State<CategoryView> {
                                  Get.find<ServiceController>().getPopularServiceList(offset: 1,reload: true,placeId: placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue.replaceAll("150+", "151")));
                                  Get.find<ServiceController>().getTrendingServiceList( offset: 1,reload: true,placeId: placedIdGloabal.value,distance:int.parse( serviceController.dropdownvalue.replaceAll("150+", "151")));
                                  Get.find<ServiceController>().getFeatherCategoryList(reload: true,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue.replaceAll("150+", "151")) );
+                                 Get.find<ServiceController>().getAllServiceList(reload: true,placeId:placedIdGloabal.value,distance: int.parse(serviceController.dropdownvalue.replaceAll("150+", "151")), offset: 1 );
                                 // dropValue.value = dropdownvalue;
 
                               });

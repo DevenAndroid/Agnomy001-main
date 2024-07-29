@@ -105,6 +105,8 @@ import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/provider/model/provider_model.dart';
 import 'package:get/get.dart';
 
+import '../../booking/model/invoice.dart';
+
 class ProviderItemView extends StatelessWidget {
   final  bool fromHomePage;
   final ProviderData providerData;
@@ -118,6 +120,7 @@ class ProviderItemView extends StatelessWidget {
         subcategory.add(element.subCategory?.name??"");
       }
     });
+
 
     String subcategories = subcategory.toString().replaceAll('[', '');
     subcategories = subcategories.replaceAll(']', '');
@@ -170,6 +173,8 @@ class ProviderItemView extends StatelessWidget {
                       )),
 
 
+
+
                       // Text(
                       //   providerData.avgRating!.toString(),
                       //   style: TextStyle(
@@ -181,6 +186,30 @@ class ProviderItemView extends StatelessWidget {
                   ],
 
                   ),
+                  // SizedBox(
+                  //   // color: Colors.red,
+                  //   height: 20,width: Get.width,
+                  //   child: GetBuilder<ProviderBookingController>(
+                  //   builder: (providerController) {
+                  //     Provider providerDetails = providerController.providerDetailsContent!.provider! as Provider;
+                  //     return
+                  //       ListView.builder(
+                  //         scrollDirection: Axis.horizontal,
+                  //         shrinkWrap: true,
+                  //         physics: const NeverScrollableScrollPhysics(),
+                  //         itemCount: providerController.providerDetailsContent!
+                  //             .subscribedServices!.length,
+                  //         // itemCount: providerController.providerDetailsContent!.subscribedServices!.length,
+                  //         itemBuilder: (context, index) {
+                  //           return Text(
+                  //               '${providerController.providerDetailsContent!
+                  //                   .subscribedServices![index].name
+                  //                   .toString()}, ');
+                  //         },)
+                  //     ;
+                  //   },
+                  //   ),
+                  // ),
                  Text(providerData.cropTypes ?? "", style: ubuntuRegular.copyWith(
                     fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
                   )),
@@ -190,10 +219,11 @@ class ProviderItemView extends StatelessWidget {
 
 
 
-            Text(subcategories,
-              style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).secondaryHeaderColor), maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+            // Text(
+            //   subcategories,
+            //   style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).secondaryHeaderColor), maxLines: 1,
+            //   overflow: TextOverflow.ellipsis,
+            // ),
             SizedBox(height: 10,),
             Row(children: [
               Padding(padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
