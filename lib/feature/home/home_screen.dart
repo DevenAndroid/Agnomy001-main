@@ -4,6 +4,7 @@ import 'package:demandium/feature/home/widget/service_not_availavle.dart';
 import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
+import '../../components/service_center_dialog1.dart';
 import 'web_home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,12 @@ class HomeScreen extends StatefulWidget {
       Get.find<BannerController>().getBannerList(reload);
     }else{
       final serviceController = Get.put(ServiceController(serviceRepo: ServiceRepo(apiClient:Get.find())));
+
+
+      // Get.find<ServiceCenterDialog1>.getAllServiceList( distance: int.parse(serviceController.servicevalue));
+
+
+
       Get.find<ServiceController>().getAllServiceList(offset: 1,reload: reload,placeId: placedIdGloabal.value, distance: int.parse(serviceController.servicevalue));
       Get.find<BannerController>().getBannerList(reload);
       Get.find<CategoryController>().getCategoryList(1,reload);

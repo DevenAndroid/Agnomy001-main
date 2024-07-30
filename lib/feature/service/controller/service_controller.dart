@@ -4,12 +4,10 @@ import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 import 'package:demandium/feature/campaign/model/service_types.dart';
 
-import '../../location/controller/location_controller.dart';
-
 class ServiceController extends GetxController implements GetxService {
   final ServiceRepo serviceRepo;
   ServiceController({required this.serviceRepo});
-  String dropdownvalue = '20';
+  String dropdownvalue = '150';
   var items = [
     '20',
     '30',
@@ -20,7 +18,7 @@ class ServiceController extends GetxController implements GetxService {
     '150',
     '150+'
   ];
-  String milesdropdownvalue = '20';
+  String milesdropdownvalue = '150';
   var miles = [
     '20',
     '30',
@@ -35,7 +33,7 @@ class ServiceController extends GetxController implements GetxService {
 // List of items in our dropdown menu
 
 
-  var servicevalue = '20';
+  var servicevalue = '150';
 
 
 

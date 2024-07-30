@@ -95,6 +95,9 @@ class Provider {
   String? updatedAt;
   int? isApproved;
   String? zoneId;
+  String? state;
+  String? city;
+  String? cropTypes;
   Owner? owner;
   int? serviceAvailability;
   List<String>? weekends;
@@ -103,7 +106,9 @@ class Provider {
 
   Provider(
       {this.id,
+        this.city,this.state,
         this.userId,
+        this.cropTypes,
         this.companyName,
         this.companyPhone,
         this.companyAddress,
@@ -133,6 +138,9 @@ class Provider {
 
   Provider.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    state = json['state'];
+    cropTypes = json['crop_types'];
+    city = json['city'];
     userId = json['user_id'];
     companyName = json['company_name'];
     companyPhone = json['company_phone'];
@@ -171,6 +179,9 @@ class Provider {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['city'] = city;
+    data['crop_types'] =cropTypes;
+    data['state'] = state;
     data['user_id'] = userId;
     data['company_name'] = companyName;
     data['company_phone'] = companyPhone;
@@ -292,6 +303,7 @@ class TimeSchedule {
 
 
 class SubscribedServices {
+  String? id;
   String? name;
   String? shortDescription;
   String? description;
@@ -303,6 +315,7 @@ class SubscribedServices {
 
   SubscribedServices(
       {this.name,
+        this.id,
         this.shortDescription,
         this.description,
         this.coverImage,
@@ -312,6 +325,8 @@ class SubscribedServices {
       });
 
   SubscribedServices.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
     name = json['name'];
     shortDescription = json['short_description'];
     description = json['description'];
@@ -324,6 +339,7 @@ class SubscribedServices {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
     data['short_description'] = this.shortDescription;
     data['description'] = this.description;

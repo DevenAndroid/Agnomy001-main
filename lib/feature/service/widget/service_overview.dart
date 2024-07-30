@@ -410,11 +410,13 @@ class _ServiceOverviewState extends State<ServiceOverview> {
             padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.paddingSizeDefault,
                 vertical: Dimensions.paddingSizeEight),
-            child: Text(
-              "Service Provider in your area:",
-              style: ubuntuRegular.copyWith(
-                  fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
-            ),
+            child:  widget.providers.length == 0 ?const SizedBox(height: 0,width: 0,):
+    Text(
+    "Service Provider in your area:",
+    style: ubuntuRegular.copyWith(
+    fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
+    ),
+
           ),
            SizedBox(
              height:ResponsiveHelper.isMobile(context)?6:20,
@@ -694,6 +696,7 @@ class _ServiceOverviewState extends State<ServiceOverview> {
             ),
           ),
 
+
           SizedBox(height:ResponsiveHelper.isMobile(context)?6:20,),
 
         ],
@@ -708,9 +711,9 @@ class _ServiceOverviewState extends State<ServiceOverview> {
 
 
   Future<void> createQuote() async {
-    final String serviceId = widget.service.id.toString();// widget.service!.id.toString();
-    final String categoryID =widget.service.categoryId.toString(); //widget.service!.categoryId.toString();
-    final String subCategoryID =widget.service.subCategoryId.toString(); //widget.service!.subCategoryId.toString();
+    final String serviceId = widget.service.id.toString();            // widget.service!.id.toString();
+    final String categoryID =widget.service.categoryId.toString();     //widget.service!.categoryId.toString();
+    final String subCategoryID =widget.service.subCategoryId.toString();   //widget.service!.subCategoryId.toString();
 
     final url = Uri.parse('https://admin.agnomy.com/api/v1/customer/create-quote');
     print("token 3${ Get.find<SplashController>().splashRepo.apiClient.token.toString()}");

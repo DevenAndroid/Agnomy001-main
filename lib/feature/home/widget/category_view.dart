@@ -4,6 +4,7 @@ import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
 RxString dropValue = "".obs;
+RxString valueDrop = "".obs;
 class CategoryView extends StatefulWidget {
   const CategoryView({super.key});
 
@@ -28,6 +29,7 @@ class _CategoryViewState extends State<CategoryView> {
         return const SizedBox();
       } else {
         if (categoryController.categoryList != null) {
+          valueDrop.value = serviceController.dropdownvalue ;
           return Center(
             child: SizedBox(
               width: Dimensions.webMaxWidth,

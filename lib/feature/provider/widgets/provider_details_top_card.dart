@@ -60,6 +60,20 @@ class ProviderDetailsTopCard extends StatelessWidget {
                 //   maxLines: 2,overflow: TextOverflow.ellipsis,
                 // ),
                , const SizedBox(height: Dimensions.paddingSizeEight),
+                SizedBox(
+                  // color: Colors.red,
+                  width: Get.width,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('${providerController.providerDetailsContent!.provider!.city.toString()}, ${providerController.providerDetailsContent!.provider!.state.toString()}'),
+                    SizedBox(width: 10,), Text("|"),SizedBox(width: 10,),
+                      Text(providerController.providerDetailsContent!.provider!.cropTypes.toString().replaceAll(",",", ")),
+
+                    ],
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

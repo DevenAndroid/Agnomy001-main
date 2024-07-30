@@ -486,13 +486,13 @@ class ServiceWidgetVertical extends StatelessWidget {
             Positioned.fill(child: RippleButton(onTap: () {
               print("placeid:::${placedIdGloabal.value}");
               if (fromPage == "search_page") {
-                print("search page");
+                print("search page${service.id}");
                 Get.toNamed(
                   RouteHelper.getServiceRoute(service.id!,
                       fromPage: "search_page"),
                 );
               } else {
-                print("RouteHelper.getServiceRoute(service.id!)");
+                print("RouteHelper.getServiceRoute(service.id!)${service.id}");
                 Get.toNamed(
                   RouteHelper.getServiceRoute(service.id!),
                 );

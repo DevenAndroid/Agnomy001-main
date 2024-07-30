@@ -99,7 +99,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
     try {
       addressModel = AddressModel.fromJson(
           jsonDecode(sharedPreferences.getString(AppConstants.userAddress)!));
-      fetchServiceProviders().then((value) {
+     fetchServiceProviders().then((value) {
         servicewiseProviderModel.value = value;
         RxInt refereshInt = 0.obs;
       });
@@ -783,33 +783,42 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog1> {
       ServicewiseProviderModel().obs;
   RxBool success = false.obs;
 
-  Future<ServicewiseProviderModel> fetchServiceProviders() async {
-    AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
-    final String url =
-        'https://admin.agnomy.com/api/v1/customer/service/providders';
-    final String serviceId = widget.service!.id.toString();
-    final String placeId = placedIdGloabal.value;
-    final String? zoneId = addressModel?.zoneId.toString(); //
-    final Uri uri = Uri.parse('$url?service_id=$serviceId&placeid=$placeId&lat=${addressModel.latitude.toString()}&long=${addressModel.longitude.toString()}');
-    print("zoneId${zoneId.toString()}");
-    final response = await http.get(
-      uri,
-      headers: {
-        'zoneId': zoneId.toString(),
-        'Authorization':
-            "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
-      },
-    );
+  // Future<void> getAllServiceList({required int offset, required bool reload, String? placeId, int? distance, String?lat ,String?lng }) async{
 
-    if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
-      refereshInt.value = DateTime.now().microsecondsSinceEpoch;
-      return ServicewiseProviderModel.fromJson(json.decode(response.body));
-    } else {
-      refereshInt.value = DateTime.now().microsecondsSinceEpoch;
-      return ServicewiseProviderModel.fromJson(json.decode(response.body));
+    Future<ServicewiseProviderModel> fetchServiceProviders() async {
+      print("hufuiewgufigweuyfgryewgfy${valueDrop.value.toString()}");
+      print("hufuiewgufigweuyfgryewgfy${int.parse(valueDrop.value)}");
+      print("hufuiewgufigweuyfgryewgfy${widget.service!.id.toString()}");
+      AddressModel addressModel = Get.find<LocationController>().getUserAddress()!;
+      final String url =
+          'https://admin.agnomy.com/api/v1/customer/service/providders';
+      final String serviceId = widget.service!.id.toString();
+      final String placeId = placedIdGloabal.value;
+      final String? zoneId = addressModel?.zoneId.toString(); //
+      final Uri uri = Uri.parse('$url?&service_id=$serviceId&placeid=$placeId&lat=${addressModel.latitude.toString()}&long=${addressModel.longitude.toString()}&distance=${int.parse(valueDrop.value)}');
+      print("zoneId${zoneId.toString()}");
+
+      final response = await http.get(
+        uri,
+        headers: {
+          'zoneId': zoneId.toString(),
+          'Authorization':
+          "Bearer ${Get.find<SplashController>().splashRepo.apiClient.token.toString()}"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print(uri.toString());
+        print(jsonDecode(response.body));
+        refereshInt.value = DateTime.now().microsecondsSinceEpoch;
+        return ServicewiseProviderModel.fromJson(json.decode(response.body));
+      } else {
+        refereshInt.value = DateTime.now().microsecondsSinceEpoch;
+        return ServicewiseProviderModel.fromJson(json.decode(response.body));
+      }
     }
-  }
+  //}
+
 
   /// add to provider to share in list
 

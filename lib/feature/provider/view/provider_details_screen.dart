@@ -137,80 +137,92 @@ class ProviderDetailsScreenState extends State<ProviderDetailsScreen> with Singl
                           eachItemChild: (object, index) =>
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
-                                         border: Border.all(
-                                           color: Theme.of(context).primaryColor
-                                         )
-                                         // color: Colors.blue
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(providerBookingController.providerDetailsContent!.subscribedServices![index].name.toString(),
-                        style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
+                                      child: InkWell(
+                                        onTap: (){
+                                          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
-                                              ),
+                                            print("RouteHelper.getServiceRoute(service.id!)${providerBookingController.providerDetailsContent!.subscribedServices![index].id.toString()}");
+                                            Get.toNamed(
+                                              RouteHelper.getServiceRoute(providerBookingController.providerDetailsContent!.subscribedServices![index].id ?? ""),
+                                            );
 
-                                              Text(providerBookingController.providerDetailsContent!.subscribedServices![index].shortDescription.toString(),
-                                              ),
-                                              SizedBox(height: 8),
+                                          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                           border: Border.all(
+                                             color: Theme.of(context).primaryColor
+                                           )
+                                           // color: Colors.blue
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(providerBookingController.providerDetailsContent!.subscribedServices![index].name.toString(),
+                                                                style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
 
-                                              // Html(
-                                              //   data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),
-                                              //  // tagsList: Html.tags,
-                                              //
-                                              // ),
-                                              Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault)),
-                            child: CustomImage(
-                              image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${providerBookingController.providerDetailsContent!.subscribedServices![index].thumbnail.toString()}',
-                               height: Dimensions.imageSizeButton,
-                              width: Dimensions.imageSizeButton,
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
-                          // Container(
-                          //    color: Colors.red,
-                          //   width: Get.width*0.5,
-                          //   child:
-                            // Html(
-                            //   data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),
-                              // tagsList: Html.tags,
+                                                ),
 
-                            //),
-                            //Text(providerBookingController.providerDetailsContent!.subscribedServices![index].shortDescription.toString(),
+                                                Text(providerBookingController.providerDetailsContent!.subscribedServices![index].shortDescription.toString(),
+                                                ),
+                                                SizedBox(height: 8),
 
-                           // ),
-                         // ),
+                                                // Html(
+                                                //   data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),
+                                                //  // tagsList: Html.tags,
+                                                //
+                                                // ),
+                                                Row(
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                children: [
+                                                                  ClipRRect(
+                                                                    borderRadius: const BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault)),
+                                                                    child: CustomImage(
+                                                                      image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${providerBookingController.providerDetailsContent!.subscribedServices![index].thumbnail.toString()}',
+                                                                       height: Dimensions.imageSizeButton,
+                                                                      width: Dimensions.imageSizeButton,
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(width: 20,),
+                                                                  // Container(
+                                                                  //    color: Colors.red,
+                                                                  //   width: Get.width*0.5,
+                                                                  //   child:
+                                                                    // Html(
+                                                                    //   data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),
+                                                                      // tagsList: Html.tags,
 
-                          ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault)),
-                            child: CustomImage(
-                              image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${providerBookingController.providerDetailsContent!.subscribedServices![index].coverImage.toString()}',
-                              height: Dimensions.imageSizeButton,
-                              width: Dimensions.imageSizeButton,
-                            ),
-                          ),
-                        ],
-                                              ),
-                                    Html(
-                                    data:providerBookingController.providerDetailsContent!.subscribedServices![index].description.toString(),),
+                                                                    //),
+                                                                    //Text(providerBookingController.providerDetailsContent!.subscribedServices![index].shortDescription.toString(),
 
-                                              providerBookingController.providerDetailsContent!.subscribedServices![index].providerDescription == null ?//
-                                   const SizedBox(height: 0,width: 0,)
-                                                  :  Text(providerBookingController.providerDetailsContent!.subscribedServices![index].providerDescription.toString())
+                                                                   // ),
+                                                                 // ),
+
+                                                                  // ClipRRect(
+                                                                  //   borderRadius: const BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault)),
+                                                                  //   child: CustomImage(
+                                                                  //     image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${providerBookingController.providerDetailsContent!.subscribedServices![index].coverImage.toString()}',
+                                                                  //     height: Dimensions.imageSizeButton,
+                                                                  //     width: Dimensions.imageSizeButton,
+                                                                  //   ),
+                                                                  // ),
+                                                                ],
+                                                ),
+                                                SizedBox(height: 8),
+                                                providerBookingController.providerDetailsContent!.subscribedServices![index].providerDescription == null ?//
+                                                const SizedBox(height: 0,width: 0,)
+                                                    :  Text(providerBookingController.providerDetailsContent!.subscribedServices![index].providerDescription.toString())
 
 
 
 
-                                            ],
+
+
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),

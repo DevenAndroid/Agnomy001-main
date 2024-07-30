@@ -210,7 +210,7 @@ class ProviderItemView extends StatelessWidget {
                   //   },
                   //   ),
                   // ),
-                 Text(providerData.cropTypes ?? "", style: ubuntuRegular.copyWith(
+                 Text(providerData.cropTypes.toString().replaceAll(",",", ") ?? "", style: ubuntuRegular.copyWith(
                     fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
                   )),
                 ],),
@@ -235,7 +235,14 @@ class ProviderItemView extends StatelessWidget {
                     overflow: TextOverflow.ellipsis),
               ),
 
-            ],)
+            ],),
+            SizedBox(height: ResponsiveHelper.isMobile(context)? Get.height*0.001 : Get.height*0.001,)
+            ,  Align(
+              alignment: Alignment.topLeft,
+              child: Text('${providerData.city.toString()}, ${providerData.state.toString()}', style: ubuntuRegular.copyWith(
+                fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).secondaryHeaderColor,
+              )),
+            ),
           ]),
         ),
       ),

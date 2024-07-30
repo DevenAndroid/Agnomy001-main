@@ -111,9 +111,12 @@ class ProviderData {
   TimeSchedule? timeSchedule;
   List<SubscribedServices>? subscribedServices;
   String? cashLimitStatus;
+  String? city;
+  String? state;
 
   ProviderData(
       {this.id,
+        this.city,this.state,
         this.userId,
         this.companyName,
         this.cropTypes,
@@ -147,6 +150,8 @@ class ProviderData {
 
   ProviderData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    state = json['state'];
+    city = json['city'];
     userId = json['user_id'];
     companyName = json['company_name'];
     cropTypes = json['crop_types'];
@@ -188,6 +193,8 @@ class ProviderData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['state'] = state;
+    data['city'] = city;
     data['user_id'] = userId;
     data['company_name'] = companyName;
     data['company_type'] = cropTypes;
@@ -329,6 +336,7 @@ class SubscribedServices {
   String? createdAt;
   String? updatedAt;
   SubCategory? subCategory;
+
 
   SubscribedServices(
       {this.id,

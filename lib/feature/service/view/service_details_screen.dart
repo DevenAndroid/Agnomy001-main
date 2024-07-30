@@ -229,16 +229,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       children: [
                                         const EmptyReviewWidget(),
                                         SizedBox(height: MediaQuery.of(context).size.height*0.02),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: Dimensions.paddingSizeDefault,
-                                              vertical: Dimensions.paddingSizeEight),
-                                          child: Text(
-                                            "Service Provider in your area:",
-                                            style: ubuntuRegular.copyWith(
-                                                fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
-                                          ),
-                                        ),
+
                                         const SizedBox(height: 20,),
 
 
@@ -267,6 +258,18 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                                     length: Get.find<ServiceDetailsController>().service!.faqs!.isNotEmpty ? 3 :2,
                                                     child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.symmetric(
+                                                              horizontal: Dimensions.paddingSizeDefault,
+                                                              vertical: Dimensions.paddingSizeEight),
+                                                          child:service.providers!.length == 0 ?
+                                                         SizedBox(height: 0,width: 0,): Text(
+                                                    "Service Provider in your area:",
+                                                    style: ubuntuRegular.copyWith(
+                                                        fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
+                                                  ),
+                                                        ),
+
                                                         if(!ResponsiveHelper.isMobile(context) && !ResponsiveHelper.isTab(context))
                                                           const SizedBox(height: Dimensions.paddingSizeDefault,),
 
