@@ -602,7 +602,7 @@ class WebBookingDetailsSection extends StatelessWidget {
                           height: Dimensions.paddingSizeExtraLarge),
                       Directionality(
                         textDirection: TextDirection.ltr,
-                        child: Text(PriceConverter.convertPrice(bookingDetailsContent.quoteOfferedPrice!.toDouble(), isShowLongPrice: true),
+                        child: Text(PriceConverter.convertPrice(bookingDetailsContent.quoteOfferedPrice!.toDouble()+ bookingDetailsContent.extraFee!.toDouble(), isShowLongPrice: true),
                             style: ubuntuBold.copyWith(
                               fontSize: Dimensions.fontSizeDefault,
                               color:

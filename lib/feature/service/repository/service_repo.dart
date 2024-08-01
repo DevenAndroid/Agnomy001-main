@@ -4,6 +4,8 @@ import 'package:demandium/feature/web_landing/widget/web_landing_search_box.dart
 import 'package:get/get.dart';
 import 'package:demandium/utils/app_constants.dart';
 
+import '../../home/widget/category_view.dart';
+
 class ServiceRepo extends GetxService {
   final ApiClient apiClient;
   ServiceRepo({required this.apiClient});
@@ -43,7 +45,7 @@ class ServiceRepo extends GetxService {
 
   Future<Response> getServiceListBasedOnSubCategory({required String subCategoryID, required int offset , required String lat, required String lng}) async {
     print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA${subCategoryID}");
-    return await apiClient.getData('${AppConstants.serviceBasedOnSubcategory}$subCategoryID?limit=30&offset=$offset&placeid=$placedIdGloabal&lat=${lat}&long=${lng}');
+    return await apiClient.getData('${AppConstants.serviceBasedOnSubcategory}$subCategoryID?limit=30&offset=$offset&placeid=$placedIdGloabal&lat=${lat}&long=${lng}&distance=${int.parse(valueDrop.value)}');
   }
   Future<Response> getItemsBasedOnCampaignId({required String campaignID}) async {
     return await apiClient.getData('${AppConstants.itemsBasedOnCampaignId}$campaignID&limit=100&offset=1');

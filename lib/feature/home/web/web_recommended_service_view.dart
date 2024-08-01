@@ -211,7 +211,7 @@ class ServiceModelView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text( 'Service ${serviceList[index].providerCount.toString()} Provider'.tr,style: ubuntuRegular.copyWith(fontSize: 11,
+                  Text( '${serviceList[index].providerCount.toString()} Available'.tr,style: ubuntuRegular.copyWith(fontSize: 11,
                       color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.5)),),
                   serviceList[index].maxDistanceProvider!=null&&serviceList[index].maxDistanceProvider!=""?
                   Column(

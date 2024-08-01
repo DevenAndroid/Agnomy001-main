@@ -410,11 +410,21 @@ class _ServiceOverviewState extends State<ServiceOverview> {
             padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.paddingSizeDefault,
                 vertical: Dimensions.paddingSizeEight),
-            child:  widget.providers.length == 0 ?const SizedBox(height: 0,width: 0,):
-    Text(
-    "Service Provider in your area:",
-    style: ubuntuRegular.copyWith(
-    fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
+            child:
+            //widget.providers.length == 0 ?const SizedBox(height: 0,width: 0,):
+    Row(
+      children: [
+        Text(
+        "Service Provider in your area:",
+        style: ubuntuRegular.copyWith(
+        fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
+        ),
+        Text(
+          " ${widget.providers.length.toString()} Available",
+          style: ubuntuRegular.copyWith(
+              fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
+        ),
+      ],
     ),
 
           ),

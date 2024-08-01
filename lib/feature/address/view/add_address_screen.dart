@@ -323,7 +323,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
               ),
             locationController.loading ? const Center(child: CircularProgressIndicator()) : const SizedBox(),
-            Center(child: !locationController.loading ? Image.asset(Images.marker, height: 40, width: 40, color: Theme.of(context).hoverColor,)
+            Center(child: !locationController.loading ? Image.asset(Images.marker, height: 40, width: 40,
+               // color: Theme.of(context).hoverColor,
+            )
                 : const CircularProgressIndicator()),
             Positioned(
               bottom: 10,

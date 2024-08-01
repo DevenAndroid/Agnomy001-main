@@ -160,6 +160,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                         ),
                       ],
                     ),
+                    ///
                     // if( fromPage == 'fromRecommendedScreen')
                     //   Expanded(
                     //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,6 +240,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                     //       ],
                     //     ),
                     //   ),
+                    ///
                    if( fromPage == 'popular_services')
                     Expanded(
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -407,7 +409,7 @@ class ServiceWidgetVertical extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                   Text(
-                                  'Service ${service.providerCount.toString()} Provider'.tr,
+                                  '${service.providerCount.toString()} Available'.tr,
                                   style: ubuntuRegular.copyWith(
                                       fontSize: Dimensions.fontSizeExtraSmall,
                                       color: Theme.of(context)

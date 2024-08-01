@@ -26,8 +26,7 @@ class AppConstants {
       '/api/v1/customer/campaign/data/items?campaign_id=';
   static const String serviceDetailsUri = '/api/v1/customer/service/detail';
   static const String getServiceReviewList = '/api/v1/customer/service/review/';
-  static const String subcategoryUri =
-      '/api/v1/customer/category/childes?limit=20&offset=1&id=';
+  static const String subcategoryUri = '/api/v1/customer/category/childes?limit=20&offset=1&id=';
   static const String categoryServiceUri = '/api/v1/categories/service/';
   static const String configUri = '/api/v1/customer/config';
   static const String customerRemove = '/api/v1/customer/remove-account';

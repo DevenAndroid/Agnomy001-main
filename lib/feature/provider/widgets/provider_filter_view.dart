@@ -211,10 +211,11 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                         Row(
                           children: [
                             Text(
-                              'Show Provider',  
+                              'Search',
                               style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeLarge),
                             ),
                             const SizedBox(width: Dimensions.paddingSizeDefault),
+
                             DropdownButton(
                               // Initial Value
                               value: serviceController.milesdropdownvalue,
@@ -237,6 +238,9 @@ class _ProductBottomSheetState extends State<ProviderFilterView> {
                                 });
                               },
                             ),
+                            const SizedBox(width: Dimensions.paddingSizeDefault),
+                            Text("Miles", style: ubuntuMedium.copyWith(
+                                fontSize: Dimensions.fontSizeExtraLarge)),
                           ],
                         ),
                     

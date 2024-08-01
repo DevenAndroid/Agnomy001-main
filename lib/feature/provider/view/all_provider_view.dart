@@ -58,33 +58,37 @@ class _AllProviderViewState extends State<AllProviderView> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 if(ResponsiveHelper.isDesktop(context))
-                Padding(padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault,horizontal: Dimensions.paddingSizeDefault),
-                  child: InkWell(
-                    onTap: (){
-                      showModalBottomSheet(
-                        useRootNavigator: true,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        context: context, builder: (context) => ProviderFilterView(
-                        onUpdate: (){
-                          setState(() {
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault,
+                      horizontal: Dimensions.paddingSizeDefault),
+                    child: InkWell(
+                      onTap: (){
+                        showModalBottomSheet(
+                          useRootNavigator: true,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          context: context, builder: (context) => ProviderFilterView(
+                          onUpdate: (){
+                            setState(() {
 
-                          });
-                        },
+                            });
+                          },
+                        ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge,vertical: Dimensions.paddingSizeSmall),
+                        child: Row(mainAxisSize: MainAxisSize.min,children: [
+                          Image.asset(Images.filter,width: 20,color: Colors.white,),
+                          const SizedBox(width: Dimensions.paddingSizeSmall,),
+                          Text('filter'.tr,style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Colors.white),)
+                        ],),
                       ),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge,vertical: Dimensions.paddingSizeSmall),
-                      child: Row(mainAxisSize: MainAxisSize.min,children: [
-                        Image.asset(Images.filter,width: 20,color: Colors.white,),
-                        const SizedBox(width: Dimensions.paddingSizeSmall,),
-                        Text('filter'.tr,style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Colors.white),)
-                      ],),
                     ),
                   ),
                 ),

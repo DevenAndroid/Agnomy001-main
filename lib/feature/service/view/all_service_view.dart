@@ -319,10 +319,14 @@ class _AllServiceViewState extends State<AllServiceView> {
                     Dimensions.paddingSizeDefault,
                     Dimensions.paddingSizeSmall,
                   ),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       TitleWidget(
-                        title: 'all_service'.tr,
+                        title: "Search",
+                        // title: 'all_service'.tr,
+                      ),
+                      const SizedBox(
+                        width: Dimensions.paddingSizeDefault,
                       ),
                       DropdownButton(
                         // Initial Value
@@ -351,6 +355,11 @@ class _AllServiceViewState extends State<AllServiceView> {
                            });
                         },
                       ),
+                      const SizedBox(
+                        width: Dimensions.paddingSizeDefault,
+                      ),
+                      Text("Miles", style: ubuntuMedium.copyWith(
+                          fontSize: Dimensions.fontSizeExtraLarge)),
                     ],
                   ),
 

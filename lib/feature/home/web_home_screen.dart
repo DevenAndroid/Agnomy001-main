@@ -90,7 +90,7 @@ class WebHomeScreen extends StatelessWidget {
           const SliverToBoxAdapter(
             child: Center(
               child: SizedBox(width: Dimensions.webMaxWidth,
-                 // child: WebTrendingServiceView()
+                  child: WebTrendingServiceView()
               ),
             ),
           ),

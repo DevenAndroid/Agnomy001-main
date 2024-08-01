@@ -46,7 +46,9 @@ class _CategoryViewState extends State<CategoryView> {
 
 
                             },
-                            child: Text('all_categories'.tr,
+                            child: Text(
+                              "Search",
+                                // 'all_categories'.tr,
                                 style: ubuntuMedium.copyWith(
                                     fontSize: Dimensions.fontSizeExtraLarge)),
                           ),
@@ -88,6 +90,11 @@ class _CategoryViewState extends State<CategoryView> {
                               });
                             },
                           ),
+                          const SizedBox(
+                            width: Dimensions.paddingSizeDefault,
+                          ),
+                          Text("Miles", style: ubuntuMedium.copyWith(
+                              fontSize: Dimensions.fontSizeExtraLarge)),
                           Spacer(),
                           InkWell(
                             onTap: () {
