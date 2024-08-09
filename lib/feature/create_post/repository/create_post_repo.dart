@@ -58,7 +58,8 @@ class CreatePostRepo{
 
 
     return await apiClient.postData(AppConstants.placeRequest, {
-      "payment_method": "offline_payment", //paymentMethod,
+      // "payment_method": "offline_payment", //paymentMethod,
+       "payment_method": "stripe", //paymentMethod,
       "zone_id": zoneId,
       "service_schedule": schedule,
       "service_address_id": serviceAddressID,

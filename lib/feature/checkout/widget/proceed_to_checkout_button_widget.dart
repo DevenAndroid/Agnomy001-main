@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
  String? pageState;
  String? addressId;
+ String? Id;
 class ProceedToCheckoutButtonWidget extends StatefulWidget {
   final String pageState;
   final String addressId;
@@ -28,6 +29,8 @@ class _ProceedToCheckoutButtonWidgetState
 
 
   Future<void> checkoutSummeryApiCall() async {
+
+    // List<AddressModel>? addressList = locationController.addressList;
 print("Data summary ka Body drop :${cropTypesdropdownvalue.toString()}");
 String jsonString = jsonEncode(cropTypesdropdownvalue);
 print("Datajson to ${jsonString}");
@@ -35,11 +38,7 @@ print("Datajson to ${jsonString}");
 // print("datalist:${checkedItemsString}");
     List<dynamic> list = cropTypesdropdownvalue!.map((item) => '"$item"').toList();
     print("result${list}");
-    // List<dynamic> list = jsonDecode(result);
-    // List<String> stringList = List<String>.from(list);
 
-    // print("result${stringList}");
-    // print("result${list}");
     print("result${Get.find<SplashController>().splashRepo.apiClient.token.toString()}");
     print("Data summary ka Body crop:${ cropController.text}");
     print("Data summary ka Body accur:${ aacurageController.text}");
@@ -48,6 +47,25 @@ print("Datajson to ${jsonString}");
     print("question_input");
     print("quote_id${quote_id}");
     print("zoneId${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
+    print("AAAAAAAAAAAADDDDDDDDDDDDDDDDDDDIDDDDDDDDDDDDDDDDDD${ Get.find<LocationController>().getUserAddress()!.id.toString()}");
+    print("AAAAAAAAlatitude${ Get.find<LocationController>().getUserAddress()!.latitude.toString()}");
+    print("addressAAAAAAAAAAAAAAAAAAAAAAAA${ Get.find<LocationController>().getUserAddress()!.address.toString()}");
+    print("addressAAAAAAAAAAAAAAAAAAAAAAAA${ Get.find<LocationController>().getUserAddress()!.userId.toString()}");
+    // print("addressAAAAAAAAAAAAAAAAAAAAAAAAPPPP${ idModel["service_address_id"]}");
+    print("addressAAAAAAAAAAAAAAAAAAAAAAAA${ Get.find<LocationController>().getUserAddress()!.id.toString()}");
+    print("addressAAAAAAAAAAAAAAAAAAAAAAAA${ Get.find<LocationController>().getUserAddress()!.longitude}");
+    print("addressAAAAAAAAAAAAAAAAAAAAAAAA${ Get.find<LocationController>().getUserAddress()!.zoneId.toString()}");
+    print("addressAAAAAAAAAAAAAAAAAAAAAAAA${ Get.find<LocationController>().getUserAddress()!.house.toString()}");
+    print("addressAAAAAAAAAAAAAAAAAAAAAAAA${ Get.find<LocationController>().getUserAddress()!.zoneId}");
+    print("addressIODDDDDDDDDDD${widget.addressId.toString()}");
+    String zoneId = Get.find<LocationController>().getUserAddress()!.zoneId.toString();
+    AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+    print("iddddddddddddddddd${addressModel!.id.toString()}");
+    print("iddddddddddddddddd${Id.toString()}");
+    // String address = jsonEncode(serviceAddress);
+    // print("addressIODDDDDDDDDDD$
+    // AddresIdsankur");
+    // print("addressIODDDDDDDDDDD${AddresIdsankur.toString()}");
     if (questionController.text != null &&
         cropController.text != null &&
         aacurageController.text != null &&
@@ -67,7 +85,9 @@ print("Datajson to ${jsonString}");
         ..fields['crop'] = cropController.text
         ..fields['crop_type'] = jsonEncode(jsonString)
         ..fields['quote_id'] = quote_id
+        ..fields['service_address_id'] = addressModel!.id.toString() //Get.find<LocationController>().getUserAddress()!.id.toString()
         ..fields['zone_id'] =  Get.find<LocationController>().getUserAddress()!.zoneId.toString();
+        // ..fields['service_address_id'] = hncjcj;
 
       try {
         var response = await request.send();
@@ -142,6 +162,7 @@ print("Datajson to ${jsonString}");
             InkWell(
               onTap: () {
                 AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+
                  if (Get.find<AuthController>().acceptTerms) {
 
 
@@ -212,6 +233,9 @@ print("Datajson to ${jsonString}");
 
 
                     print('if 3');
+                    AddressModel? addressModel = Get.find<LocationController>().selectedAddress ?? Get.find<LocationController>().getUserAddress();
+                    print("behwjgew${addressModel!.id.toString()}");
+                     Id = addressModel!.id.toString();
 
                     if (!Get.find<ScheduleController>().checkScheduleTime()
                     || (controller==null || controller == "null")
@@ -285,7 +309,8 @@ print("Datajson to ${jsonString}");
                             DateTime selectedStartTime =  Get.find<ScheduleController>().selectedData;
 
                             checkoutController.placeBookingRequest(
-                              paymentMethod: "offline_payment",
+                              paymentMethod: "stripe",
+                              // paymentMethod: "offline_payment",
                               schedule: selectedStartTime.toString(),
                               isPartial: isPartialPayment && cartController.walletPaymentStatus
                                   ? 1
@@ -396,6 +421,7 @@ print("Datajson to ${jsonString}");
                         print('if 20');
 
                         _makeDigitalPayment(
+
                             addressModel,
                             checkoutController.selectedDigitalPaymentMethod,
                             isPartialPayment);
@@ -446,11 +472,13 @@ print("Datajson to ${jsonString}");
 
   _makeDigitalPayment(AddressModel? address,
       DigitalPaymentMethod? paymentMethod, bool isPartialPayment) {
+    print("Bookingggggggggggggggggggggggggggggggggggggggggggggggggggiddddd");
     String url = '';
     String hostname = html.window.location.hostname!;
     String protocol = html.window.location.protocol;
     String port = html.window.location.port;
     String? path = html.window.location.pathname;
+
 
     String schedule = DateConverter.dateToDateOnly(
         Get.find<ScheduleController>().selectedData);
@@ -468,10 +496,12 @@ print("Datajson to ${jsonString}");
             ? 1
             : 0;
     String platform = ResponsiveHelper.isWeb() ? "web" : "app";
+    // Get.find<CheckOutController>().updateState(PageState.complete);
+   print("Boking ID ${ Get.find<CheckOutController>().bookingReadableId.toString()}");
 
     url =
         '${AppConstants.baseUrl}/payment?payment_method=${paymentMethod?.gateway}&access_token=${base64Url.encode(utf8.encode(userId))}&zone_id=$zoneId'
-        '&service_schedule=$schedule&service_address_id=$addressId&callback=$callbackUrl&service_address=$encodedAddress&is_partial=$isPartial&payment_platform=$platform';
+        '&service_schedule=$schedule&service_address_id=$addressId&callback=$callbackUrl&service_address=$encodedAddress&is_partial=$isPartial&payment_platform=$platform&booking_id${Get.find<CheckOutController>().bookingReadableId.toString()}';
 
     if (GetPlatform.isWeb) {
       printLog("url_with_digital_payment:$url");

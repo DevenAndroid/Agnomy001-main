@@ -1,7 +1,7 @@
 import 'package:demandium/feature/web_landing/web_landing_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/components/core_export.dart';
-
+// String ?AddresIdsankur;
 class AccessLocationScreen extends StatefulWidget {
   final bool? fromSignUp;
   final bool? fromHome;
@@ -66,6 +66,7 @@ class _AccessLocationScreenState extends State<AccessLocationScreen> {
                                   address: locationController.addressList![index],
                                   fromAddress: false,
                                   onTap: () async {
+                                    // AddresIdsankur = locationController.addressList![index].id.toString();
                                     Get.dialog(const CustomLoader(), barrierDismissible: false);
                                     AddressModel address = locationController.addressList![index];
                                     await locationController.setAddressIndex(address,fromAddressScreen: false);

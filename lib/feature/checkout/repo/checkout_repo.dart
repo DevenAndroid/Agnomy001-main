@@ -47,7 +47,8 @@ class CheckoutRepo extends GetxService {
     print('Formatted Start Time: $formattedStartTime');
     print("enddate::::${selectedEndTime}");
     return await apiClient.postData(AppConstants.placeRequest, {
-      "payment_method": "offline_payment",
+      "payment_method": "stripe",
+      // "payment_method": "stripe",
       "quote_id":quote_id,
       "zone_id" : zoneId,
       "service_address_id" : serviceAddressID,

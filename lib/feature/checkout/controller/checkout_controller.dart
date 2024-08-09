@@ -9,7 +9,7 @@ import 'package:demandium/feature/checkout/widget/payment_section/payment_method
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-
+// String? BookingID;
 enum PageState {orderDetails, payment, complete}
 
 enum PaymentMethodName  {digitalPayment, cos , walletMoney, offline ,none}
@@ -58,6 +58,7 @@ class CheckOutController extends GetxController implements GetxService{
 
   String _bookingReadableId = "";
   String get bookingReadableId => _bookingReadableId;
+   // BookingID =_bookingReadableId;
 
   bool _isLoading= false;
   bool get isLoading => _isLoading;
@@ -145,7 +146,7 @@ class CheckOutController extends GetxController implements GetxService{
 
      Response response = await checkoutRepo.placeBookingRequest(
 
-       paymentMethod : "",  //paymentMethod,
+       paymentMethod : "stripe",  //paymentMethod,
        zoneId : zoneId,
        schedule : formattedStartTime,
        serviceAddressID : address.id == "null" ? "" : address.id,

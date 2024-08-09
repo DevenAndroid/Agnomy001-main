@@ -55,6 +55,7 @@ class AddressWidget extends StatelessWidget {
                     Icon(address.addressLabel == "home" ? Icons.nature_sharp: Icons.view_quilt_sharp, color: Theme.of(context).primaryColorDark,),
 
                     const SizedBox(width: Dimensions.paddingSizeSmall,),
+                    // Text(address.id.toString()),
                     Text((address.addressLabel != null ? address.addressLabel.toString().toLowerCase() : 'others').tr, style: ubuntuMedium.copyWith(
                       fontSize: 16, color: selectedUserAddressId != null && selectedUserAddressId != address.id ? Theme.of(context).primaryColorDark: Theme.of(context).primaryColorDark
                     ),),

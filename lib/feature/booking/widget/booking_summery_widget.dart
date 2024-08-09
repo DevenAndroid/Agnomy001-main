@@ -242,8 +242,8 @@ class BookingSummeryWidget extends StatelessWidget{
                             textDirection: TextDirection.ltr,
                             child: Text(
                               PriceConverter.convertPrice(
-                                  bookingDetailsController.bookingDetailsContent!.totalBookingAmount!.toDouble()+
-                                      bookingDetailsContent.quoteOfferedPrice!.toDouble()
+                              bookingDetailsContent.quoteOfferedPrice!.toDouble()+ bookingDetailsContent.extraFee!.toDouble()
+                                  // bookingDetailsController.bookingDetailsContent!.totalBookingAmount!.toDouble()+ bookingDetailsContent.quoteOfferedPrice!.toDouble()
                                   ,isShowLongPrice: true),
                               style: ubuntuBold.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor),),
                           ),

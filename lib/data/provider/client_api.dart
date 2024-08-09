@@ -8,6 +8,8 @@ import 'package:demandium/components/core_export.dart';
 import 'package:path/path.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
+
+// var idModel ;
 class ApiClient extends GetxService {
   final String? appBaseUrl;
   final SharedPreferences sharedPreferences;
@@ -65,6 +67,7 @@ class ApiClient extends GetxService {
   Future<Response> postData(String? uri, dynamic body, {Map<String, String>? headers}) async {
     printLog('====> API Call: $uri\nHeader: $_mainHeaders');
     printLog('====> body00 : ${body.toString()}');
+    // idModel = jsonDecode( body.toString());
     print("HHHHHHHHHHHHHHH${headers}");
 
 
